@@ -3,3 +3,4 @@ Senior Capstone Project Repository - The Job Hunting AI Web Tool - Wilson, Au, M
 
 Nicholai Moguet <br />
 Michael Lin <br />
+McKenzie Bourn <br />
