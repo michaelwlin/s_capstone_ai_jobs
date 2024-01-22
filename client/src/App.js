@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import FindJobsPage from './pages/FindJobs';
@@ -8,6 +8,10 @@ import HomePage from './pages/LandingPage';
 
 const App = () => {
 
+  useEffect(() => { //TODO: update this with data to be fetched from database
+    fetch('http://localhost:4000')
+    .then((res) => res.json())
+  })
 
   return (
       <Router>

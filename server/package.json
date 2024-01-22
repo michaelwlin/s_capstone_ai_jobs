@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
+    "dev": "nodemon app.js",
     "database": "node src/index.js"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "mongodb": "^6.3.0"
   },
   "devDependencies": {
+    "nodemon": "^3.0.3",
     "prettier": "3.2.4"
   },
   "husky": {
