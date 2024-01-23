@@ -9,7 +9,7 @@ import HomePage from './pages/LandingPage';
 const App = () => {
 
   useEffect(() => { //TODO: update this with data to be fetched from database
-    fetch('http://localhost:4000')
+    fetch('http://localhost:3000')
     .then((res) => res.json())
   })
 

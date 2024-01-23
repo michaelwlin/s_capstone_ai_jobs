@@ -68,3 +68,44 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+------------------------------------------
+### Getting Started with Python
+
+- These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Python 3.x (specify the exact version if necessary)
+pip (Python Package Installer)
+
+
+### Start by cloning the repository to your local machine:
+
+git clone https://github.com/michaelwlin/s_capstone_ai_jobs/
+cd s_capstone_ai_jobs
+
+###  Create a virtual environment named env within the project directory:
+- This command creates a new directory env where the virtual environment files are stored:
+
+python -m venv env
+
+
+###  Before working on the project, activate the virtual environment:
+
+- On Windows:
+
+.\env\Scripts\activate
+
+- On macOS/Linux:
+
+source env/bin/activate
+
+- You'll know the virtual environment is activated because the command prompt will now show the name of the virtual environment (env).
+
+### Install Project Dependencies
+- With the virtual environment activated, install the project dependencies using:
+
+pip install -r requirements.txt
+
+- This command reads the requirements.txt file and installs all the Python packages listed there, ensuring you have all the necessary dependencies.
