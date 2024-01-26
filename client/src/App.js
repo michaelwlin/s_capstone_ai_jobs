@@ -23,7 +23,7 @@ const App = () => {
               <Route path="/how-it-works" element={<HowItWorksPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               </Routes>
-              <FetchData/>
+              <FetchData/> // Used for demo purposes, can remove this later for actual implementation of data fetching
       </Router>
   );
 };
