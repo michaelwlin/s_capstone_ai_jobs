@@ -5,6 +5,7 @@ import FindJobsPage from './pages/FindJobs';
 import HowItWorksPage from './pages/HowItWorks';
 import AboutUsPage from './pages/AboutUs';
 import HomePage from './pages/LandingPage';
+import FetchData from './components/FetchData';
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
               <Route path="/how-it-works" element={<HowItWorksPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               </Routes>
+              <FetchData/>
       </Router>
   );
 };
