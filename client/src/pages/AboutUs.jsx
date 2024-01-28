@@ -1,5 +1,3 @@
-import React from "react";
-
 const AboutUs = () => {
   return (
     <div>
@@ -10,7 +8,7 @@ const AboutUs = () => {
         This page will contain information about our company and team.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default AboutUs;
+export default AboutUs

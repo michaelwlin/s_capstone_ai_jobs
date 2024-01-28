@@ -1,5 +1,3 @@
-import React from "react";
-
 const FindJobs = () => {
   return (
     <div className="container mx-auto p-4">
@@ -10,7 +8,7 @@ const FindJobs = () => {
         This page will contain information on how to find jobs.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default FindJobs;
+export default FindJobs
