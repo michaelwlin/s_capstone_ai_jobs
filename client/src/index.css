@@ -34,3 +34,11 @@ code {
 .active {
   color: blue;
 }
+
+.w-120 {
+  width: 120px;
+}
+
+.w-200 {
+  width: 200px;
+}

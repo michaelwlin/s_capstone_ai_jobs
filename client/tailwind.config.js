@@ -10,7 +10,7 @@ module.exports = {
         sans: ['Open Sans', 'sans-serif'],
       },
       minHeight: {
-        "screen": '90vh',
+        "screen": '80vh',
       },
     },
   },
