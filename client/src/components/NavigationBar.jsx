@@ -1,10 +1,9 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, NavbarLink, Avatar } from 'flowbite-react'
 
 const NavigationBar = () => {
   return (
-    <Navbar fluid rounded className="navbar">
+    <Navbar fluid rounded className="navbar p-2.5">
       <Navbar.Brand>
         <NavLink to="/" as={NavbarLink} className="nav-logo">
           <img
