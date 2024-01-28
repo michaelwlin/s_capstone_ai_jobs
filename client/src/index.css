@@ -15,3 +15,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navbar {
+  margin: 10px;
+}
+
+.nav-logo {
+  display: inline-block;
+  & > img {
+    display: inline-block;
+  }
+}
+
+.user-profile {
+  margin: 0 30px;
+}
+
+.active {
+  color: blue;
+}
