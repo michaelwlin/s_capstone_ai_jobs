@@ -1,19 +1,48 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, NavbarLink, Avatar } from 'flowbite-react'
+import { FaUser } from 'react-icons/fa'
 
 const NavigationBar = () => {
+  const [signedIn, setSignedIn] = useState(false)
+
+  const signIn = () => {}
+  const register = () => {}
+
+  const userNavigation = () => {
+    if (signedIn) {
+      return (
+        <div>
+          <Dropdown.Header>
+            <span className="block text-sm">User Profile</span>
+            <span className="block truncate text-sm font-medium">
+              name@flowbite.com
+            </span>
+          </Dropdown.Header>
+          <Dropdown.Item>Dashboard</Dropdown.Item>
+          <Dropdown.Item>Settings</Dropdown.Item>
+          <Dropdown.Item>Sign out</Dropdown.Item>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Dropdown.Item onClick={signIn}>Sign In</Dropdown.Item>
+          <Dropdown.Item onClick={register}>Register</Dropdown.Item>
+        </div>
+      )
+    }
+  }
+
   return (
     <Navbar fluid rounded className="navbar p-2.5">
       <Navbar.Brand>
         <NavLink to="/" as={NavbarLink} className="nav-logo">
           <img
-            src="/icons/MatchIQ_logo.svg"
+            src="/icons/MatchIQ_transparent.png"
             className="mr-3 h-6 sm:h-9"
-            alt="Your Logo"
+            alt="MatchIQ"
           />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            MatchIQ
-          </span>
         </NavLink>
       </Navbar.Brand>
 
@@ -36,23 +65,9 @@ const NavigationBar = () => {
         <Dropdown
           arrowIcon={false}
           inline
-          label={
-            <Avatar
-              alt="User settings"
-              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-              rounded
-            />
-          }
+          label={<Avatar alt="User settings" img={FaUser} rounded />}
         >
-          <Dropdown.Header>
-            <span className="block text-sm">User Profile</span>
-            <span className="block truncate text-sm font-medium">
-              name@flowbite.com
-            </span>
-          </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          {userNavigation()}
         </Dropdown>
         <Navbar.Toggle />
       </div>

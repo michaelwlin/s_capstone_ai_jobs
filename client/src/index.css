@@ -4,6 +4,7 @@
 
 :root {
   --background-color: #FAFAFA;
+  --logo-color: #6936F5;
 }
 
 body {
@@ -41,4 +42,19 @@ code {
 
 .w-200 {
   width: 200px;
+}
+
+.w-250 {
+  width: 250px;
+}
+
+.statistics {
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0;
+  width: 200px;
+  transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
 }
