@@ -1,13 +1,12 @@
 import { Button } from 'flowbite-react'
+import { Hero } from '../components'
 
 const LandingPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="text-center mb-4">
-        <p className="text-xl font-semibold">
-          Welcome to MatchIQ - Let's find you some jobs!
-        </p>
-        <form className="flex flex-col items-center gap-2 mt-4">
+      <Hero />
+      <div className="text-center mt-12">
+        <form className="flex flex-row items-center gap-2">
           <input
             type="text"
             placeholder="keywords"
@@ -21,9 +20,9 @@ const LandingPage = () => {
           <Button color="blue" type="submit">
             Search
           </Button>
-          <p className="mt-4">OR</p>
-          <Button color="dark">Sign In</Button>
         </form>
+        <p className="mt-4">OR</p>
+        <Button color="dark">Sign In</Button>
       </div>
     </div>
   )
