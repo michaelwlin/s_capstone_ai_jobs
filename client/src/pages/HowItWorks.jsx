@@ -1,5 +1,3 @@
-import React from "react";
-
 const HowItWorks = () => {
   return (
     <div className="font-sans p-4">
@@ -10,7 +8,7 @@ const HowItWorks = () => {
         This page will explain how our service works.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default HowItWorks;
+export default HowItWorks

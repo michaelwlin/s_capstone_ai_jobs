@@ -1,16 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
+    './src/**/*.{js,jsx,ts,tsx}',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['Open Sans', 'sans-serif'],
       },
+      minHeight: {
+        "screen": '80vh',
+      },
     },
   },
-  plugins: [
-    require('flowbite/plugin')
-  ],
+  plugins: [require('flowbite/plugin')],
 }
