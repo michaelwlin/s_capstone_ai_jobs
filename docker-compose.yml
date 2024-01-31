@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  web:
+    build: ./client
+    ports:
+      - 3000:3000
+
+  api:
+
+    build: ./server
+    ports:
+      - 4000:4000
+    environment:
+      DB_URL: mongodb://db/matchiq
+    volumes:
+      - ./server:/app
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - matchiq:/data/db
+
+volumes:
+  matchiq:
