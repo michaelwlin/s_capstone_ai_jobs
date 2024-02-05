@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, TextInput } from 'flowbite-react'
 import { Hero } from '../components'
 import { FaSearch, FaMapPin } from 'react-icons/fa'
@@ -7,6 +8,12 @@ const LandingPage = () => {
   const [signedIn, setSignedIn] = useState(false)
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
+
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      navigate('/search-results', { state: { keyword, location } });
+  };
 
   const uploadResume = () => {}
   const signIn = () => {
@@ -33,7 +40,7 @@ const LandingPage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Hero />
       <div className="text-center mt-12">
-        <form className="flex flex-row items-center gap-2">
+        <form className="flex flex-row items-center gap-2" onSubmit={handleSubmit}>
           <TextInput
             id="keywords"
             icon={FaSearch}
