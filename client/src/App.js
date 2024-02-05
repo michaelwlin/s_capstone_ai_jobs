@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
 import { NavigationBar, Footer } from './components'
-import { Results, FindJobs, HowItWorks, AboutUs, Homepage} from './pages'
+import { FindJobs, HowItWorks, AboutUs, Homepage } from './pages'
+import FetchData from './components/FetchData';
 
 const App = () => {
   useEffect(() => {
@@ -18,9 +20,9 @@ const App = () => {
           <Route path="/find-jobs" element={<FindJobs />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/search-results" element={<Results />} />
         </Routes>
-        
+        <FetchData/> {/* Used for demo purposes, can remove this later for actual implementation of data fetching */}
+
       </Router>
       <Footer />
     </div>
