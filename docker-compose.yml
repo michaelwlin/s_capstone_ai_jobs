@@ -12,16 +12,29 @@ services:
     ports:
       - 4000:4000
     environment:
-      DB_URL: mongodb://db/matchiq
+      DB_URL: mongodb://db:27017/matchiq
     volumes:
       - ./server:/app
+    depends_on:
+      - db
 
   db:
     image: mongo:4.0-xenial
+    container_name: mongodb
+    restart: always
     ports:
       - 27017:27017
     volumes:
       - matchiq:/data/db
+  
+  cron-job:
+    build: ./django_be
+    restart: always
+    env_file: .env
+    depends_on:
+      - db
+    volumes:
+      - ./django_be:/app
 
 volumes:
   matchiq:
