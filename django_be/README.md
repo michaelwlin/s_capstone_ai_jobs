@@ -1,9 +1,12 @@
 In your python environment run
+
 ```
+ $ pip install -r requirements.txt
  $ pip install django
 ```
 
 To start the local backend server run
+
 ```
 python3 manage.py runserver
 ```
