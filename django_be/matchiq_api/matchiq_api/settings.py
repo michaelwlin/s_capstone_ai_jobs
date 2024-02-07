@@ -79,8 +79,16 @@ WSGI_APPLICATION = 'matchiq_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #NM
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'MatchIQCluster',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'mongodb+srv://aujoy:OgdaeBAP1Uq5ryns@matchiqcluster.anhzjkd.mongodb.net/'
+        }
+        #NM
     }
 }
 
