@@ -5,12 +5,21 @@ WORKDIR /app
 # Copy .env file
 COPY .env .
 
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Install pip
+RUN pip install --upgrade pip
+
 # Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
-COPY . .
+COPY . /app
+
+# Add permissions for entrypoint
+RUN chmod +x ./entrypoint.sh
 
 # Install cron
 RUN apt-get update && apt-get install -y cron
@@ -22,4 +31,6 @@ RUN crontab /etc/cron.d/scheduler
 
 EXPOSE 8000
 
-CMD ["cron", "-f"]
+# Start the application
+ENTRYPOINT ["sh", "./entrypoint.sh"]
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8000 & cron -f"]

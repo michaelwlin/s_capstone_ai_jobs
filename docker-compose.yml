@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   web:
+    container_name: client
     build: ./client
     ports:
       - 3000:3000
@@ -26,8 +27,11 @@ services:
     volumes:
       - matchiq:/data/db
   
-  cron-job:
+  django:
+    container_name: django
     build: ./django_be
+    ports:
+      - 8000:8000
     restart: always
     env_file: .env
     depends_on:
