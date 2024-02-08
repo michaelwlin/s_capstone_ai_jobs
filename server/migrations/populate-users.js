@@ -3,14 +3,15 @@ module.exports = {
         await db
             .collection("users")
             .insertMany([
-                { userName: "test", premiumUser: true, password: "test" }
+                { userName: "test", premiumUser: true, password: "test" },
+                { userName: "test2", premiumUser: true, password: "test2" }
 
             ]);
     },
 
     async down(db, client) {
         await db.collection("users").deleteMany({
-            title: {
+            userName: {
                 $in: ["test"],
             },
         });

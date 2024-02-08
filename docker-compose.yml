@@ -1,7 +1,21 @@
 version: "3.8"
 
 services:
+  django:
+    container_name: django
+    build: ./django_api/django_api/
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./django_api/django_api/:/app/
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=8193828291903
+      - ALLOWED_HOSTS=localhost, 127.0.0.1
+
   web:
+    container_name: client
     build: ./client
     ports:
       - 3000:3000
