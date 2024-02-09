@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/sh
 
 #change directory to /app/matchiq_api directory
 cd /app/matchiq_api
