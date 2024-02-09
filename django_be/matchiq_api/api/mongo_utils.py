@@ -4,10 +4,10 @@ import os
 
 
 def save_to_mongodb(data):
-    load_dotenv()
-    path = os.environ.get("DB_URL", "mongodb://db:27017/matchiq")
+    # load_dotenv()
+    # path = os.environ.get("DB_URL", "mongodb://db:27017/matchiq")
 
-    client = MongoClient(path)
+    client = MongoClient("mongodb://db:27017/matchiq")
     db = client.get_database('matchiq')
     print(db)
     collection = db["jobs"]

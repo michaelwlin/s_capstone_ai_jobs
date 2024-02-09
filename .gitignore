@@ -3,3 +3,6 @@ server/node_modules/
 .env
 env/
 ./env/
+__pycache__
+.DS_Store
+db.sqlite3
