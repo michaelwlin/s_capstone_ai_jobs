@@ -2,9 +2,6 @@ FROM python:3.11.2
 
 WORKDIR /app
 
-# Copy .env file
-COPY .env .
-
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
