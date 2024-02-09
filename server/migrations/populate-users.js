@@ -10,7 +10,7 @@ module.exports = {
 
     async down(db, client) {
         await db.collection("users").deleteMany({
-            title: {
+            userName: {
                 $in: ["test"],
             },
         });

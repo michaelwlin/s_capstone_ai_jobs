@@ -2,26 +2,43 @@ version: "3.8"
 
 services:
   web:
+    container_name: client
     build: ./client
     ports:
       - 3000:3000
 
   api:
-
     build: ./server
     ports:
       - 4000:4000
     environment:
-      DB_URL: mongodb://db/matchiq
+      DB_URL: mongodb://db:27017/matchiq
     volumes:
       - ./server:/app
+    depends_on:
+      - db
 
   db:
     image: mongo:4.0-xenial
+    container_name: mongodb
+    restart: always
     ports:
       - 27017:27017
     volumes:
       - matchiq:/data/db
+  
+  django:
+    container_name: django
+    build: ./django_be
+    ports:
+      - 8000:8000
+    restart: always
+    environment:
+      DB_URL: mongodb://db:27017/matchiq
+    depends_on:
+      - db
+    volumes:
+      - ./django_be:/app
 
 volumes:
   matchiq:
