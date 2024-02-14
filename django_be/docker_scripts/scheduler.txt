@@ -1,1 +1,0 @@
-0 2 * * * cd /app && python3 ./matchiq_api/api/scrape_and_save.py
