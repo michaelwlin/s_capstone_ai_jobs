@@ -9,9 +9,24 @@ const LandingPage = () => {
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
 
+  const maliciousChars = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=',
+   '|', '\\', '{', '}', '[', ']', ';', ':', '\'', '"', '<', '.', '>'];
+
+  const checkForMaliciousChars = (input) => {
+      return maliciousChars.some(char => input.includes(char));
+  };
+
   const navigate = useNavigate();
   const handleSubmit = (e) => {
       e.preventDefault();
+      if (!keyword.trim() || !location.trim()) {
+        alert('Keyword and/or location cannot be empty.');
+        return;
+      }
+      if (checkForMaliciousChars(keyword) || checkForMaliciousChars(location)) {
+        alert('Keyword and/or location cannot contain special characters.');
+        return;
+      }
       navigate('/search-results', { state: { keyword, location } });
   };
 
