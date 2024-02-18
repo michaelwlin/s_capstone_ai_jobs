@@ -7,11 +7,11 @@ const User = mongoose.model('User', new mongoose.Schema({
   },
   premiumUser: {
     type: Boolean,
-    required: true
+    required: false
   },
   password: {
     type: String,
-    required: true
+    required: false
   }
 }));
 
