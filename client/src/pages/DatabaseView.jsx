@@ -1,42 +1,30 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const DatabaseView = () => {
     const [data, setData] = useState([]);
-    const [dataType, setDataType] = useState('users'); // Default to 'users'
-    const [formData, setFormData] = useState({}); // For form data
-    const [isEditing, setIsEditing] = useState(false); // To toggle add/edit mode
-    const [editId, setEditId] = useState(null); // To store the id of the entity being edited
+    const [dataType, setDataType] = useState('users');
+    const [formData, setFormData] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
+    const [editId, setEditId] = useState(null);
     const [feedbackMessage, setFeedbackMessage] = useState('');
-    const [feedbackMessageType, setFeedbackMessageType] = useState(''); // 'success' or 'error'
-
-    console.log('API URL:', process.env.REACT_APP_API_URL); // This should log the API URL
+    const [feedbackMessageType, setFeedbackMessageType] = useState('');
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/${dataType}/`);
+        const fetchUrl = `${process.env.REACT_APP_API_URL}/${dataType}/`;
+        axios.get(fetchUrl)
+            .then(response => {
                 setData(response.data);
                 setFeedbackMessage('');
                 setFeedbackMessageType('');
-            } catch (error) {
+            })
+            .catch(error => {
                 console.error('There was an error fetching the data:', error);
                 setFeedbackMessage('Failed to fetch data.');
                 setFeedbackMessageType('error');
-            }
-        };
-
-        fetchData();
+            });
     }, [dataType, isEditing]);
-
-    const fetchDataType = async () => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/${dataType}/`);
-            setData(response.data);
-        } catch (error) {
-            console.error('There was an error refreshing the data:', error);
-        }
-    };
 
     const handleDataTypeChange = (event) => {
         setDataType(event.target.value);
@@ -44,7 +32,6 @@ const DatabaseView = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log("Updating form data: ", name, value);
         setFormData(prevState => ({
             ...prevState,
             [name]: value,
@@ -53,43 +40,54 @@ const DatabaseView = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = `${process.env.REACT_APP_API_URL}/${dataType}/${editId ? editId + '/' : ''}`;
-        const method = editId ? 'PUT' : 'POST';
+        const url = `${process.env.REACT_APP_API_URL}/${dataType}/${editId ? `${editId}/` : ''}`;
+        const method = editId ? 'put' : 'post';
 
-        try {
-            await axios({ method, url, data: formData });
-            fetchDataType();
-            setIsEditing(false);
-            setEditId(null);
-            setFormData({});
-            setFeedbackMessage(`${isEditing ? 'Updated' : 'Added new'} ${dataType.slice(0, -1)} successfully.`);
-            setFeedbackMessageType('success');
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setFeedbackMessage(`Error ${isEditing ? 'updating' : 'adding'} ${dataType.slice(0, -1)}.`);
-            setFeedbackMessageType('error');
-        }
+        axios[method](url, formData)
+            .then(() => {
+                setFeedbackMessage(editId ? 'Data updated successfully.' : 'Data added successfully.');
+                setFeedbackMessageType('success');
+                fetchDataType();
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                setFeedbackMessage('Error submitting form.');
+                setFeedbackMessageType('error');
+            });
+
+        setIsEditing(false);
+        setEditId(null);
+        setFormData({});
     };
 
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`${process.env.REACT_APP_API_URL}/${dataType}/${id}/`);
-            fetchDataType();
-            setFeedbackMessage('Deleted successfully.');
-            setFeedbackMessageType('success');
-        } catch (error) {
-            console.error('Error deleting entity:', error);
-            setFeedbackMessage('Error deleting entity.');
-            setFeedbackMessageType('error');
-        }
+    const handleDelete = (id) => {
+        const deleteUrl = `${process.env.REACT_APP_API_URL}/${dataType}/${id}/`;
+        axios.delete(deleteUrl)
+            .then(() => {
+                setFeedbackMessage('Deleted successfully.');
+                setFeedbackMessageType('success');
+                fetchDataType();
+            })
+            .catch(error => {
+                console.error('Error deleting entity:', error);
+                setFeedbackMessage('Error deleting entity.');
+                setFeedbackMessageType('error');
+            });
     };
 
     const handleEdit = (entity) => {
         setIsEditing(true);
-        setEditId(entity.id);
-        setFormData({ ...entity });
+        setEditId(entity._id);
+        setFormData(entity);
         setFeedbackMessage('');
         setFeedbackMessageType('');
+    };
+
+    const fetchDataType = () => {
+        const fetchUrl = `${process.env.REACT_APP_API_URL}/${dataType}/`;
+        axios.get(fetchUrl)
+            .then(response => setData(response.data))
+            .catch(error => console.error('Error refreshing the data:', error));
     };
 
     return (
@@ -117,7 +115,8 @@ const DatabaseView = () => {
 
                 {/* Form for Add/Edit Operations */}
                 <div className="mb-4">
-                    <h2 className="text-lg font-semibold text-gray-800">{isEditing ? "Edit" : "Add New"} {dataType.slice(0, -1)}</h2>
+                <h2 className="text-lg font-semibold text-gray-800"> {isEditing ? `Editing user: "${formData.userName}" with ID "${editId}"` : `Add New ${dataType.slice(0, -1)}`}</h2>
+
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {dataType === 'users' && (
                             <input
@@ -127,7 +126,6 @@ const DatabaseView = () => {
                                 placeholder="Username"
                                 className="w-full p-2 text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            // Add other user-specific inputs styled similarly
                         )}
 
                         <button
