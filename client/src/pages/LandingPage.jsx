@@ -13,22 +13,35 @@ const LandingPage = () => {
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
 
-  const schema = yup.object().shape({
-    location: yup
-      .string()
-      .test(
-        'maliciousChars',
-        'Special characters are not allowed.',
-        (value) => !maliciousChars.some((char) => value.includes(char)),
-      ),
-    keyword: yup
-      .string()
-      .test(
-        'maliciousChars',
-        'Special characters are not allowed.',
-        (value) => !maliciousChars.some((char) => value.includes(char)),
-      ),
-  })
+  const schema = yup.object().shape(
+    {
+      location: yup
+        .string()
+        .when(['keyword'], {
+          is: (keyword) => !keyword,
+          then: () =>
+            yup.string().required('Please enter a keyword or location.'),
+        })
+        .test(
+          'maliciousChars',
+          'Special characters are not allowed.',
+          (value) => !maliciousChars.some((char) => value.includes(char)),
+        ),
+      keyword: yup
+        .string()
+        .when(['location'], {
+          is: (location) => !location,
+          then: () =>
+            yup.string().required('Please enter a keyword or location.'),
+        })
+        .test(
+          'maliciousChars',
+          'Special characters are not allowed.',
+          (value) => !maliciousChars.some((char) => value.includes(char)),
+        ),
+    },
+    ['keyword', 'location'],
+  )
 
   const {
     register,
