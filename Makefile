@@ -12,3 +12,6 @@ run_cronjob:
 
 clean:
 	docker container prune
+
+mongodb-reset:
+	docker-compose exec -it db bash -c "mongo matchiq --eval 'db.dropDatabase()'"

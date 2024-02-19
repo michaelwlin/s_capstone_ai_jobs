@@ -14,6 +14,7 @@ const Jobs = mongoose.model(
     url: {
       type: String,
       required: true,
+      unique: true
     },
     description: {
       type: String,
