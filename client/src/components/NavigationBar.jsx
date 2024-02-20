@@ -64,9 +64,6 @@ const NavigationBar = () => {
         <NavLink to="/about-us" as={NavbarLink}>
           About Us
         </NavLink>
-        <NavLink to="/database-view" as={NavbarLink}>
-          Admin
-        </NavLink>
       </Navbar.Collapse>
 
       <div className="flex md:order-2 user-profile">
