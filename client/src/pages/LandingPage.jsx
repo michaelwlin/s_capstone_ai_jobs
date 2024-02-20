@@ -20,7 +20,7 @@ const LandingPage = () => {
         const keyword = this.parent.keyword
         const location = this.parent.location
 
-        return !!keyword || !!location
+        return !!keyword.trim() || !!location.trim()
       })
       .test(
         'maliciousChars',
@@ -35,7 +35,7 @@ const LandingPage = () => {
         const keyword = this.parent.keyword
         const location = this.parent.location
 
-        return !!keyword || !!location
+        return !!keyword.trim() || !!location.trim()
       })
       .test(
         'maliciousChars',
