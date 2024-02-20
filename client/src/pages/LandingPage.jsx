@@ -16,12 +16,16 @@ const LandingPage = () => {
   const schema = yup.object().shape({
     location: yup
       .string()
-      .test('atLeastOne', 'At least one field is required.', function () {
-        const keyword = this.parent.keyword
-        const location = this.parent.location
+      .test(
+        'atLeastOne',
+        'Keyword and/or location cannot be empty.',
+        function () {
+          const keyword = this.parent.keyword
+          const location = this.parent.location
 
-        return !!keyword || !!location
-      })
+          return !!keyword || !!location
+        },
+      )
       .test(
         'maliciousChars',
         'Special characters are not allowed.',
@@ -31,12 +35,16 @@ const LandingPage = () => {
       ),
     keyword: yup
       .string()
-      .test('atLeastOne', 'At least one field is required.', function () {
-        const keyword = this.parent.keyword
-        const location = this.parent.location
+      .test(
+        'atLeastOne',
+        'Keyword and/or location cannot be empty.',
+        function () {
+          const keyword = this.parent.keyword
+          const location = this.parent.location
 
-        return !!keyword || !!location
-      })
+          return !!keyword || !!location
+        },
+      )
       .test(
         'maliciousChars',
         'Special characters are not allowed.',
