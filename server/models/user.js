@@ -5,8 +5,8 @@ const User = mongoose.model('User', new mongoose.Schema({
     type: String, 
     required: true
   },
-  premiumUser: {
-    type: Boolean,
+  role: {
+    type: String,
     required: true
   },
   password: {
