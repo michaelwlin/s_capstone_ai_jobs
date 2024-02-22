@@ -58,3 +58,9 @@ code {
       transform: scale(1.05);
     }
 }
+
+.field-valid::after {
+  content: '✔';
+  color: green;
+  margin-left: 5px;
+}

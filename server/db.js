@@ -1,7 +1,8 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const Jobs = require("./models/jobs");
 
-const dbUrl = process.env.DB_URL || "mongodb://localhost/matchiq";
+const dbUrl = process.env.DB_URI || "mongodb://localhost/matchiq";
 
 
 

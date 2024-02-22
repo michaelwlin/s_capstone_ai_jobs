@@ -6,7 +6,6 @@ import FetchApp from "./components/FetchApp";
 import FetchUsers from "./components/FetchUsers";
 import FetchJob from "./components/FetchJob";
 import FetchData from "./components/FetchData";
-import DatabaseView from "./pages/DatabaseView";
 
 const App = () => {
   useEffect(() => {
@@ -29,7 +28,6 @@ const App = () => {
           <Route path="/jobs" element={<FetchJob />} />
           <Route path="/users" element={<FetchUsers />} />
           <Route path="/app" element={<FetchApp />} />     
-          <Route path="/database-view" element={<DatabaseView />} /> 
         </Routes>
         
       </Router>
