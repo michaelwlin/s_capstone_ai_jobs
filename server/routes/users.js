@@ -14,10 +14,13 @@ router.get("/", async (req, res) => {
     res.send(users);
 });
 
-router.get("/loggedInData", authenticateToken, (req, res) => {
-    res.json(users.filter(user => user.userName === req.userName))
+router.get("/loggedInData", authenticateToken, async (req, res) => {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+    res.json(user);
 });
-
 router.get("/:id", validateID, async (req, res) => {
     const users = await User.findById(req.params.id);
     if (!user) return res.status(404).send();
@@ -46,34 +49,6 @@ router.post("/", async (req, res) => {
         }
     }
 
-
-});
-
-router.post('/login', async (req, res) => {
-    const user = await User.findOne({ "userName": req.body.userName });
-    if (user == null) {
-        return res.status(400).send('Cannot find user');
-    }
-    else {
-        try {
-            if (await bcryptjs.compare(req.body.password, user.password)) {
-                const greeting = "Welcome " + user.userName + "!"
-                console.log(greeting);
-                const userPayload = { userName: user.userName };
-                const accessToken = jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET);
-                console.log(accessToken);
-                res.json({ accessToken: accessToken, greeting: greeting });
-
-            } else {
-                res.status(401).send('Unauthorized');
-            }
-
-        }
-        catch (error) {
-            console.error(error);
-            res.status(500).send('An error occurred: ' + error.message);
-        }
-    }
 
 });
 

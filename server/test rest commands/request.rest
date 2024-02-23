@@ -2,22 +2,36 @@ POST http://localhost:4000/api/users
 Content-Type: application/json
 
 {
-    "userName": "Test 32",
+    "userName": "Test 35",
     "password": "password1"
 }
 
 ###
 
 GET http://localhost:4000/api/users/loggedInData
-Aut8horization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlc3QgMSIsImlhdCI6MTcwODA3MjEyOX0.FLgpoQjt84GwpQ2o0jDd_vWB4gbgpYTixP20GAeX7_c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDg2NzM2OTksImV4cCI6MTcwODY3NDU5OX0.4suElhGK0jvr1fpZcKzrI9V8vdGrD5Qz3tO1ErLDAWw
 
 ###
 
-POST http://localhost:4000/api/users/login
+GET http://localhost:5000/api/auth/loggedInData
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDg2NzUxNTQsImV4cCI6MTcwODY3NTE2OX0.VwW_0GW0uQfejiktcQUL6Mj8Cm7lAuAvbSZKpg0IQvk
+
+
+###
+
+POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "userName": "Test 1",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDg2NzUxMDYsImV4cCI6MTcwOTI3OTkwNn0.z0J3I2agDs6LLDt7Siw9_CJqjNQQtz7Vi84zIbXxTgk"
+
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "userName": "Test 35",
     "password": "password1"
 }
 

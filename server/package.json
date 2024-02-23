@@ -6,7 +6,8 @@
   "scripts": {
     "db:up": "migrate-mongo up",
     "start": "nodemon -L --ignore './tests' index.js",
-    "dev": "nodemon app.js",
+    "devStart": "nodemon app.js",
+    "devStartAuth": "nodemon auth_server.js",
     "database": "node index.js"
   },
   "repository": {
