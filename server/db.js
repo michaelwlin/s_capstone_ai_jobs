@@ -1,10 +1,25 @@
-require('dotenv').config();
 const mongoose = require("mongoose");
 const Jobs = require("./models/jobs");
+const vault = require("node-vault")({
+  apiVersion: 'v1',
+  endpoint: 'http://127.0.0.1:8200',
+  token: 'ABLMW'
+});
 
-const dbUrl = process.env.DB_URI || "mongodb://localhost/matchiq";
+async function initDB() {
+  try {
+    const data = await vault.read('secret/myapp');
+    const dbUrl = data.data.DB_URI || "mongodb://localhost/matchiq";
 
+    await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log("Connected to database.");
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1);
+  }
+}
 
+initDB();
 
 async function createUniqueIndex() {
   const indexExists = await Jobs.collection.indexExists('url');
