@@ -1,5 +1,9 @@
 import { useState } from 'react'
-import { EditableBoard, TextEditorBlock } from 'react-web-editor'
+import { EditableBoard } from 'react-web-editor'
+import { Sidebar } from 'flowbite-react'
+import { IoMdAddCircle } from 'react-icons/io'
+import { FaUpload, FaSpellCheck, FaHistory } from 'react-icons/fa'
+import { BiSolidCustomize } from 'react-icons/bi'
 import {
   Header,
   Summary,
@@ -11,9 +15,10 @@ import {
 
 const Resume = () => {
   const defaultLeft = 20
+  const parentWidth = 1150
   const parentStyle = {
-    parentWidth: 1240,
-    width: 1240 - defaultLeft,
+    parentWidth: parentWidth,
+    width: parentWidth - defaultLeft,
     height: 1754,
     unit: 'px',
   }
@@ -25,7 +30,30 @@ const Resume = () => {
   const educationTop = projectsTop + 170
 
   return (
-    <div className="resume container mx-auto max-h-max">
+    <div className="resume mx-5 container min-h-max flex flex-row gap-1">
+      <Sidebar style={{ minHeight: parentStyle.height }}>
+        <Sidebar.Items>
+          <Sidebar.ItemGroup>
+            <Sidebar.Item href="#" icon={IoMdAddCircle}>
+              Add Section
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={FaUpload}>
+              Upload Resume
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={FaSpellCheck}>
+              AI Proof Read
+            </Sidebar.Item>
+          </Sidebar.ItemGroup>
+          <Sidebar.ItemGroup>
+            <Sidebar.Item href="#" icon={FaHistory}>
+              History
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={BiSolidCustomize}>
+              Tailor for Job
+            </Sidebar.Item>
+          </Sidebar.ItemGroup>
+        </Sidebar.Items>
+      </Sidebar>
       <div className="resume-wrapper">
         <EditableBoard
           className="resume-board"
