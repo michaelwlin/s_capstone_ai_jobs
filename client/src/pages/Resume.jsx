@@ -11,6 +11,7 @@ import {
   Education,
   Skills,
   Projects,
+  UploadModal,
 } from '../components/Resume/index.js'
 
 const Resume = () => {
@@ -29,15 +30,20 @@ const Resume = () => {
   const projectsTop = experienceTop + 260
   const educationTop = projectsTop + 170
 
+  const [openModal, setOpenModal] = useState(false)
+
   return (
     <div className="resume mx-5 container min-h-max flex flex-row gap-1">
+      {openModal && (
+        <UploadModal openModal={openModal} setOpenModal={setOpenModal} />
+      )}
       <Sidebar style={{ minHeight: parentStyle.height }}>
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Sidebar.Item href="#" icon={IoMdAddCircle}>
               Add Section
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={FaUpload}>
+            <Sidebar.Item icon={FaUpload} onClick={() => setOpenModal(true)}>
               Upload Resume
             </Sidebar.Item>
             <Sidebar.Item href="#" icon={FaSpellCheck}>

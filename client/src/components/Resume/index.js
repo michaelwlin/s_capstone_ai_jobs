@@ -8,6 +8,7 @@ import Skills from './Skills'
 import Projects from './Projects'
 import ProjectItem from './ProjectItem'
 import GPTMenuOption from './GPTMenuOption'
+import UploadModal from './UploadModal'
 
 export {
   Experience,
@@ -20,4 +21,5 @@ export {
   Projects,
   ProjectItem,
   GPTMenuOption,
+  UploadModal,
 }

@@ -36,6 +36,12 @@ code {
   }
 }
 
+.uploadIcon { 
+  width: 30px;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
 .resume {
   width: 100%;
   height: 100%;
