@@ -3,7 +3,8 @@ import FindJobs from './FindJobs';
 import HowItWorks from './HowItWorks';
 import Homepage from './LandingPage'
 import Results from './Results';
-export { default as Register } from './Register';
-export { default as SignIn } from './SignIn';
+import Register from './Register';
+import SignIn from './SignIn';
+import Resume from './Resume'
 
-export { AboutUs, FindJobs, HowItWorks, Homepage, Results }
+export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Register, SignIn, Resume }

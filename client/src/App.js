@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavigationBar, Footer } from './components'
-import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn } from './pages'
-import FetchApp from "./components/FetchApp";
-import FetchUsers from "./components/FetchUsers";
-import FetchJob from "./components/FetchJob";
-import FetchData from "./components/FetchData";
+import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume } from './pages'
+import { FetchApp, FetchUsers, FetchJob } from './components'
 
 const App = () => {
   useEffect(() => {
@@ -27,9 +24,9 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/jobs" element={<FetchJob />} />
           <Route path="/users" element={<FetchUsers />} />
-          <Route path="/app" element={<FetchApp />} />     
+          <Route path="/app" element={<FetchApp />} />
+          <Route path="/resume" element={<Resume />} />
         </Routes>
-        
       </Router>
       <Footer />
     </div>
