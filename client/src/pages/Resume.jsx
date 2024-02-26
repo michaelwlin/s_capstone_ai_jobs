@@ -33,7 +33,7 @@ const Resume = () => {
   const [openModal, setOpenModal] = useState(false)
 
   return (
-    <div className="resume mx-5 container min-h-max flex flex-row gap-1">
+    <div className="resume mx-5 mb-20 container min-h-max flex flex-row gap-1">
       {openModal && (
         <UploadModal openModal={openModal} setOpenModal={setOpenModal} />
       )}
