@@ -6,7 +6,8 @@ RUN addgroup app && adduser -S -G app app
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN rm -rf node_modules && npm install --loglevel=info
+
 COPY . .
 
 EXPOSE 4000
