@@ -11,7 +11,7 @@ const GPTMenuOption = () => {
   console.log('GPTMenuOption rendered.')
 
   const onClick = () => {
-    console.log('Button clicked.') // Add more logs or debug info
+    //TODO: Add GPT integration
   }
 
   return (
