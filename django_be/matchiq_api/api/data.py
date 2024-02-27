@@ -97,8 +97,8 @@ class DataTools:
                 text += page.extract_text()
         elif extension == ".docx":
             # convert docx to text
-            file_like_object = io.BytesIO(content)
-            text = docx2txt.process(file_like_object)
+            parsable_file = io.BytesIO(content)
+            text = docx2txt.process(parsable_file)
         else:
             # allocate other cases
             pass
