@@ -19,6 +19,33 @@ router.get("/loggedInData", authenticateToken, async (req, res) => {
     res.json(user);
 });
 
+router.post("/logout", async (req, res) => {
+    const userToken = req.body.token;
+
+    if (!userToken) {
+        return res.status(400).send("Token not provided.");
+    }
+
+    try {
+        const result = await RefreshToken.deleteOne({ token: userToken });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).send("Token not found.");
+        }
+        res.send("Logged out successfully.");
+
+    } catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).send("An error occurred during logout.");
+    }
+
+}
+
+    // Check if a token was actually found and deleted
+
+
+);
+
 // router.get("/", (req, res) => {
 //     res.send("<h1>Api2 is running!!!</h1>");
 // });
@@ -31,15 +58,21 @@ router.get("/", async (req, res) => {
 
 router.post('/token', async (req, res) => {
     if (req.body.token == null) return res.sendStatus(401);
-    const refreshToken = await RefreshToken.findOne({ "token": req.body.token });
-    console.log("Received token:", req.body.token);
-    console.log("refreshToken is", refreshToken.token);
-    if (refreshToken == null) return res.sendStatus(403);
-    jwt.verify(refreshToken.token, process.env.REFRESH_TOKEN_SECRET, (err, userPayload) => {
-        if (err) return res.sendStatus(403)
-        const accessToken = generateAccessToken({ userId: userPayload.userId })
-        res.json({ accessToken: accessToken })
-    })
+    try {
+        const refreshToken = await RefreshToken.findOne({ "token": req.body.token });
+        console.log("Received token:", req.body.token);
+        console.log("refreshToken is", refreshToken.token);
+        if (refreshToken == null) return res.sendStatus(403);
+        jwt.verify(refreshToken.token, process.env.REFRESH_TOKEN_SECRET, (err, userPayload) => {
+            if (err) return res.sendStatus(403)
+            const accessToken = generateAccessToken({ userId: userPayload.userId })
+            res.json({ accessToken: accessToken })
+        })
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred: ' + error.message);
+    }
 
 
 })

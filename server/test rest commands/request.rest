@@ -9,12 +9,12 @@ Content-Type: application/json
 ###
 
 GET http://localhost:4000/api/users/loggedInData
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDg2NzM2OTksImV4cCI6MTcwODY3NDU5OX0.4suElhGK0jvr1fpZcKzrI9V8vdGrD5Qz3tO1ErLDAWw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDkwODYzMTksImV4cCI6MTcwOTA4NjMzNH0.uLNGqxPLHNAnIRtSTPtBPiCp_8XDdI4f0pHKRlnRDpc
 
 ###
 
 GET http://localhost:5000/api/auth/loggedInData
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDg2NzUxNTQsImV4cCI6MTcwODY3NTE2OX0.VwW_0GW0uQfejiktcQUL6Mj8Cm7lAuAvbSZKpg0IQvk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDkwODYyOTEsImV4cCI6MTcwOTA4NjMwNn0.krk9EkoNOjzT3WMusG5BC6uvQXDrpeSDxc7zGL6py34
 
 
 ###
@@ -23,7 +23,7 @@ POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDg2NzUxMDYsImV4cCI6MTcwOTI3OTkwNn0.z0J3I2agDs6LLDt7Siw9_CJqjNQQtz7Vi84zIbXxTgk"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDkwODYyOTEsImV4cCI6MTcwOTY5MTA5MX0.bEOHepx6Nk_sIAUfBA7wSTdwt3hDRf0oJMxL0oehVAg"
 
 }
 ###
