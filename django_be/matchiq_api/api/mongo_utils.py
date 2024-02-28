@@ -11,7 +11,7 @@ def save_to_mongodb(data):
     # client = MongoClient("mongodb://db:27017/matchiq")
     client = MongoClient(path)
 
-    collection = db["jobs"]
+    collection = client.matchiq.jobs
 
     try:
         collection.insert_many(data, ordered=False)
