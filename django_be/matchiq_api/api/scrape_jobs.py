@@ -18,8 +18,9 @@ def retry_if_rate_limit_error(exception):
     return isinstance(exception, requests.HTTPError) and exception.response.status_code == 429
 
 
-@retry(retry_on_exception=retry_if_rate_limit_error, wait_fixed=5000, stop_max_attempt_number=3)
+@retry(retry_on_exception=retry_if_rate_limit_error, wait_fixed=3000, stop_max_attempt_number=3)
 def make_request(url):
+    logger.info(f"Making request to {url}")
     res = requests.get(url)
     res.raise_for_status()
     return res
@@ -40,7 +41,7 @@ def scrape_utility(keywords, location, limit):
             url_params, job)
 
         try:
-            logger.info("Scraping jobs...")
+            logger.info(f"Scraping job for {url}")
             res = make_request(url)
         except requests.RequestException as e:
             logger.error(f"Error making request to {url}: {e}")
@@ -56,7 +57,7 @@ def scrape_utility(keywords, location, limit):
 
 def get_description(url):
     try:
-        logger.info("Scraping description...")
+        logger.info(f"Scraping description for {url}")
         res = make_request(url)
     except requests.RequestException as e:
         logger.error(f"Error making request to {url}: {e}")
