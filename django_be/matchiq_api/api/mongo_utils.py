@@ -10,7 +10,6 @@ def save_to_mongodb(data):
     print("saving to mongodb")
     # client = MongoClient("mongodb://db:27017/matchiq")
     client = MongoClient(path)
-    db = client.get_database('matchiq')
 
     collection = db["jobs"]
 
