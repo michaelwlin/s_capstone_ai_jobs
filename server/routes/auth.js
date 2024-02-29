@@ -7,7 +7,7 @@ const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const { generateAccessToken, generateRefreshToken } = require("../middleware/generateAccessToken");
 const RefreshToken = require('../models/refreshtokens');
-
+888
 const router = express.Router();
 
 
@@ -74,7 +74,6 @@ router.post('/token', async (req, res) => {
         res.status(500).send('An error occurred: ' + error.message);
     }
 
-
 })
 
 router.post('/login', async (req, res) => {
@@ -89,18 +88,29 @@ router.post('/login', async (req, res) => {
                 const accessToken = generateAccessToken(userPayload);
                 const refreshToken = generateRefreshToken(userPayload);
 
-                // const hashedRefreshToken = await bcryptjs.hash(refreshToken, 10);
-                console.log(accessToken, refreshToken);
-                const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
+               
+                const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
+                const accessExpires = new Date(Date.now() + 15 * 60 * 1000); // day - hour - minute - second - millisecond
+                
                 await new RefreshToken({
                     user: user._id,
                     token: refreshToken, // Consider hashing
-                    expires: expires
+                    expires: refreshExpires
                 }).save();
 
-                console.log("You win!")
+                res.cookie('accessToken', accessToken, {
+                    httpOnly: true,
+                    secure: true,
+                    expires: accessExpires
+                });
 
-                res.json({ accessToken: accessToken, refreshToken: refreshToken });
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    secure: true,
+                    expires: refreshExpires
+                });
+
+                res.status(200).send('Login Successful');
 
             } else {
                 res.status(401).send('Unauthorized');
