@@ -5,13 +5,13 @@ from pymongo.errors import BulkWriteError
 
 
 def save_to_mongodb(data):
-    # load_dotenv()
-    # path = os.environ.get("DB_URL", "mongodb://db:27017/matchiq")
+    load_dotenv()
+    path = os.environ.get("DB_URI", "mongodb://db:27017/matchiq")
     print("saving to mongodb")
-    client = MongoClient("mongodb://db:27017/matchiq")
-    db = client.get_database('matchiq')
+    # client = MongoClient("mongodb://db:27017/matchiq")
+    client = MongoClient(path)
 
-    collection = db["jobs"]
+    collection = client.matchiq.jobs
 
     try:
         collection.insert_many(data, ordered=False)
