@@ -12,6 +12,10 @@ const LandingPage = () => {
   const [signedIn, setSignedIn] = useState(false)
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
+  const [email, setEmail] = useState('');
+  const [resumeFile, setResumeFile] = useState(null);
+  const [showOverwriteWarning, setShowOverwriteWarning] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const schema = yup.object().shape({
     location: yup
@@ -77,7 +81,51 @@ const LandingPage = () => {
     clearErrors(type)
   }
 
-  const uploadResume = () => {}
+  const uploadResume = async () => {
+    if (!resumeFile) {
+      alert('Please select a file to upload.');
+      return;
+    }
+    if (!email) {
+      alert('Please enter an email address.');
+      return;
+    }
+  
+    // Example: Check if a resume already exists
+    // This requires an API endpoint on your server to check by email
+    const checkResponse = await fetch(`${apiUrl}/users/check-resume?email=${email}`);
+    const { exists } = await checkResponse.json();
+  
+    if (exists) {
+      setShowOverwriteWarning(true);
+    } else {
+      proceedWithUpload();
+    }
+  };
+  
+  const proceedWithUpload = async () => {
+    const formData = new FormData();
+    formData.append('resume', resumeFile);
+    formData.append('email', email);
+  
+    // Your API endpoint to upload the resume
+    await fetch(`${apiUrl}/users/upload-resume`, {
+      method: 'POST',
+      body: formData,
+    });
+  
+    alert('Resume uploaded successfully.');
+  };
+  
+  // Simple browser confirm dialog for the warning
+  if (showOverwriteWarning) {
+    if (window.confirm('A resume already exists for this email. Overwrite?')) {
+      proceedWithUpload();
+    } else {
+      setShowOverwriteWarning(false); // User chose to cancel
+    }
+  }
+
   const signIn = () => {
     setSignedIn(true)
   }
@@ -141,6 +189,21 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <TextInput
+            id="email"
+            type="email"
+            placeholder="User Email Address"
+            className="w-250"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,.txt"
+            onChange={(e) => setResumeFile(e.target.files[0])}
+          />
         </div>
       </div>
     </div>

@@ -1,16 +1,15 @@
 from pymongo import MongoClient
 from data import analyze_resume
+from dotenv import load_dotenv
 
-# Assuming `data` is the result from analyze_resume function
 data = analyze_resume(resume)
 
-# MongoDB connection setup (adjust the URI as needed)
-client = MongoClient('mongodb://localhost:27017/')
+load_dotenv()
+path = os.environ.get("DB_URL", "mongodb://db:27017/matchiq")
 db = client.your_database_name
 users_collection = db.users
 
-# User identification (adjust as needed)
-user_email = 'user@example.com'
+user_email = 'resumetest@example.com'
 
 # Update user profile
 update_result = users_collection.update_one(
