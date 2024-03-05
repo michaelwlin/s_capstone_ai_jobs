@@ -135,6 +135,7 @@ class DataTools:
                             "position": {"type": "string"},
                             "dates": {"type": "string"},
                             "location": {"type": "string"},
+                            "company_description": {"type": "string"},
                             "description": {"type": "array", "items": {"type": "string"}},
                         }}
                 },
