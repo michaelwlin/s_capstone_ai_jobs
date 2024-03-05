@@ -7,7 +7,23 @@ const ExperienceItem = ({
   defaultLeft,
   childSpacer,
   experienceTop,
+  experienceItem,
 }) => {
+  const [position, setPosition] = useState(
+    experienceItem?.position || 'Position',
+  )
+  const [company, setCompany] = useState(experienceItem?.name || 'Company Name')
+  const [date, setDate] = useState(experienceItem?.dates || 'Date')
+  const [description, setDescription] = useState(
+    experienceItem?.company_description || 'Company Description',
+  )
+  const [achievements, setAchievements] = useState(
+    experienceItem?.description || ['Job Achievements'],
+  )
+  const [location, setLocation] = useState(
+    experienceItem?.location || 'Location',
+  )
+
   return (
     <div>
       <TextEditorBlock
@@ -29,7 +45,7 @@ const ExperienceItem = ({
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Title'}
+        initialText={position}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
@@ -41,7 +57,7 @@ const ExperienceItem = ({
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Company Name'}
+        initialText={company}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
@@ -53,7 +69,7 @@ const ExperienceItem = ({
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Date, Location'}
+        initialText={`${date}, ${location}`}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
@@ -65,50 +81,27 @@ const ExperienceItem = ({
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Company Description'}
+        initialText={description}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
-      <TextEditorBlock
-        width={parentStyle.width}
-        top={experienceTop + 150}
-        height={30}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'• Job Achievements'}
-        initialFontColor={'black'}
-        initialFontSize={0.17}
-        initialFontName={'roboto'}
-        customMenuOptions={() => <GPTMenuOption />}
-      />
-      <TextEditorBlock
-        width={parentStyle.width}
-        top={experienceTop + 180}
-        height={30}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'• Job Achievements'}
-        initialFontColor={'black'}
-        initialFontSize={0.17}
-        initialFontName={'roboto'}
-        customMenuOptions={() => <GPTMenuOption />}
-      />
-      <TextEditorBlock
-        width={parentStyle.width}
-        top={experienceTop + 210}
-        height={30}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'• Job Achievements'}
-        initialFontColor={'black'}
-        initialFontSize={0.17}
-        initialFontName={'roboto'}
-        customMenuOptions={() => <GPTMenuOption />}
-      />
+      {achievements.map((achievement, index) => (
+        <TextEditorBlock
+          key={index}
+          width={parentStyle.width}
+          top={experienceTop + 150 + index * 30}
+          height={30}
+          left={defaultLeft}
+          parentStyle={parentStyle}
+          unit={parentStyle.unit}
+          initialText={`• ${achievement}`}
+          initialFontColor={'black'}
+          initialFontSize={0.17}
+          initialFontName={'roboto'}
+          customMenuOptions={() => <GPTMenuOption />}
+        />
+      ))}
     </div>
   )
 }

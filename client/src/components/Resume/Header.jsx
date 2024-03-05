@@ -16,25 +16,21 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
     return firstChild + (width + childSpacer) * index
   }
 
-  const [header, setHeader] = useState(resumeHeader)
-  const [name, setName] = useState(header?.name || 'Name')
-  const [role, setRole] = useState(header?.title || 'Role')
-  const [phone, setPhone] = useState(header?.phone_number || '• Phone')
-  const [email, setEmail] = useState(header?.email || '• Email')
+  const [name, setName] = useState(resumeHeader?.name || 'Name')
+  const [role, setRole] = useState(resumeHeader?.title || 'Role')
+  const [phone, setPhone] = useState(resumeHeader?.phone_number || '• Phone')
+  const [email, setEmail] = useState(resumeHeader?.email || '• Email')
   const [linkedin, setLinkedin] = useState(
-    header?.linkedin_url || '• LinkedIn/Portfolio',
+    resumeHeader?.linkedin_url || '• LinkedIn/Portfolio',
   )
 
   useEffect(() => {
-    setHeader(resumeHeader || {})
     setName(resumeHeader?.name || 'Name')
     setRole(resumeHeader?.title || 'Role')
     setPhone(resumeHeader?.phone_number || '• Phone')
     setEmail(resumeHeader?.email || '• Email')
     setLinkedin(resumeHeader?.linkedin_url || '• LinkedIn/Portfolio')
   }, [resumeHeader])
-
-  console.log(header, name)
 
   return (
     <div className="header text-center">
@@ -46,6 +42,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         parentStyle={parentStyle}
         unit={parentStyle.unit}
         initialText={name}
+        onChange={(e) => setName(e.target.initialText)}
         initialFontColor={'black'}
         initialFontSize={0.3}
         initialFontName={'roboto'}
@@ -58,6 +55,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         parentStyle={parentStyle}
         unit={parentStyle.unit}
         initialText={role}
+        onChange={(e) => setRole(e.target.initialText)}
         initialFontColor={'black'}
         initialFontSize={defaultFontSize}
         initialFontName={'roboto'}
@@ -71,6 +69,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           parentStyle={parentStyle}
           unit={parentStyle.unit}
           initialText={phone}
+          onChange={(e) => setPhone(e.target.initialText)}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
@@ -83,6 +82,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           parentStyle={parentStyle}
           unit={parentStyle.unit}
           initialText={email}
+          onChange={(e) => setEmail(e.target.initialText)}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
@@ -95,6 +95,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           parentStyle={parentStyle}
           unit={parentStyle.unit}
           initialText={linkedin}
+          onChange={(e) => setLinkedin(e.target.initialText)}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}

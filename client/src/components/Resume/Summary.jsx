@@ -1,6 +1,15 @@
 import { TextEditorBlock } from 'react-web-editor'
+import { useState } from 'react'
 
-const Summary = ({ parentStyle, defaultLeft, childSpacer, summaryTop }) => {
+const Summary = ({
+  parentStyle,
+  defaultLeft,
+  childSpacer,
+  summaryTop,
+  resumeSummary,
+}) => {
+  const [summary, setSummary] = useState(resumeSummary)
+
   return (
     <div>
       <TextEditorBlock
