@@ -1,6 +1,6 @@
 import { TextEditorBlock } from 'react-web-editor'
 
-const Summary = (parentStyle, defaultLeft, childSpacer, summaryTop) => {
+const Summary = ({ parentStyle, defaultLeft, childSpacer, summaryTop }) => {
   return (
     <div>
       <TextEditorBlock

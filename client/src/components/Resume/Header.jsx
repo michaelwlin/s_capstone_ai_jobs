@@ -1,6 +1,7 @@
-import { TextEditorBlock, useDraggable } from 'react-web-editor'
+import { TextEditorBlock } from 'react-web-editor'
+import { useState, useEffect } from 'react'
 
-const Header = (parentStyle, defaultLeft, childSpacer) => {
+const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
   const nameTop = 30
   const nameHeight = 40
   const defaultFontSize = 0.17
@@ -15,6 +16,19 @@ const Header = (parentStyle, defaultLeft, childSpacer) => {
     return firstChild + (width + childSpacer) * index
   }
 
+  const [header, setHeader] = useState(resumeHeader || {})
+  const [name, setName] = useState(header.name || 'Name')
+
+  useEffect(() => {
+    setHeader(resumeHeader || {})
+  }, [resumeHeader])
+
+  useEffect(() => {
+    setName(header.name || 'Name')
+  }, [header])
+
+  console.log(header, name)
+
   return (
     <div className="header text-center">
       <TextEditorBlock
@@ -24,7 +38,7 @@ const Header = (parentStyle, defaultLeft, childSpacer) => {
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Name'}
+        initialText={name}
         initialFontColor={'black'}
         initialFontSize={0.3}
         initialFontName={'roboto'}

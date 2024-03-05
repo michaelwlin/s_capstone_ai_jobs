@@ -1,9 +1,14 @@
 import { EducationItem } from './index'
 
-const Education = (parentStyle, defaultLeft, childSpacer, educationTop) => {
+const Education = ({ parentStyle, defaultLeft, childSpacer, educationTop }) => {
   return (
     <div>
-      {EducationItem(parentStyle, defaultLeft, childSpacer, educationTop)}
+      <EducationItem
+        parentStyle={parentStyle}
+        defaultLeft={defaultLeft}
+        childSpacer={childSpacer}
+        educationTop={educationTop}
+      />
     </div>
   )
 }

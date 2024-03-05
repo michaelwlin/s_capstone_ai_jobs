@@ -1,6 +1,11 @@
 import { TextEditorBlock } from 'react-web-editor'
 
-const EducationItem = (parentStyle, defaultLeft, childSpacer, educationTop) => {
+const EducationItem = ({
+  parentStyle,
+  defaultLeft,
+  childSpacer,
+  educationTop,
+}) => {
   return (
     <div>
       <TextEditorBlock

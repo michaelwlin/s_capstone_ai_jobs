@@ -1,5 +1,10 @@
 import { TextEditorBlock } from 'react-web-editor'
-const ProjectItem = (parentStyle, defaultLeft, childSpacer, projectsTop) => {
+const ProjectItem = ({
+  parentStyle,
+  defaultLeft,
+  childSpacer,
+  projectsTop,
+}) => {
   return (
     <div>
       <TextEditorBlock

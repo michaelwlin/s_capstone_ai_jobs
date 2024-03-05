@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { TextEditorBlock } from 'react-web-editor'
 import { GPTMenuOption } from './index'
 
-const ExperienceItem = (
+const ExperienceItem = ({
   parentStyle,
   defaultLeft,
   childSpacer,
   experienceTop,
-) => {
+}) => {
   return (
     <div>
       <TextEditorBlock

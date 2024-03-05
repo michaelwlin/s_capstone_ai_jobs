@@ -1,9 +1,19 @@
 import { ExperienceItem } from './index'
 
-const Experience = (parentStyle, defaultLeft, childSpacer, experienceTop) => {
+const Experience = ({
+  parentStyle,
+  defaultLeft,
+  childSpacer,
+  experienceTop,
+}) => {
   return (
     <div>
-      {ExperienceItem(parentStyle, defaultLeft, childSpacer, experienceTop)}
+      <ExperienceItem
+        parentStyle={parentStyle}
+        defaultLeft={defaultLeft}
+        childSpacer={childSpacer}
+        experienceTop={experienceTop}
+      />
     </div>
   )
 }
