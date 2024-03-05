@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "MatchIQ_transparent.png",
+      "src": "icons/MatchIQ_transparent.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "MatchIQ_transparent.png",
+      "src": "icons/MatchIQ_transparent.png",
       "type": "image/png",
       "sizes": "512x512"
     }

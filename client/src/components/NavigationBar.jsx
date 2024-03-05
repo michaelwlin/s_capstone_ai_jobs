@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Dropdown, Navbar, NavbarLink, Avatar } from 'flowbite-react'
+import { Dropdown, Navbar, Avatar } from 'flowbite-react'
 import { FaUser } from 'react-icons/fa'
 
 const NavigationBar = () => {
   const [signedIn, setSignedIn] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const signIn = () => {}
   const register = () => {}
@@ -28,10 +28,16 @@ const NavigationBar = () => {
     } else {
       return (
         <div>
-          <NavLink to="/signin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Sign In
+          <NavLink
+            to="/signin"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            Sign In
           </NavLink>
-          <NavLink to="/register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <NavLink
+            to="/register"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
             Register
           </NavLink>
         </div>
@@ -41,29 +47,27 @@ const NavigationBar = () => {
 
   return (
     <Navbar fluid rounded className="navbar p-2.5">
-      <Navbar.Brand>
-        <NavLink to="/" as={NavbarLink} className="nav-logo">
-          <img
-            src="/icons/MatchIQ_transparent.png"
-            className="mr-3 h-6 sm:h-9"
-            alt="MatchIQ"
-          />
-        </NavLink>
+      <Navbar.Brand to="/" className="nav-logo" as={NavLink}>
+        <img
+          src="/icons/MatchIQ_transparent.png"
+          className="mr-3 h-6 sm:h-9"
+          alt="MatchIQ"
+        />
       </Navbar.Brand>
 
       <Navbar.Collapse className="nav-menu">
-        <NavLink to="/" as={NavbarLink}>
+        <Navbar.Link to="/" as={NavLink}>
           Home
-        </NavLink>
-        <NavLink to="/find-jobs" as={NavbarLink}>
+        </Navbar.Link>
+        <Navbar.Link to="/find-jobs" as={NavLink}>
           Find Jobs
-        </NavLink>
-        <NavLink to="/how-it-works" as={NavbarLink}>
+        </Navbar.Link>
+        <Navbar.Link to="/how-it-works" as={NavLink}>
           How it Works
-        </NavLink>
-        <NavLink to="/about-us" as={NavbarLink}>
+        </Navbar.Link>
+        <Navbar.Link to="/about-us" as={NavLink}>
           About Us
-        </NavLink>
+        </Navbar.Link>
       </Navbar.Collapse>
 
       <div className="flex md:order-2 user-profile">
