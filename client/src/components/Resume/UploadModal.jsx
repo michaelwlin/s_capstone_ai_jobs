@@ -61,6 +61,30 @@ const UploadModal = ({ openModal, setOpenModal }) => {
     )
   }
 
+  const fileUploader = () => {
+    if (!inputFile) {
+      return (
+        <>
+          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+            <span className="font-semibold">Click to upload</span> or drag and
+            drop
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            .docx or PDF
+          </p>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+            {inputFile.name}
+          </p>
+        </>
+      )
+    }
+  }
+
   return (
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
       <Modal.Header>Upload Resume</Modal.Header>
@@ -74,13 +98,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
             >
               <div className="flex flex-col items-center justify-center pb-6 pt-5">
                 <FaUpload className="uploadIcon" />
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Click to upload</span> or drag
-                  and drop
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  .docx or PDF
-                </p>
+                {fileUploader()}
               </div>
               <FileInput
                 id="dropzone-file"

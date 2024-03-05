@@ -26,3 +26,28 @@ def save_to_mongodb(data):
                 print(f"Error inserting job: {error}")
 
     client.close()
+
+
+def save_resume_to_mongodb(data):
+    load_dotenv()
+    path = os.environ.get("DB_URI", "mongodb://db:27017/matchiq")
+    print("saving to mongodb")
+    client = MongoClient(path)
+
+    collection = client.matchiq.users
+    user_filter = {"userName": "testUser"}
+    existing_user = collection.find_one(user_filter)
+
+    if existing_user:
+        new_resume = existing_user.get("resume", [] + [data])
+        collection.update_one(user_filter, {"$set": {"resume": new_resume}})
+        print("Resume inserted into MongoDB.")
+    else:
+        user = {"userName": "testUser2", "resume": [
+            data], "email": "test@gmail.com"}
+        result = collection.insert_one(user)
+
+        print(
+            f"New user and resume inserted into MongoDB. {result.inserted_id}")
+
+    client.close()
