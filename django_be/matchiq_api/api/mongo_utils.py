@@ -35,7 +35,7 @@ def save_resume_to_mongodb(data):
     client = MongoClient(path)
 
     collection = client.matchiq.users
-    user_filter = {"userName": "testUser"}
+    user_filter = {"userName": "testUser"}  # TODO: Update to logged in user
     existing_user = collection.find_one(user_filter)
 
     if existing_user:
