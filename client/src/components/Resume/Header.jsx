@@ -16,16 +16,23 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
     return firstChild + (width + childSpacer) * index
   }
 
-  const [header, setHeader] = useState(resumeHeader || {})
-  const [name, setName] = useState(header.name || 'Name')
+  const [header, setHeader] = useState(resumeHeader)
+  const [name, setName] = useState(header?.name || 'Name')
+  const [role, setRole] = useState(header?.title || 'Role')
+  const [phone, setPhone] = useState(header?.phone_number || '• Phone')
+  const [email, setEmail] = useState(header?.email || '• Email')
+  const [linkedin, setLinkedin] = useState(
+    header?.linkedin_url || '• LinkedIn/Portfolio',
+  )
 
   useEffect(() => {
     setHeader(resumeHeader || {})
+    setName(resumeHeader?.name || 'Name')
+    setRole(resumeHeader?.title || 'Role')
+    setPhone(resumeHeader?.phone_number || '• Phone')
+    setEmail(resumeHeader?.email || '• Email')
+    setLinkedin(resumeHeader?.linkedin_url || '• LinkedIn/Portfolio')
   }, [resumeHeader])
-
-  useEffect(() => {
-    setName(header.name || 'Name')
-  }, [header])
 
   console.log(header, name)
 
@@ -50,7 +57,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Role'}
+        initialText={role}
         initialFontColor={'black'}
         initialFontSize={defaultFontSize}
         initialFontName={'roboto'}
@@ -63,7 +70,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           left={defaultLeft}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={'• Phone'}
+          initialText={phone}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
@@ -75,7 +82,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           left={relativeLeft(defaultLeft, relativeWidth(3))}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={'• Email'}
+          initialText={email}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
@@ -87,7 +94,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           left={relativeLeft(defaultLeft, relativeWidth(3), 2)}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={'• LinkedIn/Portfolio'}
+          initialText={linkedin}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
