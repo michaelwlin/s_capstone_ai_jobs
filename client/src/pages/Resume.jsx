@@ -48,6 +48,8 @@ const Resume = () => {
     }
   }
 
+  console.log(resume)
+
   useEffect(() => {
     getUserResume()
   }, [])
@@ -99,30 +101,35 @@ const Resume = () => {
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
             summaryTop={summaryTop}
+            resumeSummary={resume.summary}
           />
           <Skills
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
             skillsTop={skillsTop}
+            resumeSkills={resume.skills}
           />
           <Experience
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
             experienceTop={experienceTop}
+            resumeExperience={resume.experience}
           />
           <Projects
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
             projectsTop={projectsTop}
+            resumeProjects={resume.selected_projects}
           />
           <Education
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
             educationTop={educationTop}
+            resumeEducation={resume.education}
           />
         </EditableBoard>
       </div>

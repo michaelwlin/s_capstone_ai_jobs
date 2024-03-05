@@ -32,6 +32,7 @@ const Skills = ({
             parentStyle={parentStyle}
             unit={parentStyle.unit}
             initialText={languages}
+            onChange={(e) => setLanguages(e.target.initialText)}
             initialFontColor={'black'}
             initialFontSize={0.17}
             initialFontName={'roboto'}
@@ -44,6 +45,7 @@ const Skills = ({
             parentStyle={parentStyle}
             unit={parentStyle.unit}
             initialText={databases}
+            onChange={(e) => setDatabases(e.target.initialText)}
             initialFontColor={'black'}
             initialFontSize={0.17}
             initialFontName={'roboto'}
@@ -56,6 +58,7 @@ const Skills = ({
             parentStyle={parentStyle}
             unit={parentStyle.unit}
             initialText={other}
+            onChange={(e) => setOther(e.target.initialText)}
             initialFontColor={'black'}
             initialFontSize={0.17}
             initialFontName={'roboto'}
