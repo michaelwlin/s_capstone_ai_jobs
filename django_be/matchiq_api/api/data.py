@@ -4,6 +4,7 @@ import os
 from PyPDF2 import PdfReader
 import docx2txt
 import time
+import io
 
 # Collection of text, predetermined stopwords (corpus)
 from nltk.corpus import stopwords
@@ -59,7 +60,6 @@ class DataTools:
 
         return summary
 
-
     def analyze_job_desc(self, job_desc_summary):
         system_prompt = "You are a job headhunter looking for specific individuals to fit the job position"
         user_prompt = "Identify the skills (only named skills and not general) in a list and other important info needed for this job:\n {}".format(
@@ -83,25 +83,98 @@ class DataTools:
         res_json = json.loads(gpt_res)
         return res_json
 
+    def get_resume_text(self, file_object):
+        content = file_object.read()
+        extension = os.path.splitext(file_object.name)[-1]
 
-    def get_resume_text(self, file_name):
-        path_split = os.path.splitext(file_name)
-        extension = path_split[-1]
         text = ""
+
         if extension == ".pdf":
             # convert pdf to text
-            reader = PdfReader(file_name)
+            reader = PdfReader(io.BytesIO(content))
             for i in range((len(reader.pages))):
                 page = reader.pages[i]
                 text += page.extract_text()
         elif extension == ".docx":
-            #convert docx to text
-            text += docx2txt.process(file_name)
+            # convert docx to text
+            parsable_file = io.BytesIO(content)
+            text = docx2txt.process(parsable_file)
         else:
             # allocate other cases
             pass
+
         return text
 
+    def parse_resume(self, resume_text):
+        system_prompt = "You are a resume analyzer trying to categorize the information on a resume."
+        user_prompt = f"Categorize the information in this resume:\n {resume_text}"
+        schema = {
+            "type": "object",
+            "properties": {
+                "header": {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"},
+                        "title": {"type": "string"},
+                        "email": {"type": "string", "format": "email"},
+                        "phone_number": {"type": "string"},
+                        "linkedin_url": {"type": "string", "format": "uri"},
+                    },
+                },
+                "summary": {"type": "array", "items": {"type": "string"}},
+                "skills": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                },
+                "experience": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "position": {"type": "string"},
+                            "dates": {"type": "string"},
+                            "location": {"type": "string"},
+                            "description": {"type": "array", "items": {"type": "string"}},
+                        }}
+                },
+                "selected_projects": {
+                    "type": "array",
+                    "items": {"type": "object", "properties": {
+                        "name": {"type": "string"},
+                        "dates": {"type": "string"},
+                        "description": {"type": "array", "items": {"type": "string"}},
+                    }}
+                },
+                "education": {
+                    "type": "object",
+                    "properties": {
+                        "degree": {"type": "string"},
+                        "school_university": {"type": "string"},
+                        "dates": {"type": "string"},
+                        "location": {"type": "string"},
+                    },
+                },
+                "other_information": {
+                    "type": "array",
+                    "description": "Other things listed in the resume",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "header": {"type": "string"},
+                            "description": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                            },
+                        },
+                    },
+                },
+            },
+        }
+        gpt_res = self.gpt(system_prompt, user_prompt, schema)
+        print("GPT Response:", gpt_res)
+        res_json = json.loads(gpt_res)
+        return res_json
 
     def analyze_resume(self, resume):
         system_prompt = "You are a job headhunter trying to summarize a resume."
@@ -130,7 +203,6 @@ class DataTools:
         gpt_res = self.gpt(system_prompt, user_prompt, schema)
         res_json = json.loads(gpt_res)
         return res_json
-
 
     def get_score(self, resume_obj, job_obj):
         system_prompt = "You are a job headhunter trying match people to specific jobs."
@@ -182,10 +254,10 @@ class DataTools:
         print("Getting matching score...")
         matching_score = self.get_score(obj_resume, obj_job_desc)
 
-        return(matching_score)
-
+        return (matching_score)
 
     # GPT Client, takes in system, user prompt and schema32                                                                     5t
+
     def gpt(self, system_prompt, user_prompt, schema):
         client = OpenAI()
         completion = client.chat.completions.create(
@@ -204,7 +276,4 @@ class DataTools:
             function_call={"name": "test"},
         )
 
-        return(completion.choices[0].message.function_call.arguments)
-
-
-
+        return (completion.choices[0].message.function_call.arguments)

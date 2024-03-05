@@ -1,5 +1,9 @@
 from django.http import JsonResponse
 from . import scrape_jobs
+from .data import DataTools as dt
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -13,6 +17,29 @@ def index(request):
 def db(request):
     # Test
     pass
+
+
+def upload_resume(request):
+    if request.method == 'POST':
+        try:
+            resume = request.FILES['resume']
+        except KeyError:
+            return JsonResponse({'error': 'No resume file provided'}, status=400)
+
+        try:
+            data = dt()
+            resume_text = data.get_resume_text(resume)
+            parsed_resume = data.parse_resume(resume_text)
+
+            response = JsonResponse(parsed_resume)
+
+            return response
+
+        except Exception as e:
+            logger.error(f"Error parsing resume: {str(e)}")
+            return JsonResponse({'error': f'Error parsing resume: {str(e)}'}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
 def scrape(request):
