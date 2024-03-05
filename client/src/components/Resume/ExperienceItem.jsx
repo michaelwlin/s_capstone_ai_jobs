@@ -18,7 +18,11 @@ const ExperienceItem = ({
     experienceItem?.company_description || 'Company Description',
   )
   const [achievements, setAchievements] = useState(
-    experienceItem?.description || ['Job Achievements'],
+    experienceItem?.description || [
+      'Job Achievements',
+      'Job Achievements',
+      'Job Achievements',
+    ],
   )
   const [location, setLocation] = useState(
     experienceItem?.location || 'Location',
@@ -90,7 +94,7 @@ const ExperienceItem = ({
         <TextEditorBlock
           key={index}
           width={parentStyle.width}
-          top={experienceTop + 150 + index * 30}
+          top={experienceTop + 150 + 30 * index}
           height={30}
           left={defaultLeft}
           parentStyle={parentStyle}

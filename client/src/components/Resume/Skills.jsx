@@ -1,5 +1,5 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Skills = ({
   parentStyle,
@@ -7,8 +7,10 @@ const Skills = ({
   childSpacer,
   skillsTop,
   resumeSkills,
+  skillsHeight,
+  setSkillsHeight,
 }) => {
-  const [skills, setSkills] = useState(resumeSkills)
+  const [skills, setSkills] = useState(resumeSkills || [])
   const [languages, setLanguages] = useState(
     'Languages, Frameworks & Testing: ',
   )
@@ -16,56 +18,63 @@ const Skills = ({
   const [other, setOther] = useState('Other: ')
 
   const formattedSkills = () => {
-    if (!resumeSkills) return ''
-    return resumeSkills.toString().split(',').join(' • ')
+    if (!skills) return ''
+    return skills.toString().split(',').join(' • ')
   }
 
+  useEffect(() => {
+    const height = skills.length === 0 ? 80 : skillsHeight
+    setSkillsHeight(height)
+  }, [skills, skillsHeight, setSkillsHeight])
+
+  useEffect(() => {
+    setSkills(resumeSkills || [])
+  }, [resumeSkills])
+
   const defaultSkills = () => {
-    if (!resumeSkills) {
-      return (
-        <>
-          <TextEditorBlock
-            width={parentStyle.width}
-            top={skillsTop + 30}
-            height={30}
-            left={defaultLeft}
-            parentStyle={parentStyle}
-            unit={parentStyle.unit}
-            initialText={languages}
-            onChange={(e) => setLanguages(e.target.initialText)}
-            initialFontColor={'black'}
-            initialFontSize={0.17}
-            initialFontName={'roboto'}
-          />
-          <TextEditorBlock
-            width={parentStyle.width}
-            top={skillsTop + 60}
-            height={30}
-            left={defaultLeft}
-            parentStyle={parentStyle}
-            unit={parentStyle.unit}
-            initialText={databases}
-            onChange={(e) => setDatabases(e.target.initialText)}
-            initialFontColor={'black'}
-            initialFontSize={0.17}
-            initialFontName={'roboto'}
-          />
-          <TextEditorBlock
-            width={parentStyle.width}
-            top={skillsTop + 90}
-            height={30}
-            left={defaultLeft}
-            parentStyle={parentStyle}
-            unit={parentStyle.unit}
-            initialText={other}
-            onChange={(e) => setOther(e.target.initialText)}
-            initialFontColor={'black'}
-            initialFontSize={0.17}
-            initialFontName={'roboto'}
-          />
-        </>
-      )
-    }
+    return (
+      <>
+        <TextEditorBlock
+          width={parentStyle.width}
+          top={skillsTop + 30}
+          height={30}
+          left={defaultLeft}
+          parentStyle={parentStyle}
+          unit={parentStyle.unit}
+          initialText={languages}
+          onChange={(e) => setLanguages(e.target.initialText)}
+          initialFontColor={'black'}
+          initialFontSize={0.17}
+          initialFontName={'roboto'}
+        />
+        <TextEditorBlock
+          width={parentStyle.width}
+          top={skillsTop + 60}
+          height={30}
+          left={defaultLeft}
+          parentStyle={parentStyle}
+          unit={parentStyle.unit}
+          initialText={databases}
+          onChange={(e) => setDatabases(e.target.initialText)}
+          initialFontColor={'black'}
+          initialFontSize={0.17}
+          initialFontName={'roboto'}
+        />
+        <TextEditorBlock
+          width={parentStyle.width}
+          top={skillsTop + 90}
+          height={30}
+          left={defaultLeft}
+          parentStyle={parentStyle}
+          unit={parentStyle.unit}
+          initialText={other}
+          onChange={(e) => setOther(e.target.initialText)}
+          initialFontColor={'black'}
+          initialFontSize={0.17}
+          initialFontName={'roboto'}
+        />
+      </>
+    )
   }
 
   return (
@@ -83,7 +92,7 @@ const Skills = ({
         initialFontName={'roboto'}
       />
 
-      {resumeSkills ? (
+      {skills.length > 0 ? (
         <TextEditorBlock
           width={parentStyle.width}
           top={skillsTop + 30}

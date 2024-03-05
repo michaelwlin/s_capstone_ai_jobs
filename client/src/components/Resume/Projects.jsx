@@ -1,5 +1,5 @@
 import { ProjectItem } from './index'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Projects = ({
   parentStyle,
@@ -7,8 +7,26 @@ const Projects = ({
   childSpacer,
   projectsTop,
   resumeProjects,
+  projectsHeight,
+  setProjectsHeight,
 }) => {
   const [projects, setProjects] = useState(resumeProjects || [])
+
+  useEffect(() => {
+    const height =
+      projects && projects.length ? projects.length * 170 : projectsHeight
+
+    setProjectsHeight((prevHeight) => {
+      if (height !== prevHeight) {
+        return height
+      }
+      return prevHeight
+    })
+  }, [projects, projectsHeight, setProjectsHeight])
+
+  useEffect(() => {
+    setProjects(resumeProjects || [])
+  }, [resumeProjects])
 
   return (
     <div>

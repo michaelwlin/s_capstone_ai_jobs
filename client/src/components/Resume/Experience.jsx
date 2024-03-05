@@ -1,5 +1,5 @@
 import { ExperienceItem } from './index'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Experience = ({
   parentStyle,
@@ -7,13 +7,22 @@ const Experience = ({
   childSpacer,
   experienceTop,
   resumeExperience,
+  experienceHeight,
+  setExperienceHeight,
 }) => {
-  const [experience, setExperience] = useState(resumeExperience || [])
+  useEffect(() => {
+    const calculatedHeight =
+      resumeExperience && resumeExperience.length
+        ? resumeExperience.length * 300
+        : experienceHeight
+
+    setExperienceHeight(calculatedHeight)
+  }, [resumeExperience, experienceHeight, setExperienceHeight])
 
   return (
     <div>
-      {experience.length > 0 ? (
-        experience.map((exp, index) => (
+      {resumeExperience && resumeExperience.length > 0 ? (
+        resumeExperience.map((exp, index) => (
           <ExperienceItem
             key={index}
             parentStyle={parentStyle}

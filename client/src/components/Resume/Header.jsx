@@ -1,5 +1,5 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
   const nameTop = 30
@@ -16,86 +16,92 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
     return firstChild + (width + childSpacer) * index
   }
 
-  const [name, setName] = useState(resumeHeader?.name || 'Name')
-  const [role, setRole] = useState(resumeHeader?.title || 'Role')
-  const [phone, setPhone] = useState(resumeHeader?.phone_number || '• Phone')
-  const [email, setEmail] = useState(resumeHeader?.email || '• Email')
-  const [linkedin, setLinkedin] = useState(
-    resumeHeader?.linkedin_url || '• LinkedIn/Portfolio',
-  )
+  const defaultValues = useMemo(() => {
+    return {
+      name: 'Name',
+      title: 'Role',
+      phone_number: '• Phone',
+      email: '• Email',
+      linkedin_url: '• LinkedIn/Portfolio',
+    }
+  }, [])
+
+  const [header, setHeader] = useState({
+    ...defaultValues,
+    ...resumeHeader,
+  })
 
   useEffect(() => {
-    setName(resumeHeader?.name || 'Name')
-    setRole(resumeHeader?.title || 'Role')
-    setPhone(resumeHeader?.phone_number || '• Phone')
-    setEmail(resumeHeader?.email || '• Email')
-    setLinkedin(resumeHeader?.linkedin_url || '• LinkedIn/Portfolio')
-  }, [resumeHeader])
+    setHeader({
+      ...defaultValues,
+      ...resumeHeader,
+    })
+  }, [defaultValues, resumeHeader])
 
   return (
     <div className="header text-center">
       <TextEditorBlock
+        key={`name-${header.name}`}
         width={parentStyle.width}
         top={nameTop}
         height={nameHeight}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={name}
-        onChange={(e) => setName(e.target.initialText)}
+        initialText={header.name}
         initialFontColor={'black'}
         initialFontSize={0.3}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
+        key={`title-${header.title}`}
         width={parentStyle.width}
         top={nameTop + nameHeight + 10}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={role}
-        onChange={(e) => setRole(e.target.initialText)}
+        initialText={header.title}
         initialFontColor={'black'}
         initialFontSize={defaultFontSize}
         initialFontName={'roboto'}
       />
       <div>
         <TextEditorBlock
+          key={`phone-${header.phone_number}`}
           width={relativeWidth(3)}
           top={nameTop + nameHeight + 40}
           height={30}
           left={defaultLeft}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={phone}
-          onChange={(e) => setPhone(e.target.initialText)}
+          initialText={header.phone_number}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
+          key={`email-${header.email}`}
           width={relativeWidth(3)}
           top={nameTop + nameHeight + 40}
           height={20}
           left={relativeLeft(defaultLeft, relativeWidth(3))}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={email}
-          onChange={(e) => setEmail(e.target.initialText)}
+          initialText={header.email}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
+          key={`linkedin-${header.linkedin_url}`}
           width={relativeWidth(3)}
           top={nameTop + nameHeight + 40}
           height={20}
           left={relativeLeft(defaultLeft, relativeWidth(3), 2)}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={linkedin}
-          onChange={(e) => setLinkedin(e.target.initialText)}
+          initialText={header.linkedin_url}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}

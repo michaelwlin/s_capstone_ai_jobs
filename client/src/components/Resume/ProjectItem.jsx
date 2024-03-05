@@ -12,7 +12,11 @@ const ProjectItem = ({
     projectItem?.name || 'Project Name',
   )
   const [projectDescription, setProjectDescription] = useState(
-    projectItem?.description || ['Achievements'],
+    projectItem?.description || [
+      'Achievements',
+      'Achievements',
+      'Achievements',
+    ],
   )
 
   return (
@@ -46,7 +50,7 @@ const ProjectItem = ({
           <TextEditorBlock
             key={index}
             width={parentStyle.width}
-            top={projectsTop + 60 * (index + 1)}
+            top={projectsTop + 30 + 30 * (index + 1)}
             height={30}
             left={defaultLeft}
             parentStyle={parentStyle}

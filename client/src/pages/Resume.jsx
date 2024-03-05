@@ -27,13 +27,25 @@ const Resume = () => {
   const childSpacer = 5
   const summaryTop = 30 + 90 + 30
   const skillsTop = summaryTop + 80
-  const experienceTop = skillsTop + 140
-  const projectsTop = experienceTop + 260
-  const educationTop = projectsTop + 170
 
   const [openModal, setOpenModal] = useState(false)
   const [resume, setResume] = useState({})
   const [signedIn, setSignedIn] = useState(false)
+  const [skillsHeight, setSkillsHeight] = useState(140)
+  const [experienceHeight, setExperienceHeight] = useState(260)
+  const [projectsHeight, setProjectsHeight] = useState(170)
+
+  const experienceTop = () => {
+    return skillsTop + skillsHeight
+  }
+
+  const projectsTop = () => {
+    return experienceTop() + experienceHeight
+  }
+
+  const educationTop = () => {
+    return projectsTop() + projectsHeight
+  }
 
   const getUserResume = async () => {
     try {
@@ -109,26 +121,32 @@ const Resume = () => {
             childSpacer={childSpacer}
             skillsTop={skillsTop}
             resumeSkills={resume.skills}
+            skillsHeight={skillsHeight}
+            setSkillsHeight={setSkillsHeight}
           />
           <Experience
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            experienceTop={experienceTop}
+            experienceTop={experienceTop()}
             resumeExperience={resume.experience}
+            experienceHeight={experienceHeight}
+            setExperienceHeight={setExperienceHeight}
           />
           <Projects
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            projectsTop={projectsTop}
+            projectsTop={projectsTop()}
             resumeProjects={resume.selected_projects}
+            projectsHeight={projectsHeight}
+            setProjectsHeight={setProjectsHeight}
           />
           <Education
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            educationTop={educationTop}
+            educationTop={educationTop()}
             resumeEducation={resume.education}
           />
         </EditableBoard>
