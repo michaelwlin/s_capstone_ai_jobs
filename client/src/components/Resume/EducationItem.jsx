@@ -1,5 +1,5 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 const EducationItem = ({
   parentStyle,
@@ -17,9 +17,19 @@ const EducationItem = ({
     educationItem?.location || 'Location',
   )
 
+  console.log(educationItem)
+
+  useEffect(() => {
+    setDegree(educationItem?.degree || 'Degree')
+    setSchool(educationItem?.school_university || 'School/University')
+    setDates(educationItem?.dates || 'Dates')
+    setLocation(educationItem?.location || 'Location')
+  }, [educationItem])
+
   return (
     <div>
       <TextEditorBlock
+        key={`education-header`}
         width={parentStyle.width}
         top={educationTop}
         height={40}
@@ -32,6 +42,7 @@ const EducationItem = ({
         initialFontName={'roboto'}
       />
       <TextEditorBlock
+        key={`education-${degree}`}
         width={parentStyle.width}
         top={educationTop + 30}
         height={30}
@@ -43,7 +54,9 @@ const EducationItem = ({
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
+
       <TextEditorBlock
+        key={`education-${school}`}
         width={parentStyle.width}
         top={educationTop + 60}
         height={30}
@@ -55,7 +68,9 @@ const EducationItem = ({
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
+
       <TextEditorBlock
+        key={`education-${dates}`}
         width={parentStyle.width}
         top={educationTop + 90}
         height={30}

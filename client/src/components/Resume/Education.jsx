@@ -1,5 +1,5 @@
 import { EducationItem } from './index'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Education = ({
   parentStyle,
@@ -8,11 +8,12 @@ const Education = ({
   educationTop,
   resumeEducation,
 }) => {
-  const [education, setEducation] = useState(resumeEducation || [])
+  console.log('edu', resumeEducation)
+
   return (
     <div>
-      {education.length > 0 ? (
-        education.map((edu, index) => (
+      {resumeEducation && resumeEducation.length > 0 ? (
+        resumeEducation.map((edu, index) => (
           <EducationItem
             key={index}
             parentStyle={parentStyle}
@@ -24,6 +25,7 @@ const Education = ({
         ))
       ) : (
         <EducationItem
+          key={'edu-item'}
           parentStyle={parentStyle}
           defaultLeft={defaultLeft}
           childSpacer={childSpacer}
