@@ -23,7 +23,7 @@ POST http://localhost:5000/api/auth/token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDkwODczMDksImV4cCI6MTcwOTY5MjEwOX0.h6likKWo3bLwsrUASVMFGbzR_W6NkN-1_RDdZNUZlw8"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDk2ODkyNDYsImV4cCI6MTcwOTY4OTI3Nn0.YDIZMwG00XpQH29Qn45lArd0eZBKzA7lvlOo-3_4khI"
 
 }
 ###

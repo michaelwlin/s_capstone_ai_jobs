@@ -110,6 +110,7 @@ router.post('/login', async (req, res) => {
                     expires: refreshExpires
                 });
 
+                console.log("refresh = ", refreshToken)
                 res.status(200).send('Login Successful');
 
             } else {

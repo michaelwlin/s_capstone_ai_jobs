@@ -6,8 +6,8 @@ import { FaUser } from 'react-icons/fa'
 const NavigationBar = () => {
   const [signedIn, setSignedIn] = useState(false)
 
-  const signIn = () => {}
-  const register = () => {}
+  const signIn = () => { }
+  const register = () => { }
 
   const userNavigation = () => {
     if (signedIn) {
@@ -58,6 +58,9 @@ const NavigationBar = () => {
         </NavLink>
         <NavLink to="/about-us" as={NavbarLink}>
           About Us
+        </NavLink>
+        <NavLink to="/login" as={NavbarLink}>
+          Login
         </NavLink>
       </Navbar.Collapse>
 

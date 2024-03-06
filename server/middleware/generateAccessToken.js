@@ -6,7 +6,7 @@ function generateAccessToken(user) {
 }
 
 function generateRefreshToken(user) {
-    return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' })
+    return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30s' })
 }
 
-module.exports = {generateAccessToken, generateRefreshToken};
+module.exports = { generateAccessToken, generateRefreshToken };
