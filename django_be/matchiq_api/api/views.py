@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from . import scrape_jobs
 from .data import DataTools as dt
+from . import mongo_utils
 import logging
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,8 @@ def upload_resume(request):
             parsed_resume = data.parse_resume(resume_text)
 
             response = JsonResponse(parsed_resume)
+
+            mongo_utils.save_resume_to_mongodb(parsed_resume)
 
             return response
 

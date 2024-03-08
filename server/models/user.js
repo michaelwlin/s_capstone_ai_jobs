@@ -29,6 +29,10 @@ const User = mongoose.model('User', new mongoose.Schema({
   lastLogin: {
     type: Date,
     required: false
+  },
+  resume: {
+    type: Array,
+    required: false
   }
 }));
 

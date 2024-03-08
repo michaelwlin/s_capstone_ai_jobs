@@ -5,10 +5,6 @@ import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Res
 import { FetchApp, FetchUsers, FetchJob } from './components'
 
 const App = () => {
-  useEffect(() => {
-    //TODO: update this with data to be fetched from database
-    fetch('http://localhost:3000').then((res) => res.json())
-  })
 
   return (
     <div className="App">
