@@ -14,7 +14,7 @@ const Projects = ({
 
   useEffect(() => {
     const height =
-      projects && projects.length ? projects.length * 170 : projectsHeight
+      projects && projects.length ? projects.length * 190 : projectsHeight
 
     setProjectsHeight((prevHeight) => {
       if (height !== prevHeight) {
