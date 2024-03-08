@@ -39,8 +39,7 @@ def save_resume_to_mongodb(data):
     existing_user = collection.find_one(user_filter)
 
     if existing_user:
-        new_resume = existing_user.get("resume", [] + [data])
-        collection.update_one(user_filter, {"$set": {"resume": new_resume}})
+        collection.update_one(user_filter, {"$push": {"resume": data}})
         print("Resume inserted into MongoDB.")
     else:
         user = {"userName": "testUser2", "resume": [
