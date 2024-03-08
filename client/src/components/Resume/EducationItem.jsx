@@ -32,29 +32,30 @@ const EducationItem = ({
         initialFontSize={0.2}
         initialFontName={'roboto'}
       />
+
       <TextEditorBlock
-        key={`education-${degree}`}
+        key={`education-${school}`}
         width={parentStyle.width}
         top={educationTop + 30}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={degree}
+        initialText={school}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
 
       <TextEditorBlock
-        key={`education-${school}`}
+        key={`education-${degree}`}
         width={parentStyle.width}
         top={educationTop + 60}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={school}
+        initialText={degree}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}

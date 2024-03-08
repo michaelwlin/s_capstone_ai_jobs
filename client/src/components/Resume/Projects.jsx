@@ -13,33 +13,29 @@ const Projects = ({
   const [projects, setProjects] = useState(resumeProjects || [])
 
   useEffect(() => {
-    const height =
-      projects && projects.length ? projects.length * 190 : projectsHeight
-
     setProjectsHeight((prevHeight) => {
-      if (height !== prevHeight) {
-        return height
-      }
-      return prevHeight
+      const calculatedHeight =
+        resumeProjects && resumeProjects.length
+          ? resumeProjects.length * 210
+          : prevHeight
+      return calculatedHeight
     })
-  }, [projects, projectsHeight, setProjectsHeight])
+  }, [resumeProjects, projectsHeight, setProjectsHeight])
 
   useEffect(() => {
     setProjects(resumeProjects || [])
   }, [resumeProjects])
 
-  console.log('projects', projects)
-
   return (
     <div>
-      {projects.length > 0 ? (
+      {projects && projects.length > 0 ? (
         projects.map((project, index) => (
           <ProjectItem
             key={index}
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            projectsTop={projectsTop + index * 60}
+            projectsTop={projectsTop + index * 70}
             projectItem={project}
           />
         ))

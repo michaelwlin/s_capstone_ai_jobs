@@ -63,8 +63,6 @@ const Resume = () => {
     }
   }
 
-  console.log(resume)
-
   useEffect(() => {
     getUserResume()
   }, [])

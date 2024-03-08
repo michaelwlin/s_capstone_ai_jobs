@@ -16,92 +16,90 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
     return firstChild + (width + childSpacer) * index
   }
 
-  const defaultValues = useMemo(() => {
-    return {
-      name: 'Name',
-      title: 'Role',
-      phone_number: '• Phone',
-      email: '• Email',
-      linkedin_url: '• LinkedIn/Portfolio',
-    }
-  }, [])
-
-  const [header, setHeader] = useState({
-    ...defaultValues,
-    ...resumeHeader,
-  })
+  const [headerName, setHeaderName] = useState(resumeHeader?.name || 'Name')
+  const [headerRole, setHeaderRole] = useState(resumeHeader?.role || 'Role')
+  const [headerPhone, setHeaderPhone] = useState(
+    resumeHeader?.phone_number || '• Phone',
+  )
+  const [headerEmail, setHeaderEmail] = useState(
+    resumeHeader?.email || '• Email',
+  )
+  const [headerLinkedin, setHeaderLinkedin] = useState(
+    resumeHeader?.linkedin_url || '• LinkedIn/Portfoli URL',
+  )
 
   useEffect(() => {
-    setHeader({
-      ...defaultValues,
-      ...resumeHeader,
-    })
-  }, [defaultValues, resumeHeader])
+    setHeaderName(resumeHeader?.name || 'Name')
+    setHeaderRole(resumeHeader?.role || 'Role')
+    setHeaderEmail(resumeHeader?.email || '• Email')
+    setHeaderPhone(resumeHeader?.phone_number || '• Phone')
+    setHeaderLinkedin(resumeHeader?.linkedin_url || '• LinkedIn/Portfolio URL')
+  }, [resumeHeader])
 
   return (
     <div className="header text-center">
       <TextEditorBlock
-        key={`name-${header.name}`}
+        key={`name-${headerName}`}
         width={parentStyle.width}
         top={nameTop}
         height={nameHeight}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={header.name}
+        initialText={headerName}
         initialFontColor={'black'}
         initialFontSize={0.3}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
-        key={`title-${header.title}`}
+        key={`title-${headerRole}`}
         width={parentStyle.width}
         top={nameTop + nameHeight + 10}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={header.title}
+        initialText={headerRole}
         initialFontColor={'black'}
         initialFontSize={defaultFontSize}
         initialFontName={'roboto'}
       />
       <div>
         <TextEditorBlock
-          key={`phone-${header.phone_number}`}
+          key={`phone-${headerPhone}`}
           width={relativeWidth(3)}
           top={nameTop + nameHeight + 40}
           height={30}
           left={defaultLeft}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={header.phone_number}
+          initialText={headerPhone}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
-          key={`email-${header.email}`}
+          key={`email-${headerEmail}`}
           width={relativeWidth(3)}
           top={nameTop + nameHeight + 40}
           height={20}
           left={relativeLeft(defaultLeft, relativeWidth(3))}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={header.email}
+          initialText={headerEmail}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
-          key={`linkedin-${header.linkedin_url}`}
+          key={`linkedin-${headerLinkedin}`}
           width={relativeWidth(3)}
           top={nameTop + nameHeight + 40}
           height={20}
           left={relativeLeft(defaultLeft, relativeWidth(3), 2)}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
-          initialText={header.linkedin_url}
+          initialText={headerLinkedin}
           initialFontColor={'black'}
           initialFontSize={defaultFontSize}
           initialFontName={'roboto'}

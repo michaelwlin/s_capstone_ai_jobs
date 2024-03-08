@@ -10,19 +10,26 @@ const Experience = ({
   experienceHeight,
   setExperienceHeight,
 }) => {
-  useEffect(() => {
-    const calculatedHeight =
-      resumeExperience && resumeExperience.length
-        ? resumeExperience.length * 300
-        : experienceHeight
+  const [experience, setExperience] = useState(resumeExperience || [])
 
-    setExperienceHeight(calculatedHeight)
+  useEffect(() => {
+    setExperienceHeight((prevHeight) => {
+      const calculatedHeight =
+        resumeExperience && resumeExperience.length
+          ? resumeExperience.length * 290
+          : prevHeight
+      return calculatedHeight
+    })
   }, [resumeExperience, experienceHeight, setExperienceHeight])
+
+  useEffect(() => {
+    setExperience(resumeExperience || [])
+  }, [resumeExperience])
 
   return (
     <div>
-      {resumeExperience && resumeExperience.length > 0 ? (
-        resumeExperience.map((exp, index) => (
+      {experience && experience.length > 0 ? (
+        experience.map((exp, index) => (
           <ExperienceItem
             key={index}
             parentStyle={parentStyle}
