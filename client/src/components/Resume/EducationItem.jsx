@@ -17,15 +17,6 @@ const EducationItem = ({
     educationItem?.location || 'Location',
   )
 
-  console.log(educationItem)
-
-  useEffect(() => {
-    setDegree(educationItem?.degree || 'Degree')
-    setSchool(educationItem?.school_university || 'School/University')
-    setDates(educationItem?.dates || 'Dates')
-    setLocation(educationItem?.location || 'Location')
-  }, [educationItem])
-
   return (
     <div>
       <TextEditorBlock

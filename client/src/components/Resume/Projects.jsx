@@ -28,6 +28,8 @@ const Projects = ({
     setProjects(resumeProjects || [])
   }, [resumeProjects])
 
+  console.log('projects', projects)
+
   return (
     <div>
       {projects.length > 0 ? (

@@ -8,24 +8,27 @@ const Education = ({
   educationTop,
   resumeEducation,
 }) => {
-  console.log('edu', resumeEducation)
+  const [educations, setEducations] = useState(resumeEducation || [])
+
+  useEffect(() => {
+    setEducations(resumeEducation || [])
+  }, [resumeEducation])
 
   return (
     <div>
-      {resumeEducation && resumeEducation.length > 0 ? (
-        resumeEducation.map((edu, index) => (
+      {educations.length > 0 ? (
+        educations.map((education, index) => (
           <EducationItem
             key={index}
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
             educationTop={educationTop + index * 60}
-            educationItem={edu}
+            educationItem={education}
           />
         ))
       ) : (
         <EducationItem
-          key={'edu-item'}
           parentStyle={parentStyle}
           defaultLeft={defaultLeft}
           childSpacer={childSpacer}

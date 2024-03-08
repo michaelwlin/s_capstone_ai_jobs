@@ -148,13 +148,14 @@ class DataTools:
                     }}
                 },
                 "education": {
-                    "type": "object",
-                    "properties": {
-                        "degree": {"type": "string"},
-                        "school_university": {"type": "string"},
-                        "dates": {"type": "string"},
-                        "location": {"type": "string"},
-                    },
+                    "type": "array",
+                    "items": {"type": "object",
+                              "properties": {
+                                  "degree": {"type": "string"},
+                                  "school_university": {"type": "string"},
+                                  "dates": {"type": "string"},
+                                  "location": {"type": "string"},
+                              }}
                 },
                 "other_information": {
                     "type": "array",

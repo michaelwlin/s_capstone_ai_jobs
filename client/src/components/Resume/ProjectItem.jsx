@@ -18,6 +18,7 @@ const ProjectItem = ({
       'Achievements',
     ],
   )
+  console.log('projectitem', projectItem)
 
   return (
     <div>
