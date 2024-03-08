@@ -53,6 +53,9 @@ const Resume = () => {
       const res = await axios.get(
         'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
       )
+      if (res && res.data.resume.length === 0) {
+        return
+      }
       setResume(res.data.resume[0])
       setSignedIn(true)
     } catch (error) {
