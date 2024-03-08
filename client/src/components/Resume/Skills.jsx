@@ -23,9 +23,14 @@ const Skills = ({
   }
 
   useEffect(() => {
-    const height = skills.length === 0 ? 80 : skillsHeight
-    setSkillsHeight(height)
-  }, [skills, skillsHeight, setSkillsHeight])
+    setSkillsHeight((prevHeight) => {
+      const calculatedHeight =
+        resumeSkills && resumeSkills.length
+          ? resumeSkills.length * 1
+          : prevHeight
+      return calculatedHeight
+    })
+  }, [resumeSkills, skillsHeight, setSkillsHeight])
 
   useEffect(() => {
     setSkills(resumeSkills || [])

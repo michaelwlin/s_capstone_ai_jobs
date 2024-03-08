@@ -1,5 +1,6 @@
 import { ExperienceItem } from './index'
 import { useState, useEffect } from 'react'
+import { TextEditorBlock } from 'react-web-editor'
 
 const Experience = ({
   parentStyle,
@@ -16,18 +17,31 @@ const Experience = ({
     setExperienceHeight((prevHeight) => {
       const calculatedHeight =
         resumeExperience && resumeExperience.length
-          ? resumeExperience.length * 290
-          : prevHeight
+          ? experienceTop + 90 + resumeExperience.length * 700
+          : experienceTop
+
       return calculatedHeight
     })
-  }, [resumeExperience, experienceHeight, setExperienceHeight])
+  }, [resumeExperience, experienceTop, experienceHeight, setExperienceHeight])
 
   useEffect(() => {
     setExperience(resumeExperience || [])
   }, [resumeExperience])
 
   return (
-    <div>
+    <div className="container experience">
+      <TextEditorBlock
+        width={parentStyle.width}
+        top={experienceTop}
+        height={40}
+        left={defaultLeft}
+        parentStyle={parentStyle}
+        unit={parentStyle.unit}
+        initialText={'EXPERIENCE'}
+        initialFontColor={'black'}
+        initialFontSize={0.2}
+        initialFontName={'roboto'}
+      />
       {experience && experience.length > 0 ? (
         experience.map((exp, index) => (
           <ExperienceItem
@@ -35,17 +49,31 @@ const Experience = ({
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            experienceTop={experienceTop + index * 60}
+            experienceTop={experienceTop + 90 + index * 230}
             experienceItem={exp}
           />
         ))
       ) : (
-        <ExperienceItem
-          parentStyle={parentStyle}
-          defaultLeft={defaultLeft}
-          childSpacer={childSpacer}
-          experienceTop={experienceTop}
-        />
+        <>
+          <TextEditorBlock
+            width={parentStyle.width}
+            top={experienceTop}
+            height={40}
+            left={defaultLeft}
+            parentStyle={parentStyle}
+            unit={parentStyle.unit}
+            initialText={'EXPERIENCE'}
+            initialFontColor={'black'}
+            initialFontSize={0.2}
+            initialFontName={'roboto'}
+          />
+          <ExperienceItem
+            parentStyle={parentStyle}
+            defaultLeft={defaultLeft}
+            childSpacer={childSpacer}
+            experienceTop={experienceTop + 40}
+          />
+        </>
       )}
     </div>
   )

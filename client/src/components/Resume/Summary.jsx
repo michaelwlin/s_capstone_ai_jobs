@@ -1,5 +1,5 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Summary = ({
   parentStyle,
@@ -8,10 +8,17 @@ const Summary = ({
   summaryTop,
   resumeSummary,
 }) => {
-  const [summary, setSummary] = useState(resumeSummary)
+  const [summary, setSummary] = useState(
+    resumeSummary?.toString() || 'Summary Description',
+  )
+  console.log('res sum', resumeSummary, summary)
+
+  useEffect(() => {
+    setSummary(resumeSummary?.toString() || 'Summary Description')
+  }, [resumeSummary])
 
   return (
-    <div>
+    <div className="container">
       <TextEditorBlock
         width={parentStyle.width}
         top={summaryTop}
@@ -25,13 +32,14 @@ const Summary = ({
         initialFontName={'roboto'}
       />
       <TextEditorBlock
+        key={`summary-${summary}`}
         width={parentStyle.width}
         top={summaryTop + 30}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'Summary Description'}
+        initialText={summary}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}

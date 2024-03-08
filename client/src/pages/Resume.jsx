@@ -25,13 +25,13 @@ const Resume = () => {
     unit: 'px',
   }
   const childSpacer = 5
-  const summaryTop = 30 + 90 + 30
-  const skillsTop = summaryTop + 80
+  const summaryTop = 30 + 100 + 30 + 15
+  const skillsTop = summaryTop + 100 + 15
 
   const [openModal, setOpenModal] = useState(false)
   const [resume, setResume] = useState({})
   const [signedIn, setSignedIn] = useState(false)
-  const [skillsHeight, setSkillsHeight] = useState(140)
+  const [skillsHeight, setSkillsHeight] = useState(100)
   const [experienceHeight, setExperienceHeight] = useState(260)
   const [projectsHeight, setProjectsHeight] = useState(170)
 
@@ -40,11 +40,11 @@ const Resume = () => {
   }
 
   const projectsTop = () => {
-    return experienceTop() + experienceHeight
+    return experienceTop() + experienceHeight + 15
   }
 
   const educationTop = () => {
-    return projectsTop() + projectsHeight
+    return projectsTop() + projectsHeight + 15
   }
 
   const getUserResume = async () => {
@@ -56,7 +56,7 @@ const Resume = () => {
       if (res && res.data.resume.length === 0) {
         return
       }
-      setResume(res.data.resume[0])
+      setResume(res.data.resume.pop())
       setSignedIn(true)
     } catch (error) {
       console.error('There was an error fetching the resume data:', error)
@@ -66,6 +66,8 @@ const Resume = () => {
   useEffect(() => {
     getUserResume()
   }, [])
+
+  console.log(resume)
 
   return (
     <div className="resume mx-5 mb-20 container min-h-max flex flex-row gap-1">

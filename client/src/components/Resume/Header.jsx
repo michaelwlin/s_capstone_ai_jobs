@@ -17,7 +17,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
   }
 
   const [headerName, setHeaderName] = useState(resumeHeader?.name || 'Name')
-  const [headerRole, setHeaderRole] = useState(resumeHeader?.role || 'Role')
+  const [headerRole, setHeaderRole] = useState(resumeHeader?.title || 'Role')
   const [headerPhone, setHeaderPhone] = useState(
     resumeHeader?.phone_number || '• Phone',
   )
@@ -30,14 +30,14 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
 
   useEffect(() => {
     setHeaderName(resumeHeader?.name || 'Name')
-    setHeaderRole(resumeHeader?.role || 'Role')
+    setHeaderRole(resumeHeader?.title || 'Role')
     setHeaderEmail(resumeHeader?.email || '• Email')
     setHeaderPhone(resumeHeader?.phone_number || '• Phone')
     setHeaderLinkedin(resumeHeader?.linkedin_url || '• LinkedIn/Portfolio URL')
   }, [resumeHeader])
 
   return (
-    <div className="header text-center">
+    <div className="header container text-center">
       <TextEditorBlock
         key={`name-${headerName}`}
         width={parentStyle.width}

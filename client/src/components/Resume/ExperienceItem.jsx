@@ -15,10 +15,10 @@ const ExperienceItem = ({
   const [company, setCompany] = useState(experienceItem?.name || 'Company Name')
   const [date, setDate] = useState(experienceItem?.dates || 'Date')
   const [description, setDescription] = useState(
-    experienceItem?.company_description || 'Company Description',
+    experienceItem?.company_or_role_description || 'Company Description',
   )
   const [achievements, setAchievements] = useState(
-    experienceItem?.description || [
+    experienceItem?.accomplishments || [
       'Job Achievements',
       'Job Achievements',
       'Job Achievements',
@@ -32,24 +32,12 @@ const ExperienceItem = ({
     <div>
       <TextEditorBlock
         width={parentStyle.width}
-        top={experienceTop}
-        height={40}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'EXPERIENCE'}
-        initialFontColor={'black'}
-        initialFontSize={0.2}
-        initialFontName={'roboto'}
-      />
-      <TextEditorBlock
-        width={parentStyle.width}
         top={experienceTop + 30}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={position}
+        initialText={company}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
@@ -61,7 +49,7 @@ const ExperienceItem = ({
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={company}
+        initialText={position}
         initialFontColor={'black'}
         initialFontSize={0.17}
         initialFontName={'roboto'}
@@ -90,22 +78,23 @@ const ExperienceItem = ({
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
-      {achievements.map((achievement, index) => (
-        <TextEditorBlock
-          key={index}
-          width={parentStyle.width}
-          top={experienceTop + 150 + 30 * index}
-          height={30}
-          left={defaultLeft}
-          parentStyle={parentStyle}
-          unit={parentStyle.unit}
-          initialText={`• ${achievement}`}
-          initialFontColor={'black'}
-          initialFontSize={0.17}
-          initialFontName={'roboto'}
-          customMenuOptions={() => <GPTMenuOption />}
-        />
-      ))}
+      {/* {achievements &&
+        achievements.map((achievement, index) => (
+          <TextEditorBlock
+            key={index}
+            width={parentStyle.width}
+            top={experienceTop + 150 + 30 * index}
+            height={30}
+            left={defaultLeft}
+            parentStyle={parentStyle}
+            unit={parentStyle.unit}
+            initialText={`• ${achievement}`}
+            initialFontColor={'black'}
+            initialFontSize={0.17}
+            initialFontName={'roboto'}
+            customMenuOptions={() => <GPTMenuOption />}
+          />
+        ))} */}
     </div>
   )
 }
