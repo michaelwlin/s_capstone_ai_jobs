@@ -7,6 +7,7 @@ import useAuth from '../hooks/useAuth';
 const NavigationBar = () => {
   const navigate = useNavigate();
   const { auth } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const signIn = () => {
     // Navigate to register/sign-up page
@@ -40,8 +41,18 @@ const NavigationBar = () => {
     } else {
       return (
         <div>
-          <Dropdown.Item onClick={signIn}>Sign In</Dropdown.Item>
-          <Dropdown.Item onClick={register}>Register</Dropdown.Item>
+          <NavLink
+            to="/signin"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            Sign In
+          </NavLink>
+          <NavLink
+            to="/register"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            Register
+          </NavLink>
         </div>
       )
     }
@@ -49,32 +60,27 @@ const NavigationBar = () => {
 
   return (
     <Navbar fluid rounded className="navbar p-2.5">
-      <Navbar.Brand>
-        <NavLink to="/" className="nav-logo">
-          <img
-            src="/icons/MatchIQ_transparent.png"
-            className="mr-3 h-6 sm:h-9"
-            alt="MatchIQ"
-          />
-        </NavLink>
+      <Navbar.Brand to="/" className="nav-logo" as={NavLink}>
+        <img
+          src="/icons/MatchIQ_transparent.png"
+          className="mr-3 h-6 sm:h-9"
+          alt="MatchIQ"
+        />
       </Navbar.Brand>
 
       <Navbar.Collapse className="nav-menu">
-        <NavLink to="/">
+        <Navbar.Link to="/" as={NavLink}>
           Home
-        </NavLink>
-        <NavLink to="/find-jobs">
+        </Navbar.Link>
+        <Navbar.Link to="/find-jobs" as={NavLink}>
           Find Jobs
-        </NavLink>
-        <NavLink to="/how-it-works">
+        </Navbar.Link>
+        <Navbar.Link to="/how-it-works" as={NavLink}>
           How it Works
-        </NavLink>
-        <NavLink to="/about-us">
+        </Navbar.Link>
+        <Navbar.Link to="/about-us" as={NavLink}>
           About Us
-        </NavLink>
-        <NavLink to="/login">
-          Login
-        </NavLink>
+        </Navbar.Link>
       </Navbar.Collapse>
 
       <div className="flex md:order-2 user-profile">

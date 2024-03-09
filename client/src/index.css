@@ -21,12 +21,45 @@ code {
     monospace;
 }
 
+.App {
+  min-height: 100vh;
+}
+
+.footer {
+  bottom: 0;
+}
+
 .nav-logo {
   display: inline-block;
   & > img {
     display: inline-block;
   }
 }
+
+.uploadIcon { 
+  width: 30px;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+.resume {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+}
+
+.resume-wrapper {
+  transform: scale(1);
+  transform-origin: 50% 0px;
+  max-height: 1202px;
+  transition: all 0.5s ease-in-out;
+}
+
+.resume-board {
+  box-shadow: 1px 2px 20px rgba(0, 0, 0, .1);
+}
+
+
 
 .user-profile {
   margin: 0 30px;
@@ -57,4 +90,10 @@ code {
     &:hover {
       transform: scale(1.05);
     }
+}
+
+.field-valid::after {
+  content: '✔';
+  color: green;
+  margin-left: 5px;
 }
