@@ -1,16 +1,29 @@
-import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { useNavigate, NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, NavbarLink, Avatar } from 'flowbite-react'
-import { FaUser } from 'react-icons/fa'
+import { FaUser } from 'react-icons/fa';
+import useAuth from '../hooks/useAuth';
 
 const NavigationBar = () => {
-  const [signedIn, setSignedIn] = useState(false)
+  const navigate = useNavigate();
+  const { auth } = useAuth();
 
-  const signIn = () => { }
-  const register = () => { }
+  const signIn = () => {
+    // Navigate to register/sign-up page
+    navigate('/login');
+  };
+  const register = () => {
+    // Navigate to register/sign-up page
+    navigate('/register');
+  };
+
+  const handleSignOut = () => {
+
+    navigate('/');
+  }
 
   const userNavigation = () => {
-    if (signedIn) {
+    if (auth.isAuthenticated) {
       return (
         <div>
           <Dropdown.Header>
@@ -21,7 +34,7 @@ const NavigationBar = () => {
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>
           <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
       )
     } else {
@@ -37,7 +50,7 @@ const NavigationBar = () => {
   return (
     <Navbar fluid rounded className="navbar p-2.5">
       <Navbar.Brand>
-        <NavLink to="/" as={NavbarLink} className="nav-logo">
+        <NavLink to="/" className="nav-logo">
           <img
             src="/icons/MatchIQ_transparent.png"
             className="mr-3 h-6 sm:h-9"
@@ -47,19 +60,19 @@ const NavigationBar = () => {
       </Navbar.Brand>
 
       <Navbar.Collapse className="nav-menu">
-        <NavLink to="/" as={NavbarLink}>
+        <NavLink to="/">
           Home
         </NavLink>
-        <NavLink to="/find-jobs" as={NavbarLink}>
+        <NavLink to="/find-jobs">
           Find Jobs
         </NavLink>
-        <NavLink to="/how-it-works" as={NavbarLink}>
+        <NavLink to="/how-it-works">
           How it Works
         </NavLink>
-        <NavLink to="/about-us" as={NavbarLink}>
+        <NavLink to="/about-us">
           About Us
         </NavLink>
-        <NavLink to="/login" as={NavbarLink}>
+        <NavLink to="/login">
           Login
         </NavLink>
       </Navbar.Collapse>

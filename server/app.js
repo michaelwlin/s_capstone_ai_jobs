@@ -11,7 +11,7 @@ const jobRoutes = require("./routes/jobs");
 const app = express() // We need to instantiate an express object to interact with the server in our code
 // PORT = 4000 // Set a port number at the top so it's easy to change in the future
 
-const authenticateToken = require('./middleware/authenticateToken');
+const {authenticateAccessToken} = require('./middleware/authenticateToken');
 
 app.use(cookieParser());
 app.use(cors({
@@ -19,7 +19,7 @@ app.use(cors({
     credentials: true,
 }));
 app.use(express.json());
-app.use(authenticateToken);
+app.use(authenticateAccessToken);
 const bcryptjs = require("bcryptjs");
 app.use("/api/", homeRoutes);
 app.use("/api/users", userRoutes);

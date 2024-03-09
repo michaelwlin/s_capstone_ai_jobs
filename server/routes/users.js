@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require("express");
 const validateID = require("../middleware/validateID");
-const authenticateToken = require("../middleware/authenticateToken");
+const { authenticateAccessToken, authenticateRefreshToken } = require("../middleware/authenticateToken");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     res.send(users);
 });
 
-router.get("/loggedInData", authenticateToken, async (req, res) => {
+router.get("/loggedInData", authenticateAccessToken, async (req, res) => {
     const user = await User.findById(req.user.userId);
     if (!user) {
         return res.status(404).send('User not found');

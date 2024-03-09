@@ -11,11 +11,11 @@ const LandingPage = () => {
 
   const navigate = useNavigate();
   const handleSubmit = (e) => {
-      e.preventDefault();
-      navigate('/search-results', { state: { keyword, location } });
+    e.preventDefault();
+    navigate('/search-results', { state: { keyword, location } });
   };
 
-  const uploadResume = () => {}
+  const uploadResume = () => { }
   const signIn = () => {
     setSignedIn(true)
   }

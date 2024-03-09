@@ -3,6 +3,6 @@ import FindJobs from './FindJobs';
 import HowItWorks from './HowItWorks';
 import Homepage from './LandingPage'
 import Results from './Results';
-import LoginPage from './login';
+import Login from './login';
 
-export { AboutUs, FindJobs, HowItWorks, Homepage, Results, LoginPage }
+export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Login }

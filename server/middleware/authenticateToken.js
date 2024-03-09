@@ -1,8 +1,29 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const authenticateRefreshToken = require('./authenticateRefreshToken')
+const RefreshToken = require('../models/refreshtokens');
 
-async function authenticateToken(req, res, next) {
+async function authenticateRefreshToken(req, res, next) {
+    const token = req.cookies['refreshToken'];
+    if (!token) return res.sendStatus(401);
+
+    try {
+        const refreshToken = await RefreshToken.findOne({ "token": token });
+        if (!refreshToken) return res.sendStatus(401);
+
+        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, userPayload) => {
+            if (err) return res.sendStatus(403); // Invalid refresh token
+
+            req.userPayload = userPayload; // Attach user payload to request
+            next();
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred: ' + error.message);
+    }
+
+}
+
+async function authenticateAccessToken(req, res, next) {
     const token = req.cookies['accessToken'];
     if (!token) {
         return res.sendStatus(401); // No token provided
@@ -23,4 +44,4 @@ async function authenticateToken(req, res, next) {
     });
 }
 
-module.exports = authenticateToken;
+module.exports = { authenticateAccessToken, authenticateRefreshToken };

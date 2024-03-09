@@ -1,17 +1,16 @@
 require('dotenv').config();
 
 const express = require("express");
-const authenticateToken = require("../middleware/authenticateToken");
+const { authenticateAccessToken, authenticateRefreshToken } = require("../middleware/authenticateToken");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const { generateAccessToken, generateRefreshToken } = require("../middleware/generateAccessToken");
 const RefreshToken = require('../models/refreshtokens');
-888
 const router = express.Router();
 
 
-router.get("/loggedInData", authenticateToken, async (req, res) => {
+router.get("/loggedInData", authenticateAccessToken, async (req, res) => {
     const user = await User.findById(req.user.userId);
     if (!user) {
         return res.status(404).send('User not found');
@@ -20,7 +19,7 @@ router.get("/loggedInData", authenticateToken, async (req, res) => {
 });
 
 router.post("/logout", async (req, res) => {
-    const userToken = req.body.token;
+    const userToken = req.cookies['refreshToken'];
 
     if (!userToken) {
         return res.status(400).send("Token not provided.");
@@ -32,6 +31,13 @@ router.post("/logout", async (req, res) => {
         if (result.deletedCount === 0) {
             return res.status(404).send("Token not found.");
         }
+
+        // Clear the refresh token cookie
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: true,
+        });
+
         res.send("Logged out successfully.");
 
     } catch (error) {
@@ -41,40 +47,41 @@ router.post("/logout", async (req, res) => {
 
 }
 
-    // Check if a token was actually found and deleted
-
-
 );
 
-// router.get("/", (req, res) => {
-//     res.send("<h1>Api2 is running!!!</h1>");
-// });
 
-router.get("/", async (req, res) => {
-    console.log("You got here!")
-    const tokens = await RefreshToken.find().sort("token");
-    res.send(tokens);
-});
 
-router.post('/token', async (req, res) => {
-    if (req.body.token == null) return res.sendStatus(401);
-    try {
-        const refreshToken = await RefreshToken.findOne({ "token": req.body.token });
-        console.log("Received token:", req.body.token);
-        console.log("refreshToken is", refreshToken.token);
-        if (refreshToken == null) return res.sendStatus(403);
-        jwt.verify(refreshToken.token, process.env.REFRESH_TOKEN_SECRET, (err, userPayload) => {
-            if (err) return res.sendStatus(403)
-            const accessToken = generateAccessToken({ userId: userPayload.userId })
-            res.json({ accessToken: accessToken })
-        })
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('An error occurred: ' + error.message);
+router.post('/validate', async (req, res) => {
+    const token = req.cookies['accessToken'];
+    if (!token) {
+        return res.sendStatus(401); // No token provided
     }
 
-})
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+        if (err) {
+            // If token expired or any other error
+            if (err.name === 'TokenExpiredError') {
+                try {
+                    const user = await authenticateRefreshToken();
+                    if (!user) {
+                        return res.sendStatus(401); // Token expired
+                    } else {
+                        generateAccessToken(user, res);
+                        return res.json({ isAuthenticated: true, user: user.userName });
+                    }
+                } catch (refreshError) {
+                    console.error(refreshError);
+                    return res.status(500).send('Error refreshing token')
+                }
+            } else {
+                return res.sendStatus(403); // Invalid token
+            }
+        } else {
+            res.json({ isAuthenticated: true, user: user });
+        }
+
+    });
+});
 
 router.post('/login', async (req, res) => {
     const user = await User.findOne({ "userName": req.body.userName });
@@ -85,30 +92,10 @@ router.post('/login', async (req, res) => {
         try {
             if (await bcryptjs.compare(req.body.password, user.password)) {
                 const userPayload = { userId: user._id };
-                const accessToken = generateAccessToken(userPayload);
-                const refreshToken = generateRefreshToken(userPayload);
+                console.log("this is auth.js", user._id, userPayload)
+                generateAccessToken(userPayload, res);
+                const refreshToken = await generateRefreshToken(userPayload, res);
 
-               
-                const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
-                const accessExpires = new Date(Date.now() + 15 * 60 * 1000); // day - hour - minute - second - millisecond
-                
-                await new RefreshToken({
-                    user: user._id,
-                    token: refreshToken, // Consider hashing
-                    expires: refreshExpires
-                }).save();
-
-                res.cookie('accessToken', accessToken, {
-                    httpOnly: true,
-                    secure: true,
-                    expires: accessExpires
-                });
-
-                res.cookie('refreshToken', refreshToken, {
-                    httpOnly: true,
-                    secure: true,
-                    expires: refreshExpires
-                });
 
                 console.log("refresh = ", refreshToken)
                 res.status(200).send('Login Successful');

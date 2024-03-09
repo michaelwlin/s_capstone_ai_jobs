@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+// import { AuthContext } from "../context/AuthProvider";
+import useAuth from '../hooks/useAuth'; // Adjust the path as needed
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const LoginPage = () => {
+const Login = () => {
+    const { validateToken } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [loginStatus, setLoginStatus] = useState(''); // Track login status
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         fetch('http://localhost:5000/api/auth/login', {
             method: 'POST',
             headers: {
@@ -18,7 +26,15 @@ const LoginPage = () => {
         })
             .then(response => {
                 if (response.ok) {
+                    // console.log('Before setAuth:', setAuth); // Assuming 'auth' is accessible here, otherwise skip
+                    // setAuth({ user: userName }); // Update auth state
+                    // setLoginStatus('Login successful');
+                    setUserName('');
+                    setPassword('');
                     setLoginStatus('Login successful'); // Update login status
+                    validateToken();
+                    navigate(from, { replace: true });
+
                 } else {
                     setLoginStatus('Login failed. Please check your username and password.'); // Update login status
                 }
@@ -72,4 +88,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default Login;

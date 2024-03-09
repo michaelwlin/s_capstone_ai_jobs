@@ -4,7 +4,7 @@ const RefreshToken = mongoose.model(
     'RefreshToken',
     new mongoose.Schema({
         user: {
-            type: String,
+            type: Object,
             required: true
         },
         token: {
