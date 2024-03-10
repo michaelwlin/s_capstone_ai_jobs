@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/;
 const usernameRegex = /^[a-zA-Z0-9]{3,20}$/;
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         userName: '',
         email: '',
@@ -61,6 +64,7 @@ const Register = () => {
                 confirmPassword: '',
                 premiumUser: false,
             });
+            navigate('/signIn'); // Redirect to signIn page after successful registration
         } catch (error) {
             console.error('Error registering user:', error);
             alert('Error registering user');

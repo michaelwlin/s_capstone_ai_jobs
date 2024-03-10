@@ -18,25 +18,32 @@ function generateAccessToken(userPayload, res) {
 
 async function generateRefreshToken(userPayload, res) {
 
-  const refreshToken = jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
-  const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
+  try {
+    await RefreshToken.deleteMany({ "user.userId": userPayload.userId });
 
-  console.log(userPayload)
 
-  await new RefreshToken({
-    user: userPayload,
-    token: refreshToken, // Consider hashing
-    expires: refreshExpires
-  }).save();
+    const refreshToken = jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+    const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
 
-  // Set the refresh token as an HttpOnly cookie
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-    secure: true,
-    expires: refreshExpires,
-  });
+    console.log(userPayload)
 
-  return refreshToken;
+    await new RefreshToken({
+      user: userPayload,
+      token: refreshToken, // Consider hashing
+      expires: refreshExpires
+    }).save();
+
+    // Set the refresh token as an HttpOnly cookie
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      expires: refreshExpires,
+    });
+
+    return refreshToken;
+  }
+  catch (err) {
+    console.error("Error deleting existing or creating new refresh tokens:", err);
+  }
 }
-
 module.exports = { generateAccessToken, generateRefreshToken };

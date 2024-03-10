@@ -83,6 +83,8 @@ const SignIn = () => {
                             Sign In
                         </Button>
                     </div>
+                    {/* Display login status message */}
+                    {loginStatus && <p className="mt-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">{loginStatus}</p>}
                 </form>
             </div>
         </div>
