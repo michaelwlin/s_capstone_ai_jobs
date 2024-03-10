@@ -8,7 +8,42 @@ const jwt = require('jsonwebtoken');
 const { generateAccessToken, generateRefreshToken } = require("../middleware/generateAccessToken");
 const RefreshToken = require('../models/refreshtokens');
 const router = express.Router();
+const saltRounds = 10;
 
+
+router.post("/register", async (req, res) => {
+    // const { userName, password, email, premiumUser, firstName, lastName } = req.body;
+    const { userName, password, email, premiumUser } = req.body;
+    if (!userName || !password) {
+        return res.status(400).send("Username and password are required.");
+    }
+
+    try {
+        console.log("Registration attempted");
+        const hashedPassword = await bcryptjs.hash(password, saltRounds);
+
+        const user = new User({
+            userName,
+            password: hashedPassword,
+            email,
+            premiumUser,
+            // firstName,
+            // lastName,
+        });
+
+        await user.save();
+
+        const userResponse = {
+            ...user.toObject(),
+            password: undefined,
+        };
+
+        res.status(201).send(userResponse);
+    } catch (error) {
+        console.error("Error creating user:", error);
+        res.status(500).send("Error creating user.");
+    }
+});
 
 router.get("/loggedInData", authenticateAccessToken, async (req, res) => {
     const user = await User.findById(req.user.userId);
@@ -19,26 +54,39 @@ router.get("/loggedInData", authenticateAccessToken, async (req, res) => {
 });
 
 router.post("/logout", async (req, res) => {
-    const userToken = req.cookies['refreshToken'];
+    const refreshToken = req.cookies['refreshToken'];
+    const accessToken = req.cookies['accessToken'];
 
-    if (!userToken) {
+    if (!refreshToken) {
         return res.status(400).send("Token not provided.");
     }
 
     try {
-        const result = await RefreshToken.deleteOne({ token: userToken });
+        const result = await RefreshToken.deleteOne({ token: refreshToken });
 
         if (result.deletedCount === 0) {
+            console.log("Token not found for delete")
             return res.status(404).send("Token not found.");
         }
+        else {
+            // Clear the refresh token cookie
+            res.clearCookie('refreshToken', {
+                httpOnly: true,
+                secure: true, // Set to true only in production
+                path: '/', // Ensure cookie is valid for all paths
+            });
 
-        // Clear the refresh token cookie
-        res.clearCookie('refreshToken', {
-            httpOnly: true,
-            secure: true,
-        });
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: true, // Set to true only in production
+                path: '/', // Ensure cookie is valid for all paths
+            });
 
-        res.send("Logged out successfully.");
+            res.send("Logged out successfully.");
+        }
+
+
+
 
     } catch (error) {
         console.error("Logout error:", error);
@@ -64,24 +112,24 @@ router.post('/validate', async (req, res) => {
                 try {
                     const user = await authenticateRefreshToken();
                     if (!user) {
-                        return res.sendStatus(401); // Token expired
+                        return res.sendStatus(401).json({ isAuthenticated: false }); // Token expired
                     } else {
                         generateAccessToken(user, res);
                         return res.json({ isAuthenticated: true, user: user.userName });
                     }
                 } catch (refreshError) {
                     console.error(refreshError);
-                    return res.status(500).send('Error refreshing token')
+                    return res.status(500).send('Error refreshing token').json({ isAuthenticated: false });
                 }
             } else {
-                return res.sendStatus(403); // Invalid token
+                return res.sendStatus(403).json({ isAuthenticated: false }); // Invalid token
             }
         } else {
-            res.json({ isAuthenticated: true, user: user });
+            return res.json({ isAuthenticated: true, user: user });
         }
-
     });
 });
+
 
 router.post('/login', async (req, res) => {
     const user = await User.findOne({ "userName": req.body.userName });

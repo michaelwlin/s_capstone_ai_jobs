@@ -3,10 +3,12 @@ import { useNavigate, NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, Avatar } from 'flowbite-react'
 import { FaUser } from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
+import useLogout from '../api/logout';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
   const { auth } = useAuth();
+  const logout = useLogout();
 
   const signIn = () => {
     // Navigate to register/sign-up page
@@ -17,9 +19,10 @@ const NavigationBar = () => {
     navigate('/register');
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await logout();
 
-    navigate('/');
+    navigate('/SignIn');
   }
 
   const userNavigation = () => {

@@ -1,26 +1,49 @@
 import React, { useState } from 'react';
 import { Button } from 'flowbite-react';
+import useAuth from '../hooks/useAuth'; // Adjust the path as needed
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SignIn = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
+    const { validateToken } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [loginStatus, setLoginStatus] = useState(''); // Track login status
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO: Implement logic to submit these details for authentication
-        console.log(formData);
-        alert('Sign in successful! Redirecting...');
-        // TODO: Redirect user after sign in
+        fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Include cookies in the request and response
+            body: JSON.stringify({ userName, password })
+        })
+            .then(response => {
+                if (response.ok) {
+                    // console.log('Before setAuth:', setAuth); // Assuming 'auth' is accessible here, otherwise skip
+                    // setAuth({ user: userName }); // Update auth state
+                    // setLoginStatus('Login successful');
+                    setUserName('');
+                    setPassword('');
+                    setLoginStatus('Login successful'); // Update login status
+                    validateToken();
+                    navigate(from, { replace: true });
+
+                } else {
+                    setLoginStatus('Login failed. Please check your username and password.'); // Update login status
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setLoginStatus(`An error occurred: ${error.message}`); // Update login status on error
+            });
     };
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4">
@@ -28,17 +51,17 @@ const SignIn = () => {
                 <h1 className="text-2xl font-bold mb-4 text-center">Sign In</h1>
                 <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                            Email
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userName">
+                            User
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={handleChange}
+                            id="userName"
+                            name="userName"
+                            type="text"
+                            placeholder="userName"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
                         />
                     </div>
                     <div className="mb-6">
@@ -51,8 +74,8 @@ const SignIn = () => {
                             name="password"
                             type="password"
                             placeholder="******************"
-                            value={formData.password}
-                            onChange={handleChange}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <div className="flex items-center justify-between">

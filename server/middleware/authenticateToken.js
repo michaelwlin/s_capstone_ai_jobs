@@ -8,14 +8,17 @@ async function authenticateRefreshToken(req, res, next) {
 
     try {
         const refreshToken = await RefreshToken.findOne({ "token": token });
-        if (!refreshToken) return res.sendStatus(401);
+        if (!refreshToken) {
+            return res.sendStatus(401);
+        } else {
+            jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, userPayload) => {
+                if (err) return res.sendStatus(403); // Invalid refresh token
 
-        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, userPayload) => {
-            if (err) return res.sendStatus(403); // Invalid refresh token
+                req.userPayload = userPayload; // Attach user payload to request
+                next();
+            });
+        }
 
-            req.userPayload = userPayload; // Attach user payload to request
-            next();
-        });
     } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred: ' + error.message);

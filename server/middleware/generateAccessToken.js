@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const RefreshToken = require('../models/refreshtokens');
 
 function generateAccessToken(userPayload, res) {
-  const accessToken = jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
-  const accessExpires = new Date(Date.now() + 15 * 60 * 1000); // day - hour - minute - second - millisecond
+  const accessToken = jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+  const accessExpires = new Date(Date.now() + 15 * 60 * 1000); // minute - second - millisecond
 
   // Set the refresh token as an HttpOnly cookie
   res.cookie('accessToken', accessToken, {
@@ -18,7 +18,7 @@ function generateAccessToken(userPayload, res) {
 
 async function generateRefreshToken(userPayload, res) {
 
-  const refreshToken = jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30s' });
+  const refreshToken = jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
   const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
 
   console.log(userPayload)

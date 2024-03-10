@@ -23,7 +23,7 @@ const Register = () => {
             ...prev,
             [name]: value,
         }));
-    
+
         if (name === 'userName') {
             setIsUsernameValid(usernameRegex.test(value));
         } else if (name === 'email') {
@@ -32,10 +32,10 @@ const Register = () => {
             const isValid = passwordRegex.test(value);
             setIsPasswordValid(isValid);
         }
-        
+
     };
-    
-    
+
+
     const handleEmailBlur = () => {
         setIsEmailValid(emailRegex.test(formData.email));
     };
@@ -52,7 +52,7 @@ const Register = () => {
         }
 
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/users`, formData);
+            await axios.post(`http://localhost:5000/api/auth/register`, formData);
             alert('User registered successfully');
             setFormData({
                 userName: '',
@@ -73,11 +73,11 @@ const Register = () => {
         const isEmailValid = emailRegex.test(email);
         const doPasswordsMatch = password === confirmPassword;
         const isPasswordValid = passwordRegex.test(password);
-    
+
         return isEveryFieldFilled && isEmailValid && doPasswordsMatch && isPasswordValid;
     };
 
-    
+
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
             <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>New User Registration</h1>
@@ -93,11 +93,11 @@ const Register = () => {
                     value={formData.userName}
                     onChange={handleChange}
                     className={`${isUsernameValid === null
-                            ? ''
-                            : isUsernameValid
+                        ? ''
+                        : isUsernameValid
                             ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
                             : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-                    } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+                        } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
                     placeholder="Username"
                 />
                 {isUsernameValid === false && (
@@ -109,23 +109,23 @@ const Register = () => {
                 <label htmlFor="email" className={`${isEmailValid ? 'text-green-700' : 'text-black-700'} block mb-2 text-sm font-medium`}>
                     Email
                 </label>
-                <input 
-                    name="email" 
-                    type="email" 
-                    value={formData.email} 
+                <input
+                    name="email"
+                    type="email"
+                    value={formData.email}
                     onChange={handleChange}
                     onBlur={handleEmailBlur}
                     className={`${isEmailValid === null
                         ? ''
                         : isEmailValid
-                        ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
-                        : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-                } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
-                placeholder="Email"
+                            ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
+                            : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
+                        } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+                    placeholder="Email"
                 />
                 {isEmailValid === false && (
                     <p className="mt-2 text-sm text-red-600">
-                    <span className="font-medium">Oops!</span> Please enter a valid email address.
+                        <span className="font-medium">Oops!</span> Please enter a valid email address.
                     </p>
                 )}
 
@@ -140,11 +140,11 @@ const Register = () => {
                     className={`${isPasswordValid === null
                         ? ''
                         : isPasswordValid
-                        ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
-                        : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-                    } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+                            ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
+                            : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
+                        } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
                     placeholder="Password" />
-                <div style={{ fontStyle: 'italic', fontSize: '10px'}}>
+                <div style={{ fontStyle: 'italic', fontSize: '10px' }}>
                     <p>Password requirements:</p>
                     <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
                         <li>Length is 8-30 characters</li>
@@ -165,7 +165,7 @@ const Register = () => {
                             ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
                             : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
                         : ''
-                    } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+                        } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
                     placeholder="Confirm Password"
                 />
                 {formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword && (
@@ -180,19 +180,19 @@ const Register = () => {
                 </label>
 
                 <button
-                type="submit"
-                disabled={!isFormValid()}
-                style={{
-                    padding: '10px',
-                    backgroundColor: isFormValid() ? '#4CAF50' : '#ccc',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: isFormValid() ? 'pointer' : 'default',
-                }}
-            >
-                Register
-            </button>
+                    type="submit"
+                    disabled={!isFormValid()}
+                    style={{
+                        padding: '10px',
+                        backgroundColor: isFormValid() ? '#4CAF50' : '#ccc',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                        cursor: isFormValid() ? 'pointer' : 'default',
+                    }}
+                >
+                    Register
+                </button>
 
             </form>
         </div>
