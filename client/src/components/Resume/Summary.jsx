@@ -11,7 +11,6 @@ const Summary = ({
   const [summary, setSummary] = useState(
     resumeSummary?.toString() || 'Summary Description',
   )
-  console.log('res sum', resumeSummary, summary)
 
   useEffect(() => {
     setSummary(resumeSummary?.toString() || 'Summary Description')
@@ -30,11 +29,12 @@ const Summary = ({
         initialFontColor={'black'}
         initialFontSize={0.2}
         initialFontName={'roboto'}
+        customClasses={'font-bold'}
       />
       <TextEditorBlock
         key={`summary-${summary}`}
         width={parentStyle.width}
-        top={summaryTop + 30}
+        top={summaryTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}

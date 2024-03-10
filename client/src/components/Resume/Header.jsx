@@ -37,7 +37,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
   }, [resumeHeader])
 
   return (
-    <div className="header container text-center">
+    <div className="header text-center">
       <TextEditorBlock
         key={`name-${headerName}`}
         width={parentStyle.width}
@@ -54,7 +54,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
       <TextEditorBlock
         key={`title-${headerRole}`}
         width={parentStyle.width}
-        top={nameTop + nameHeight + 10}
+        top={nameTop + 10}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -64,11 +64,12 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         initialFontSize={defaultFontSize}
         initialFontName={'roboto'}
       />
-      <div>
+      <div className="flex flex-row">
         <TextEditorBlock
+          customClasses={'grow'}
           key={`phone-${headerPhone}`}
           width={relativeWidth(3)}
-          top={nameTop + nameHeight + 40}
+          top={nameTop + 10}
           height={30}
           left={defaultLeft}
           parentStyle={parentStyle}
@@ -81,9 +82,9 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         <TextEditorBlock
           key={`email-${headerEmail}`}
           width={relativeWidth(3)}
-          top={nameTop + nameHeight + 40}
-          height={20}
-          left={relativeLeft(defaultLeft, relativeWidth(3))}
+          top={nameTop + 10}
+          height={30}
+          left={0}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
           initialText={headerEmail}
@@ -94,9 +95,9 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         <TextEditorBlock
           key={`linkedin-${headerLinkedin}`}
           width={relativeWidth(3)}
-          top={nameTop + nameHeight + 40}
-          height={20}
-          left={relativeLeft(defaultLeft, relativeWidth(3), 2)}
+          top={nameTop + 10}
+          height={30}
+          left={0}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
           initialText={headerLinkedin}

@@ -14,23 +14,34 @@ const Experience = ({
   const [experience, setExperience] = useState(resumeExperience || [])
 
   useEffect(() => {
-    setExperienceHeight((prevHeight) => {
+    setExperienceHeight(() => {
       const calculatedHeight =
         resumeExperience && resumeExperience.length
-          ? experienceTop + 90 + resumeExperience.length * 700
-          : experienceTop
-
+          ? resumeExperience.length * 25
+          : experienceHeight
       return calculatedHeight
     })
-  }, [resumeExperience, experienceTop, experienceHeight, setExperienceHeight])
+  }, [resumeExperience, experienceHeight, setExperienceHeight])
 
   useEffect(() => {
     setExperience(resumeExperience || [])
   }, [resumeExperience])
 
+  const defaultExperience = () => {
+    return (
+      <ExperienceItem
+        parentStyle={parentStyle}
+        defaultLeft={defaultLeft}
+        childSpacer={childSpacer}
+        experienceTop={experienceTop + 40}
+      />
+    )
+  }
+
   return (
     <div className="container experience">
       <TextEditorBlock
+        key={`experience-header-${experienceTop}`}
         width={parentStyle.width}
         top={experienceTop}
         height={40}
@@ -41,40 +52,21 @@ const Experience = ({
         initialFontColor={'black'}
         initialFontSize={0.2}
         initialFontName={'roboto'}
+        customClasses={'font-bold'}
       />
-      {experience && experience.length > 0 ? (
-        experience.map((exp, index) => (
-          <ExperienceItem
-            key={index}
-            parentStyle={parentStyle}
-            defaultLeft={defaultLeft}
-            childSpacer={childSpacer}
-            experienceTop={experienceTop + 90 + index * 230}
-            experienceItem={exp}
-          />
-        ))
-      ) : (
-        <>
-          <TextEditorBlock
-            width={parentStyle.width}
-            top={experienceTop}
-            height={40}
-            left={defaultLeft}
-            parentStyle={parentStyle}
-            unit={parentStyle.unit}
-            initialText={'EXPERIENCE'}
-            initialFontColor={'black'}
-            initialFontSize={0.2}
-            initialFontName={'roboto'}
-          />
-          <ExperienceItem
-            parentStyle={parentStyle}
-            defaultLeft={defaultLeft}
-            childSpacer={childSpacer}
-            experienceTop={experienceTop + 40}
-          />
-        </>
-      )}
+      {experience.length > 0
+        ? experience.map((exp, index) => (
+            <ExperienceItem
+              key={`experience-item-${index}`}
+              parentStyle={parentStyle}
+              defaultLeft={defaultLeft}
+              childSpacer={childSpacer}
+              experienceTop={experienceTop + index * 25}
+              experienceItem={exp}
+              index={index}
+            />
+          ))
+        : defaultExperience()}
     </div>
   )
 }

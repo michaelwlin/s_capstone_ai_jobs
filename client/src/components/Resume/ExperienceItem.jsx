@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { TextEditorBlock } from 'react-web-editor'
 import { GPTMenuOption } from './index'
 
@@ -8,6 +8,7 @@ const ExperienceItem = ({
   childSpacer,
   experienceTop,
   experienceItem,
+  index,
 }) => {
   const [position, setPosition] = useState(
     experienceItem?.position || 'Position',
@@ -29,10 +30,11 @@ const ExperienceItem = ({
   )
 
   return (
-    <div>
+    <div className="experience-item-container">
       <TextEditorBlock
+        key={`experience-company-${index}`}
         width={parentStyle.width}
-        top={experienceTop + 30}
+        top={experienceTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -43,8 +45,9 @@ const ExperienceItem = ({
         initialFontName={'roboto'}
       />
       <TextEditorBlock
+        key={`experience-position-${index}`}
         width={parentStyle.width}
-        top={experienceTop + 60}
+        top={experienceTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -55,8 +58,9 @@ const ExperienceItem = ({
         initialFontName={'roboto'}
       />
       <TextEditorBlock
+        key={`experience-date-location-${index}`}
         width={parentStyle.width}
-        top={experienceTop + 90}
+        top={experienceTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -67,8 +71,9 @@ const ExperienceItem = ({
         initialFontName={'roboto'}
       />
       <TextEditorBlock
+        key={`experience-description-${index}`}
         width={parentStyle.width}
-        top={experienceTop + 120}
+        top={experienceTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -78,23 +83,25 @@ const ExperienceItem = ({
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
-      {/* {achievements &&
-        achievements.map((achievement, index) => (
-          <TextEditorBlock
-            key={index}
-            width={parentStyle.width}
-            top={experienceTop + 150 + 30 * index}
-            height={30}
-            left={defaultLeft}
-            parentStyle={parentStyle}
-            unit={parentStyle.unit}
-            initialText={`• ${achievement}`}
-            initialFontColor={'black'}
-            initialFontSize={0.17}
-            initialFontName={'roboto'}
-            customMenuOptions={() => <GPTMenuOption />}
-          />
-        ))} */}
+      <div className="container achievements">
+        {achievements &&
+          achievements.map((achievement, index) => (
+            <TextEditorBlock
+              key={`experience-achievement-${index}`}
+              width={parentStyle.width}
+              top={experienceTop}
+              height={30}
+              left={defaultLeft}
+              parentStyle={parentStyle}
+              unit={parentStyle.unit}
+              initialText={`• ${achievement}`}
+              initialFontColor={'black'}
+              initialFontSize={0.17}
+              initialFontName={'roboto'}
+              customMenuOptions={() => <GPTMenuOption />}
+            />
+          ))}
+      </div>
     </div>
   )
 }

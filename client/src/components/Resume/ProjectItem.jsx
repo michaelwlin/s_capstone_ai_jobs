@@ -24,18 +24,6 @@ const ProjectItem = ({
       <TextEditorBlock
         width={parentStyle.width}
         top={projectsTop}
-        height={40}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'SELECTED PROJECTS'}
-        initialFontColor={'black'}
-        initialFontSize={0.2}
-        initialFontName={'roboto'}
-      />
-      <TextEditorBlock
-        width={parentStyle.width}
-        top={projectsTop + 30}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -50,7 +38,7 @@ const ProjectItem = ({
           <TextEditorBlock
             key={index}
             width={parentStyle.width}
-            top={projectsTop + 30 + 30 * (index + 1)}
+            top={projectsTop}
             height={30}
             left={defaultLeft}
             parentStyle={parentStyle}

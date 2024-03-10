@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { EditableBoard } from 'react-web-editor'
 import { Sidebar } from 'flowbite-react'
 import { IoMdAddCircle } from 'react-icons/io'
@@ -16,36 +16,30 @@ import {
 } from '../components/Resume/index.js'
 
 const Resume = () => {
+  const boardRef = useRef(null)
   const defaultLeft = 20
   const parentWidth = 1150
-  const parentStyle = {
+  const childSpacer = 5
+  const summaryTop = 50
+  const skillsTop = summaryTop + 20
+
+  const [boardHeight, setBoardHeight] = useState(1754)
+  const [parentStyle, setParentStyle] = useState({
     parentWidth: parentWidth,
     width: parentWidth - defaultLeft,
-    height: 1754,
+    height: boardHeight,
     unit: 'px',
-  }
-  const childSpacer = 5
-  const summaryTop = 30 + 100 + 30 + 15
-  const skillsTop = summaryTop + 100 + 15
-
+  })
   const [openModal, setOpenModal] = useState(false)
   const [resume, setResume] = useState({})
   const [signedIn, setSignedIn] = useState(false)
   const [skillsHeight, setSkillsHeight] = useState(100)
-  const [experienceHeight, setExperienceHeight] = useState(260)
-  const [projectsHeight, setProjectsHeight] = useState(170)
+  const [experienceHeight, setExperienceHeight] = useState(250)
+  const [projectsHeight, setProjectsHeight] = useState(20)
 
-  const experienceTop = () => {
-    return skillsTop + skillsHeight
-  }
-
-  const projectsTop = () => {
-    return experienceTop() + experienceHeight + 15
-  }
-
-  const educationTop = () => {
-    return projectsTop() + projectsHeight + 15
-  }
+  const experienceTop = skillsTop + skillsHeight
+  const projectsTop = experienceTop + experienceHeight
+  const educationTop = projectsTop + projectsHeight
 
   const getUserResume = async () => {
     try {
@@ -65,16 +59,27 @@ const Resume = () => {
 
   useEffect(() => {
     getUserResume()
-  }, [])
+  }, [skillsTop])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setBoardHeight((prevHeight) => {
+        const calculatedHeight = boardRef.current
+          ? boardRef.current.scrollHeight + 20
+          : prevHeight
+        return calculatedHeight
+      })
+    }, 1)
+  }, [boardRef, boardRef.current?.scrollHeight])
 
   console.log(resume)
 
   return (
-    <div className="resume mx-5 mb-20 container min-h-max flex flex-row gap-1">
+    <div className="resume mx-5 mb-20 min-h-full flex flex-row gap-1">
       {openModal && (
         <UploadModal openModal={openModal} setOpenModal={setOpenModal} />
       )}
-      <Sidebar style={{ minHeight: parentStyle.height }}>
+      <Sidebar style={{ minHeight: boardHeight }}>
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Sidebar.Item href="#" icon={IoMdAddCircle}>
@@ -97,11 +102,12 @@ const Resume = () => {
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>
-      <div className="resume-wrapper">
+      <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard
+          key={`resume-board-${boardHeight}`}
           className="resume-board"
           width={parentStyle.parentWidth}
-          height={parentStyle.height}
+          height={boardHeight}
           unit={parentStyle.unit}
           backgroundColor={'#fff'}
         >
@@ -131,7 +137,7 @@ const Resume = () => {
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            experienceTop={experienceTop()}
+            experienceTop={experienceTop}
             resumeExperience={resume.experience}
             experienceHeight={experienceHeight}
             setExperienceHeight={setExperienceHeight}
@@ -140,7 +146,7 @@ const Resume = () => {
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            projectsTop={projectsTop()}
+            projectsTop={projectsTop}
             resumeProjects={resume.selected_projects}
             projectsHeight={projectsHeight}
             setProjectsHeight={setProjectsHeight}
@@ -149,7 +155,7 @@ const Resume = () => {
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            educationTop={educationTop()}
+            educationTop={educationTop}
             resumeEducation={resume.education}
           />
         </EditableBoard>

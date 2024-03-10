@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaGithubAlt } from 'react-icons/fa'
 
 const SiteFooter = () => {
   return (
-    <Footer bgDark container className="footer">
+    <Footer bgDark container className="footer bottom-0">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>

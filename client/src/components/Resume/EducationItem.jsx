@@ -20,23 +20,9 @@ const EducationItem = ({
   return (
     <div>
       <TextEditorBlock
-        key={`education-header`}
-        width={parentStyle.width}
-        top={educationTop}
-        height={40}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'EDUCATION'}
-        initialFontColor={'black'}
-        initialFontSize={0.2}
-        initialFontName={'roboto'}
-      />
-
-      <TextEditorBlock
         key={`education-${school}`}
         width={parentStyle.width}
-        top={educationTop + 30}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -46,11 +32,10 @@ const EducationItem = ({
         initialFontSize={0.17}
         initialFontName={'roboto'}
       />
-
       <TextEditorBlock
         key={`education-${degree}`}
         width={parentStyle.width}
-        top={educationTop + 60}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -64,7 +49,7 @@ const EducationItem = ({
       <TextEditorBlock
         key={`education-${dates}`}
         width={parentStyle.width}
-        top={educationTop + 90}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
