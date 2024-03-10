@@ -72,8 +72,6 @@ const Resume = () => {
     }, 1)
   }, [boardRef, boardRef.current?.scrollHeight])
 
-  console.log(resume)
-
   return (
     <div className="resume mx-5 mb-20 min-h-full flex flex-row gap-1">
       {openModal && (

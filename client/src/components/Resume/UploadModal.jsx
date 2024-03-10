@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Button, Modal, FileInput, Label, Spinner } from 'flowbite-react'
 import { FaUpload } from 'react-icons/fa'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { getCSRFToken } from '../../api/csrfToken.js'
 
 const UploadModal = ({ openModal, setOpenModal }) => {
+  const navigate = useNavigate()
   const [inputFile, setInputFile] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -35,6 +37,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       if (res) {
         setLoading(false)
         setOpenModal(false)
+        navigate('/resume')
       }
     } catch (err) {
       //TODO: display error message
