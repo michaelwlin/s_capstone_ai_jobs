@@ -10,6 +10,9 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
   }
   const formattedDate = (date) =>
     new Date(date).toLocaleDateString('en-us', dateOptions)
