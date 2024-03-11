@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from datetime import datetime
 import os
+from bson import ObjectId
 from pymongo.errors import BulkWriteError
 
 
@@ -38,9 +40,14 @@ def save_resume_to_mongodb(data):
     user_filter = {"userName": "testUser"}  # TODO: Update to logged in user
     existing_user = collection.find_one(user_filter)
 
+    resume_entry = {
+        "_id": ObjectId(),
+        "resume_data": data,
+        "date_added": datetime.now()
+    }
+
     if existing_user:
-        new_resume = existing_user.get("resume", [] + [data])
-        collection.update_one(user_filter, {"$set": {"resume": new_resume}})
+        collection.update_one(user_filter, {"$push": {"resume": resume_entry}})
         print("Resume inserted into MongoDB.")
     else:
         user = {"userName": "testUser2", "resume": [

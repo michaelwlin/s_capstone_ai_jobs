@@ -17,34 +17,25 @@ const EducationItem = ({
     educationItem?.location || 'Location',
   )
 
-  console.log(educationItem)
-
-  useEffect(() => {
-    setDegree(educationItem?.degree || 'Degree')
-    setSchool(educationItem?.school_university || 'School/University')
-    setDates(educationItem?.dates || 'Dates')
-    setLocation(educationItem?.location || 'Location')
-  }, [educationItem])
-
   return (
     <div>
       <TextEditorBlock
-        key={`education-header`}
+        key={`education-${school}`}
         width={parentStyle.width}
         top={educationTop}
-        height={40}
+        height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
-        initialText={'EDUCATION'}
+        initialText={school}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={0.17}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
         key={`education-${degree}`}
         width={parentStyle.width}
-        top={educationTop + 30}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
@@ -56,23 +47,9 @@ const EducationItem = ({
       />
 
       <TextEditorBlock
-        key={`education-${school}`}
-        width={parentStyle.width}
-        top={educationTop + 60}
-        height={30}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={school}
-        initialFontColor={'black'}
-        initialFontSize={0.17}
-        initialFontName={'roboto'}
-      />
-
-      <TextEditorBlock
         key={`education-${dates}`}
         width={parentStyle.width}
-        top={educationTop + 90}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
