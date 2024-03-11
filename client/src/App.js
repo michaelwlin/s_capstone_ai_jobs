@@ -15,6 +15,7 @@ const App = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/find-jobs" element={<FindJobs />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/search-results" element={<Results />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
@@ -22,6 +23,8 @@ const App = () => {
           <Route path="/users" element={<FetchUsers />} />
           <Route path="/app" element={<FetchApp />} />
           <Route path="/resume" element={<Resume />} />
+          <Route path="/resume/:_id" element={<Resume />} />
+          <Route path="/user-search" element={<UserSearch />} />
 
           {/* Protected Route */}
           <Route element={<RequireAuth />}>
