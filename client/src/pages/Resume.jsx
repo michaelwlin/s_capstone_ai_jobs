@@ -60,6 +60,7 @@ const Resume = () => {
         )
         setSignedIn(true)
       } catch (error) {
+        //TODO: add error handling
         console.error('There was an error fetching the resume data:', error)
       }
     }
