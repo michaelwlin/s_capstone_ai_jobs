@@ -13,6 +13,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
   }
   const formattedDate = (date) =>
     new Date(date).toLocaleDateString('en-us', dateOptions)
+
   useEffect(() => {
     const getAllResumes = async () => {
       try {
@@ -55,6 +56,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
                   <Table.Cell>{formattedDate(resume.date_added)}</Table.Cell>
                   <Table.Cell>
                     <NavLink
+                      reloadDocument
                       to={`/resume/${resume._id}`}
                       className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                       onClick={() => setOpenModal(false)}

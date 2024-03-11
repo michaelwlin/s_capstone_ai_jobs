@@ -65,7 +65,7 @@ const Resume = () => {
       }
     }
     getUserResume()
-  }, [_id, skillsTop])
+  }, [_id])
 
   useEffect(() => {
     setTimeout(() => {
@@ -76,7 +76,7 @@ const Resume = () => {
         return calculatedHeight
       })
     }, 1)
-  }, [boardRef, boardRef.current?.scrollHeight])
+  }, [resume, boardRef, boardRef.current?.scrollHeight])
 
   return (
     <div className="resume mx-5 mb-20 min-h-full flex flex-row gap-1">
