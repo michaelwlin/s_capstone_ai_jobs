@@ -93,7 +93,7 @@ const Resume = () => {
           : prevHeight
         return calculatedHeight
       })
-    }, 1)
+    }, 1000)
   }, [resume, boardRef, boardRef.current?.scrollHeight])
 
   return (
