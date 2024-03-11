@@ -23,6 +23,7 @@ const App = () => {
             <Route path="/users" element={<FetchUsers />} />
             <Route path="/app" element={<FetchApp />} />
             <Route path="/resume" element={<Resume />} />
+            <Route path="/resume/:_id" element={<Resume />} />
           </Routes>
         </Router>
       </div>

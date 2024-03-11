@@ -3,7 +3,11 @@ import { IoMdAddCircle } from 'react-icons/io'
 import { FaUpload, FaSpellCheck, FaHistory } from 'react-icons/fa'
 import { BiSolidCustomize } from 'react-icons/bi'
 
-const ResumeSidebar = ({ boardHeight, setOpenModal }) => {
+const ResumeSidebar = ({
+  boardHeight,
+  setOpenUploadModal,
+  setOpenHistoryModal,
+}) => {
   return (
     <Sidebar style={{ minHeight: boardHeight }}>
       <Sidebar.Items>
@@ -11,7 +15,10 @@ const ResumeSidebar = ({ boardHeight, setOpenModal }) => {
           <Sidebar.Item href="#" icon={IoMdAddCircle}>
             Add Section
           </Sidebar.Item>
-          <Sidebar.Item icon={FaUpload} onClick={() => setOpenModal(true)}>
+          <Sidebar.Item
+            icon={FaUpload}
+            onClick={() => setOpenUploadModal(true)}
+          >
             Upload Resume
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={FaSpellCheck}>
@@ -19,7 +26,10 @@ const ResumeSidebar = ({ boardHeight, setOpenModal }) => {
           </Sidebar.Item>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={FaHistory}>
+          <Sidebar.Item
+            icon={FaHistory}
+            onClick={() => setOpenHistoryModal(true)}
+          >
             History
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={BiSolidCustomize}>

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 import { EditableBoard } from 'react-web-editor'
 import axios from 'axios'
 import {
@@ -10,6 +11,7 @@ import {
   Projects,
   UploadModal,
   ResumeSidebar,
+  HistoryModal,
 } from '../components/Resume/index.js'
 
 const Resume = () => {
@@ -27,7 +29,8 @@ const Resume = () => {
     height: boardHeight,
     unit: 'px',
   })
-  const [openModal, setOpenModal] = useState(false)
+  const [openUploadModal, setOpenUploadModal] = useState(false)
+  const [openHistoryModal, setOpenHistoryModal] = useState(false)
   const [resume, setResume] = useState({})
   const [signedIn, setSignedIn] = useState(false)
   const [skillsHeight, setSkillsHeight] = useState(100)
@@ -38,6 +41,8 @@ const Resume = () => {
   const projectsTop = experienceTop + experienceHeight
   const educationTop = projectsTop + projectsHeight
 
+  let { _id } = useParams()
+
   const getUserResume = async () => {
     try {
       //TODO: only call when signed in
@@ -47,7 +52,11 @@ const Resume = () => {
       if (res && res.data.resume.length === 0) {
         return
       }
-      setResume(res.data.resume.pop())
+      setResume(
+        _id
+          ? res.data.resume.find((r) => r._id === _id)['resume_data']
+          : res.data.resume.pop()['resume_data'],
+      )
       setSignedIn(true)
     } catch (error) {
       console.error('There was an error fetching the resume data:', error)
@@ -71,10 +80,23 @@ const Resume = () => {
 
   return (
     <div className="resume mx-5 mb-20 min-h-full flex flex-row gap-1">
-      {openModal && (
-        <UploadModal openModal={openModal} setOpenModal={setOpenModal} />
+      {openUploadModal && (
+        <UploadModal
+          openModal={openUploadModal}
+          setOpenModal={setOpenUploadModal}
+        />
       )}
-      <ResumeSidebar boardHeight={boardHeight} setOpenModal={setOpenModal} />
+      {openHistoryModal && (
+        <HistoryModal
+          openModal={openHistoryModal}
+          setOpenModal={setOpenHistoryModal}
+        />
+      )}
+      <ResumeSidebar
+        boardHeight={boardHeight}
+        setOpenUploadModal={setOpenUploadModal}
+        setOpenHistoryModal={setOpenHistoryModal}
+      />
       <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard
           key={`resume-board-${boardHeight}`}
