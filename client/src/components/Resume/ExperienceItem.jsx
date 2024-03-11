@@ -41,7 +41,7 @@ const ExperienceItem = ({
         unit={parentStyle.unit}
         initialText={company}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
@@ -54,7 +54,7 @@ const ExperienceItem = ({
         unit={parentStyle.unit}
         initialText={position}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
@@ -67,7 +67,7 @@ const ExperienceItem = ({
         unit={parentStyle.unit}
         initialText={`${date}, ${location}`}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
@@ -80,7 +80,7 @@ const ExperienceItem = ({
         unit={parentStyle.unit}
         initialText={description}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       <div className="container achievements">
@@ -96,7 +96,7 @@ const ExperienceItem = ({
               unit={parentStyle.unit}
               initialText={`• ${achievement}`}
               initialFontColor={'black'}
-              initialFontSize={0.17}
+              initialFontSize={parentStyle.textFontSize}
               initialFontName={'roboto'}
               customMenuOptions={() => <GPTMenuOption />}
             />

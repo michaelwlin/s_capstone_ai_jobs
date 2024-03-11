@@ -50,7 +50,7 @@ const Skills = ({
           initialText={languages}
           onChange={(e) => setLanguages(e.target.initialText)}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.headerFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
@@ -64,7 +64,7 @@ const Skills = ({
           initialText={databases}
           onChange={(e) => setDatabases(e.target.initialText)}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
@@ -78,7 +78,7 @@ const Skills = ({
           initialText={other}
           onChange={(e) => setOther(e.target.initialText)}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
       </>
@@ -97,7 +97,7 @@ const Skills = ({
         unit={parentStyle.unit}
         initialText={'SKILLS'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />
@@ -113,7 +113,7 @@ const Skills = ({
           unit={parentStyle.unit}
           initialText={formattedSkills()}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
       ) : (

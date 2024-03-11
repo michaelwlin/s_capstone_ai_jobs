@@ -7,6 +7,7 @@ const ResumeSidebar = ({
   boardHeight,
   setOpenUploadModal,
   setOpenHistoryModal,
+  saveAsPdf,
 }) => {
   return (
     <Sidebar style={{ minHeight: boardHeight }}>
@@ -35,7 +36,7 @@ const ResumeSidebar = ({
           <Sidebar.Item href="#" icon={BiSolidCustomize}>
             Tailor for Job
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={FaDownload}>
+          <Sidebar.Item icon={FaDownload} onClick={saveAsPdf}>
             Download as PDF
           </Sidebar.Item>
         </Sidebar.ItemGroup>

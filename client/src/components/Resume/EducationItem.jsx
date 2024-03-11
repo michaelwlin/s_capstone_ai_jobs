@@ -29,7 +29,7 @@ const EducationItem = ({
         unit={parentStyle.unit}
         initialText={school}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       <TextEditorBlock
@@ -42,7 +42,7 @@ const EducationItem = ({
         unit={parentStyle.unit}
         initialText={degree}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
 
@@ -56,7 +56,7 @@ const EducationItem = ({
         unit={parentStyle.unit}
         initialText={`${dates}, ${location}`}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
     </div>

@@ -27,7 +27,7 @@ const Summary = ({
         unit={parentStyle.unit}
         initialText={'SUMMARY'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />
@@ -41,7 +41,7 @@ const Summary = ({
         unit={parentStyle.unit}
         initialText={summary}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
     </div>

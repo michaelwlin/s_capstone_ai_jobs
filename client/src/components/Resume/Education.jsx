@@ -27,7 +27,7 @@ const Education = ({
         unit={parentStyle.unit}
         initialText={'EDUCATION'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />

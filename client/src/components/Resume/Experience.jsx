@@ -50,7 +50,7 @@ const Experience = ({
         unit={parentStyle.unit}
         initialText={'EXPERIENCE'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />

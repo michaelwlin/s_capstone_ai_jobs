@@ -30,7 +30,7 @@ const ProjectItem = ({
         unit={parentStyle.unit}
         initialText={projectName}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       {projectDescription.map((description, index) => {
@@ -45,7 +45,7 @@ const ProjectItem = ({
             unit={parentStyle.unit}
             initialText={`• ${description}`}
             initialFontColor={'black'}
-            initialFontSize={0.17}
+            initialFontSize={parentStyle.textFontSize}
             initialFontName={'roboto'}
           />
         )
