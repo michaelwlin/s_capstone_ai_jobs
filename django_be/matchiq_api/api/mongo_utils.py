@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from datetime import datetime
-from bson import ObjectId
 import os
 from pymongo.errors import BulkWriteError
 
@@ -41,7 +40,7 @@ def save_resume_to_mongodb(data):
     existing_user = collection.find_one(user_filter)
 
     resume_entry = {
-        "_id": ObjectId(),
+        "_id": MongoClient.objectId(),
         "resume_data": data,
         "date_added": datetime.now()
     }
