@@ -32,7 +32,7 @@ const SignIn = () => {
                     setPassword('');
                     setLoginStatus('Login successful'); // Update login status
                     validateToken();
-                    navigate(from, { replace: true });
+                    // navigate(from, { replace: true });
 
                 } else {
                     setLoginStatus('Login failed. Please check your username and password.'); // Update login status

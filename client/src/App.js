@@ -8,7 +8,7 @@ import { FetchApp, FetchUsers, FetchJob } from './components'
 const App = () => {
 
   return (
-    
+
     <div className="App">
       <NavigationBar />
       <Routes>
@@ -17,7 +17,6 @@ const App = () => {
         <Route path="/find-jobs" element={<FindJobs />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/search-results" element={<Results />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/jobs" element={<FetchJob />} />
@@ -30,7 +29,7 @@ const App = () => {
         <Route element={<RequireAuth />}>
           <Route path="/about-us" element={<AboutUs />} />
 
-          
+
         </Route>
       </Routes>
       <Footer />
