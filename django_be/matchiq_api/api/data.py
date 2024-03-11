@@ -107,7 +107,7 @@ class DataTools:
 
     def parse_resume(self, resume_text):
         system_prompt = "You are a resume analyzer trying to categorize the information on a resume."
-        user_prompt = f"Categorize the information in this resume:\n {resume_text}"
+        user_prompt = f"Categorize the information in this resume but do not change any of the wording:\n {resume_text}"
         schema = {
             "type": "object",
             "properties": {
@@ -121,11 +121,11 @@ class DataTools:
                         "linkedin_url": {"type": "string", "format": "uri"},
                     },
                 },
-                "summary": {"type": "array", "items": {"type": "string"}},
                 "skills": {
                     "type": "array",
                     "items": {"type": "string"}
                 },
+                "summary": {"type": "string"},
                 "experience": {
                     "type": "array",
                     "items": {
@@ -135,8 +135,8 @@ class DataTools:
                             "position": {"type": "string"},
                             "dates": {"type": "string"},
                             "location": {"type": "string"},
-                            "company_description": {"type": "string"},
-                            "description": {"type": "array", "items": {"type": "string"}},
+                            "accomplishments": {"type": "array", "items": {"type": "string"}},
+                            "company_or_role_description": {"type": "string"},
                         }}
                 },
                 "selected_projects": {
@@ -148,17 +148,17 @@ class DataTools:
                     }}
                 },
                 "education": {
-                    "type": "object",
-                    "properties": {
-                        "degree": {"type": "string"},
-                        "school_university": {"type": "string"},
-                        "dates": {"type": "string"},
-                        "location": {"type": "string"},
-                    },
+                    "type": "array",
+                    "items": {"type": "object",
+                              "properties": {
+                                  "degree": {"type": "string"},
+                                  "school_university": {"type": "string"},
+                                  "dates": {"type": "string"},
+                                  "location": {"type": "string"},
+                              }}
                 },
                 "other_information": {
                     "type": "array",
-                    "description": "Other things listed in the resume",
                     "items": {
                         "type": "object",
                         "properties": {
