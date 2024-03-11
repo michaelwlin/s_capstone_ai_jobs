@@ -15,4 +15,22 @@ router.get('/:id', validateID, async (req, res) => {
   res.send(job)
 })
 
+async function getUniqueJobLocations() {
+  try {
+    return await Job.distinct("location");
+  } catch (error) {
+    console.error("Failed to fetch unique job locations:", error);
+    throw error;
+  }
+}
+
+router.get('/locations', async (req, res) => {
+  try {
+    const locations = await getUniqueJobLocations();
+    res.json(locations);
+  } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
 module.exports = router
