@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavigationBar, Footer } from './components'
-import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume } from './pages'
+import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume, UserSearch } from './pages'
 import { FetchApp, FetchUsers, FetchJob } from './components'
 
 const App = () => {
@@ -24,6 +24,7 @@ const App = () => {
             <Route path="/app" element={<FetchApp />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/resume/:_id" element={<Resume />} />
+            <Route path="/user-search" element={<UserSearch />} />
           </Routes>
         </Router>
       </div>
