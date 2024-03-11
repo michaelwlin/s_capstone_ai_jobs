@@ -135,8 +135,8 @@ class DataTools:
                             "position": {"type": "string"},
                             "dates": {"type": "string"},
                             "location": {"type": "string"},
-                            "company_or_role_description": {"type": "string"},
                             "accomplishments": {"type": "array", "items": {"type": "string"}},
+                            "company_or_role_description": {"type": "string"},
                         }}
                 },
                 "selected_projects": {
