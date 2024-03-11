@@ -1,5 +1,6 @@
 import { TextEditorBlock } from 'react-web-editor'
 import { useState } from 'react'
+import { GPTMenuOption } from './index'
 
 const ProjectItem = ({
   parentStyle,
@@ -47,6 +48,7 @@ const ProjectItem = ({
             initialFontColor={'black'}
             initialFontSize={parentStyle.textFontSize}
             initialFontName={'roboto'}
+            customMenuOptions={() => <GPTMenuOption />}
           />
         )
       })}
