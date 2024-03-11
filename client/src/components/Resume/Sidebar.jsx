@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react'
 import { IoMdAddCircle } from 'react-icons/io'
-import { FaUpload, FaSpellCheck, FaHistory } from 'react-icons/fa'
+import { FaUpload, FaSpellCheck, FaHistory, FaDownload } from 'react-icons/fa'
 import { BiSolidCustomize } from 'react-icons/bi'
 
 const ResumeSidebar = ({
@@ -34,6 +34,9 @@ const ResumeSidebar = ({
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={BiSolidCustomize}>
             Tailor for Job
+          </Sidebar.Item>
+          <Sidebar.Item href="#" icon={FaDownload}>
+            Download as PDF
           </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
