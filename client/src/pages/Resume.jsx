@@ -43,29 +43,28 @@ const Resume = () => {
 
   let { _id } = useParams()
 
-  const getUserResume = async () => {
-    try {
-      //TODO: only call when signed in
-      const res = await axios.get(
-        'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
-      )
-      if (res && res.data.resume.length === 0) {
-        return
-      }
-      setResume(
-        _id
-          ? res.data.resume.find((r) => r._id === _id)['resume_data']
-          : res.data.resume.pop()['resume_data'],
-      )
-      setSignedIn(true)
-    } catch (error) {
-      console.error('There was an error fetching the resume data:', error)
-    }
-  }
-
   useEffect(() => {
+    const getUserResume = async () => {
+      try {
+        //TODO: only call when signed in
+        const res = await axios.get(
+          'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
+        )
+        if (res && res.data.resume.length === 0) {
+          return
+        }
+        setResume(
+          _id
+            ? res.data.resume.find((r) => r._id === _id)['resume_data']
+            : res.data.resume.pop()['resume_data'],
+        )
+        setSignedIn(true)
+      } catch (error) {
+        console.error('There was an error fetching the resume data:', error)
+      }
+    }
     getUserResume()
-  }, [skillsTop])
+  }, [_id, skillsTop])
 
   useEffect(() => {
     setTimeout(() => {
