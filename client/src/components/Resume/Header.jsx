@@ -11,9 +11,6 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
       numberOfChildren
     )
   }
-  const relativeLeft = (firstChild, width, index = 1) => {
-    return firstChild + (width + childSpacer) * index
-  }
 
   const [headerName, setHeaderName] = useState(resumeHeader?.name || 'Name')
   const [headerRole, setHeaderRole] = useState(resumeHeader?.title || 'Role')
