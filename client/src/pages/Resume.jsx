@@ -1,9 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
 import { EditableBoard } from 'react-web-editor'
-import { Sidebar } from 'flowbite-react'
-import { IoMdAddCircle } from 'react-icons/io'
-import { FaUpload, FaSpellCheck, FaHistory } from 'react-icons/fa'
-import { BiSolidCustomize } from 'react-icons/bi'
 import axios from 'axios'
 import {
   Header,
@@ -13,6 +9,7 @@ import {
   Skills,
   Projects,
   UploadModal,
+  ResumeSidebar,
 } from '../components/Resume/index.js'
 
 const Resume = () => {
@@ -77,29 +74,7 @@ const Resume = () => {
       {openModal && (
         <UploadModal openModal={openModal} setOpenModal={setOpenModal} />
       )}
-      <Sidebar style={{ minHeight: boardHeight }}>
-        <Sidebar.Items>
-          <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={IoMdAddCircle}>
-              Add Section
-            </Sidebar.Item>
-            <Sidebar.Item icon={FaUpload} onClick={() => setOpenModal(true)}>
-              Upload Resume
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={FaSpellCheck}>
-              AI Proof Read
-            </Sidebar.Item>
-          </Sidebar.ItemGroup>
-          <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={FaHistory}>
-              History
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={BiSolidCustomize}>
-              Tailor for Job
-            </Sidebar.Item>
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
+      <ResumeSidebar boardHeight={boardHeight} setOpenModal={setOpenModal} />
       <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard
           key={`resume-board-${boardHeight}`}
