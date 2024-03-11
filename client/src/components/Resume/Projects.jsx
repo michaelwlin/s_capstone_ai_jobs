@@ -17,8 +17,9 @@ const Projects = ({
     setProjectsHeight(() => {
       const calculatedHeight =
         resumeProjects && resumeProjects.length
-          ? resumeProjects.length * 5
+          ? resumeProjects.length * 12
           : projectsHeight
+      console.log(calculatedHeight, 'calculatedHeight')
       return calculatedHeight
     })
   }, [resumeProjects, projectsHeight, setProjectsHeight])

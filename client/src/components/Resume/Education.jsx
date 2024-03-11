@@ -38,7 +38,7 @@ const Education = ({
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            educationTop={educationTop + index * 20}
+            educationTop={educationTop + 10 + index * 30}
             educationItem={education}
           />
         ))
