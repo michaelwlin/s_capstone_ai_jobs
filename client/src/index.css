@@ -61,7 +61,8 @@ code {
 .resume-wrapper {
   transform: scale(1);
   transform-origin: 50% 0px;
-  max-height: 1202px;
+  min-height: 1202px;
+  height: 100%;
   transition: all 0.5s ease-in-out;
 }
 

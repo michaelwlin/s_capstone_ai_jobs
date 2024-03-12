@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { EditableBoard } from 'react-web-editor'
 import axios from 'axios'
+import generatePDF, { Margin } from 'react-to-pdf'
 import {
   Header,
   Summary,
@@ -15,7 +16,9 @@ import {
 } from '../components/Resume/index.js'
 
 const Resume = () => {
+  let { _id } = useParams()
   const boardRef = useRef(null)
+
   const defaultLeft = 20
   const parentWidth = 1150
   const childSpacer = 5
@@ -28,6 +31,8 @@ const Resume = () => {
     width: parentWidth - defaultLeft,
     height: boardHeight,
     unit: 'px',
+    headerFontSize: 0.24,
+    textFontSize: 0.2,
   })
   const [openUploadModal, setOpenUploadModal] = useState(false)
   const [openHistoryModal, setOpenHistoryModal] = useState(false)
@@ -41,31 +46,44 @@ const Resume = () => {
   const projectsTop = experienceTop + experienceHeight
   const educationTop = projectsTop + projectsHeight
 
-  let { _id } = useParams()
-
-  const getUserResume = async () => {
-    try {
-      //TODO: only call when signed in
-      const res = await axios.get(
-        'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
-      )
-      if (res && res.data.resume.length === 0) {
-        return
-      }
-      setResume(
-        _id
-          ? res.data.resume.find((r) => r._id === _id)['resume_data']
-          : res.data.resume.pop()['resume_data'],
-      )
-      setSignedIn(true)
-    } catch (error) {
-      console.error('There was an error fetching the resume data:', error)
-    }
+  const saveAsPdf = () => {
+    const printRef = boardRef.current.children[0]
+    return generatePDF(() => printRef, {
+      method: 'save',
+      filename: 'resume.pdf',
+      resolution: 10,
+      page: { margin: Margin.MEDIUM },
+      overrides: {
+        pdf: {
+          compress: false,
+        },
+      },
+    })
   }
 
   useEffect(() => {
+    const getUserResume = async () => {
+      try {
+        //TODO: only call when signed in
+        const res = await axios.get(
+          'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
+        )
+        if (res && res.data.resume.length === 0) {
+          return
+        }
+        setResume(
+          _id
+            ? res.data.resume.find((r) => r._id === _id)['resume_data']
+            : res.data.resume.pop()['resume_data'],
+        )
+        setSignedIn(true)
+      } catch (error) {
+        //TODO: add error handling
+        console.error('There was an error fetching the resume data:', error)
+      }
+    }
     getUserResume()
-  }, [skillsTop])
+  }, [_id])
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,8 +93,8 @@ const Resume = () => {
           : prevHeight
         return calculatedHeight
       })
-    }, 1)
-  }, [boardRef, boardRef.current?.scrollHeight])
+    }, 1000)
+  }, [resume, boardRef, boardRef.current?.scrollHeight])
 
   return (
     <div className="resume mx-5 mb-20 min-h-full flex flex-row gap-1">
@@ -96,6 +114,7 @@ const Resume = () => {
         boardHeight={boardHeight}
         setOpenUploadModal={setOpenUploadModal}
         setOpenHistoryModal={setOpenHistoryModal}
+        saveAsPdf={saveAsPdf}
       />
       <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard

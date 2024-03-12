@@ -1,19 +1,15 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 
 const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
   const nameTop = 30
   const nameHeight = 40
-  const defaultFontSize = 0.17
 
   const relativeWidth = (numberOfChildren) => {
     return (
       (parentStyle.width - defaultLeft - childSpacer * numberOfChildren) /
       numberOfChildren
     )
-  }
-  const relativeLeft = (firstChild, width, index = 1) => {
-    return firstChild + (width + childSpacer) * index
   }
 
   const [headerName, setHeaderName] = useState(resumeHeader?.name || 'Name')
@@ -61,7 +57,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
         unit={parentStyle.unit}
         initialText={headerRole}
         initialFontColor={'black'}
-        initialFontSize={defaultFontSize}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
       <div className="flex flex-row">
@@ -76,7 +72,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           unit={parentStyle.unit}
           initialText={headerPhone}
           initialFontColor={'black'}
-          initialFontSize={defaultFontSize}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
@@ -89,7 +85,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           unit={parentStyle.unit}
           initialText={headerEmail}
           initialFontColor={'black'}
-          initialFontSize={defaultFontSize}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
@@ -102,7 +98,7 @@ const Header = ({ parentStyle, defaultLeft, childSpacer, resumeHeader }) => {
           unit={parentStyle.unit}
           initialText={headerLinkedin}
           initialFontColor={'black'}
-          initialFontSize={defaultFontSize}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
       </div>

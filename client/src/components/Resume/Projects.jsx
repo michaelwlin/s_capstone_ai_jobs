@@ -39,7 +39,7 @@ const Projects = ({
         unit={parentStyle.unit}
         initialText={'SELECTED PROJECTS'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />
