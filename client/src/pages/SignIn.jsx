@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'flowbite-react';
 import useAuth from '../hooks/useAuth'; // Adjust the path as needed
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -12,10 +12,11 @@ const SignIn = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [loginStatus, setLoginStatus] = useState(''); // Track login status
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch('http://localhost:5000/api/auth/login', {
+        fetch('http://localhost:4500/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,6 +33,9 @@ const SignIn = () => {
                     setPassword('');
                     setLoginStatus('Login successful'); // Update login status
                     validateToken();
+                    setTimeout(() => {
+                        setShouldNavigate(true);
+                    }, 1500);
                     // navigate(from, { replace: true });
 
                 } else {
@@ -44,6 +48,12 @@ const SignIn = () => {
             });
     };
 
+    // Perform navigation if shouldNavigate is true
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate(from, { replace: true });
+        }
+    }, [shouldNavigate, navigate, from]);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4">

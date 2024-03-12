@@ -6,7 +6,7 @@ const useLogout = () => {
     const { validateToken } = useContext(AuthContext);
 
     const logout = () => {
-        fetch('http://localhost:5000/api/auth/logout', {
+        fetch('http://localhost:4500/api/auth/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

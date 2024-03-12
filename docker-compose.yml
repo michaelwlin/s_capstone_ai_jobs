@@ -16,7 +16,7 @@ services:
     build: ./server
     ports:
       - 4000:4000
-      - 5000:5000
+      - 4500:4500
 
     environment:
       DB_URL: mongodb://db:27017/matchiq

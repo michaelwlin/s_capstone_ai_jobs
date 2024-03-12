@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     console.log("auth = ", auth)
     try {
       const response =
-        await fetch('http://localhost:5000/api/auth/validate', {
+        await fetch('http://localhost:4500/api/auth/validate', {
           method: 'POST',
           credentials: 'include', // Necessary to include cookies
         });
