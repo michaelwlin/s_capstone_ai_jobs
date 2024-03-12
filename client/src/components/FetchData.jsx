@@ -14,9 +14,7 @@ function FetchData() {
         setIsLoading(true);
         try {
             // Conditionally set the URL based on whether 'useSkills' is true
-            const url = useSkills ? 
-                `http://localhost:8000/api/match-jobs?keyword=${keyword}&location=${locationName}` : 
-                `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}`;
+            const url = `http://localhost:8000/api/match-jobs?keyword=${keyword}&location=${locationName}`
 
             const response = await axios.get(url);
             setJobs(response.data.jobs || response.data);
