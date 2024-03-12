@@ -8,10 +8,12 @@ import io
 
 # Collection of text, predetermined stopwords (corpus)
 from nltk.corpus import stopwords
+
 # Series of tokens (tokenizer)
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -68,10 +70,7 @@ class DataTools:
         schema = {
             "type": "object",
             "properties": {
-                "skills": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
+                "skills": {"type": "array", "items": {"type": "string"}},
                 "other_information": {
                     "type": "array",
                     "description": "Other important information about the job",
@@ -121,10 +120,7 @@ class DataTools:
                         "linkedin_url": {"type": "string", "format": "uri"},
                     },
                 },
-                "skills": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
+                "skills": {"type": "array", "items": {"type": "string"}},
                 "summary": {"type": "string"},
                 "experience": {
                     "type": "array",
@@ -135,27 +131,39 @@ class DataTools:
                             "position": {"type": "string"},
                             "dates": {"type": "string"},
                             "location": {"type": "string"},
-                            "accomplishments": {"type": "array", "items": {"type": "string"}},
+                            "accomplishments": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                            },
                             "company_or_role_description": {"type": "string"},
-                        }}
+                        },
+                    },
                 },
                 "selected_projects": {
                     "type": "array",
-                    "items": {"type": "object", "properties": {
-                        "name": {"type": "string"},
-                        "dates": {"type": "string"},
-                        "description": {"type": "array", "items": {"type": "string"}},
-                    }}
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "dates": {"type": "string"},
+                            "description": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                            },
+                        },
+                    },
                 },
                 "education": {
                     "type": "array",
-                    "items": {"type": "object",
-                              "properties": {
-                                  "degree": {"type": "string"},
-                                  "school_university": {"type": "string"},
-                                  "dates": {"type": "string"},
-                                  "location": {"type": "string"},
-                              }}
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "degree": {"type": "string"},
+                            "school_university": {"type": "string"},
+                            "dates": {"type": "string"},
+                            "location": {"type": "string"},
+                        },
+                    },
                 },
                 "other_information": {
                     "type": "array",
@@ -185,14 +193,11 @@ class DataTools:
         schema = {
             "type": "object",
             "properties": {
-                "skills": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
+                "skills": {"type": "array", "items": {"type": "string"}},
                 "experience": {
                     "type": "array",
                     "description": "Experience, education, etc.",
-                    "items": {"type": "string"}
+                    "items": {"type": "string"},
                 },
                 "other_information": {
                     "type": "array",
@@ -215,8 +220,7 @@ class DataTools:
             "properties": {
                 "score": {
                     "type": "string",
-                    "description": "A matching score out of 0 out of 100 that compares the applicant's qualifications to the job."
-
+                    "description": "A matching score out of 0 out of 100 that compares the applicant's qualifications to the job.",
                 },
                 "reasoning": {
                     "type": "string",
@@ -241,7 +245,7 @@ class DataTools:
         # analyze both with gpt
         # both are objects, so convert to string
         print("Analyzing job...")
-        obj_job_desc = self.analyze_job_desc(job['description'])
+        obj_job_desc = self.analyze_job_desc(job["description"])
         obj_job_desc = json.dumps(obj_job_desc)
 
         # sleep to avoid spamming openai
@@ -255,14 +259,102 @@ class DataTools:
         print("Getting matching score...")
         matching_score = self.get_score(obj_resume, obj_job_desc)
 
-        return (matching_score)
+        return matching_score
+
+    def proofread(self, resume_text):
+        system_prompt = "You are a resume reviewer that proofreads resumes."
+        user_prompt = "Identify specific words or short phrases in the resume that are misspelled or grammatically incorrect. Respond with a JSON object that just provides the original and the fixed version of the word. Here is the resume:\n{}".format(
+            resume_text
+        )
+        schema = {
+            "type": "object",
+            "properties": {
+                "enhancements": {
+                    "type": "array",
+                    "description": "A list of proofread items containing the original and fixed version of the word or phrase you found.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "original": {
+                                "type": "string",
+                                "description": "The original word or phrase just by itself.",
+                            },
+                            "new_element": {
+                                "type": "string",
+                                "description": "The fixed version of the original word or phrase.",
+                            },
+                        },
+                        "required": ["original", "new_element"],
+                    },
+                },
+            },
+        }
+        gpt_res = self.gpt(system_prompt, user_prompt, schema)
+        res_json = json.loads(gpt_res)
+        return res_json
+
+    def enhance(self, resume_text):
+        system_prompt = "You are a resume reviewer that helps enhance resumes."
+        user_prompt = "Identify specific sentences or phrases that can be improved, enhanced or better worded. Respond with a JSON object that consist of a list of the context and the fixed version of the element you found that can be enhanced.\n{}".format(
+            resume_text
+        )
+        schema = {
+            "type": "object",
+            "properties": {
+                "enhancements": {
+                    "type": "array",
+                    "description": "A list of objects of enhancements containing the context and enhanced version of the element you found.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "original": {
+                                "type": "string",
+                                "description": "The original context or phrase.",
+                            },
+                            "new_element": {
+                                "type": "string",
+                                "description": "The enhanced or fixed version of the original phrase.",
+                            },
+                        },
+                        "required": ["original", "new_element"],
+                    },
+                },
+            },
+        }
+        gpt_res = self.gpt(system_prompt, user_prompt, schema)
+        res_json = json.loads(gpt_res)
+        return res_json
+
+    def wordbank(self, resume_text):
+        system_prompt = "You are a resume reviewer that helps improve resumes."
+        user_prompt = "Find adjectives and verbs that are not present in the resume to help the applicant strengthen their resume. Respond with a JSON object that provides a list of adjectives and a list of verbs for them to use.\n{}".format(
+            resume_text
+        )
+        schema = {
+            "type": "object",
+            "properties": {
+                "adjectives": {
+                    "type": "array",
+                    "description": "Adjectives for the user to use in their resume that they have not used yet",
+                    "items": {"type": "string"},
+                },
+                "verbs": {
+                    "type": "array",
+                    "description": "Verbs for the user to use in their resume that they have not used yet",
+                    "items": {"type": "string"},
+                },
+            },
+        }
+        gpt_res = self.gpt(system_prompt, user_prompt, schema)
+        res_json = json.loads(gpt_res)
+        return res_json
 
     # GPT Client, takes in system, user prompt and schema32                                                                     5t
 
     def gpt(self, system_prompt, user_prompt, schema):
         client = OpenAI()
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo-0613",
+            model="gpt-3.5-turbo-0125",
             messages=[
                 {
                     "role": "system",
@@ -277,4 +369,4 @@ class DataTools:
             function_call={"name": "test"},
         )
 
-        return (completion.choices[0].message.function_call.arguments)
+        return completion.choices[0].message.function_call.arguments
