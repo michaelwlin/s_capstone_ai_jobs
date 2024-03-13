@@ -1,6 +1,11 @@
 import { Sidebar } from 'flowbite-react'
-import { IoMdAddCircle } from 'react-icons/io'
-import { FaUpload, FaSpellCheck, FaHistory, FaDownload } from 'react-icons/fa'
+import {
+  FaUpload,
+  FaSpellCheck,
+  FaHistory,
+  FaDownload,
+  FaBox,
+} from 'react-icons/fa'
 import { BiSolidCustomize } from 'react-icons/bi'
 
 const ResumeSidebar = ({
@@ -13,9 +18,9 @@ const ResumeSidebar = ({
     <Sidebar style={{ minHeight: boardHeight }}>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={IoMdAddCircle}>
+          {/* <Sidebar.Item href="#" icon={IoMdAddCircle}>
             Add Section
-          </Sidebar.Item>
+          </Sidebar.Item> */}
           <Sidebar.Item
             icon={FaUpload}
             onClick={() => setOpenUploadModal(true)}
@@ -24,6 +29,9 @@ const ResumeSidebar = ({
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={FaSpellCheck}>
             AI Proof Read
+          </Sidebar.Item>
+          <Sidebar.Item href="#" icon={FaBox}>
+            AI Wordbank
           </Sidebar.Item>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>

@@ -89,7 +89,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
   }
 
   return (
-    <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+    <Modal show={openModal} onClose={() => setOpenModal(false)}>
       <Modal.Header>Upload Resume</Modal.Header>
       <Modal.Body>
         <div className="flex w-full items-center justify-center">

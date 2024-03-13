@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { TextEditorBlock } from 'react-web-editor'
 import { GPTMenuOption, SuggestionModal } from './index'
 
 const ExperienceItem = ({
   parentStyle,
   defaultLeft,
-  childSpacer,
   experienceTop,
   experienceItem,
   index,
 }) => {
+  const [showModalLoading, setModalLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [position, setPosition] = useState(
     experienceItem?.position || 'Position',
@@ -36,10 +36,6 @@ const ExperienceItem = ({
     acceptChanges: () => {}, //Takes a function to set the value
   })
 
-  useEffect(() => {
-    console.log('Description updated:', description)
-  }, [description])
-
   return (
     <div className="experience-item-container">
       <SuggestionModal
@@ -47,6 +43,7 @@ const ExperienceItem = ({
         showModal={showModal}
         setShowModal={setShowModal}
         setSuggestions={setSuggestions}
+        loading={showModalLoading}
       />
       <TextEditorBlock
         key={`experience-company-${index}`}
@@ -105,6 +102,7 @@ const ExperienceItem = ({
             setValue={setDescription}
             setShowModal={setShowModal}
             setSuggestions={setSuggestions}
+            setModalLoading={setModalLoading}
           />
         )}
       />

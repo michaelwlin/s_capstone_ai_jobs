@@ -73,13 +73,16 @@ def scrape_description(request):
 def proofread(request):
     if request.method == 'POST':
         try:
-            resume_text = request.POST.get('resume_text', '').strip()
+            json_data = json.loads(request.body)
+            resume_text = json_data.get('resume_text', '').strip()
             if not resume_text:
                 return JsonResponse({'error': 'No text provided'}, status=400)
 
             data = dt()
-            proofread_text = data.proofread(resume_text)
-            return JsonResponse(proofread_text)
+            enhanced_text = data.proofread(resume_text)
+            return JsonResponse(enhanced_text)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
         except Exception as e:
             logger.error(
                 f"Error proofreading text: {type(e).__name__} - {str(e)}")
@@ -89,7 +92,6 @@ def proofread(request):
 
 
 def enhance(request):
-    print('hello', request.POST)
     if request.method == 'POST':
         try:
             json_data = json.loads(request.body)
