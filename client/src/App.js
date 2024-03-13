@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavigationBar, Footer } from './components'
 import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume, UserSearch } from './pages'

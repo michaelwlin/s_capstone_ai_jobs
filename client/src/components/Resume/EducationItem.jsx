@@ -1,5 +1,5 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState, useEffect, useMemo } from 'react'
+import { useState } from 'react'
 
 const EducationItem = ({
   parentStyle,
