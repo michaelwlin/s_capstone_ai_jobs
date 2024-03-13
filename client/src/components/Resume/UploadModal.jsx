@@ -37,7 +37,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       if (res) {
         setLoading(false)
         setOpenModal(false)
-        navigate('/resume')
+        navigate(0)
       }
     } catch (err) {
       //TODO: display error message
