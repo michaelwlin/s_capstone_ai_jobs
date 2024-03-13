@@ -27,7 +27,7 @@ const Education = ({
         unit={parentStyle.unit}
         initialText={'EDUCATION'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />
@@ -38,7 +38,7 @@ const Education = ({
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            educationTop={educationTop + 10 + index * 30}
+            educationTop={educationTop + index * 30}
             educationItem={education}
           />
         ))

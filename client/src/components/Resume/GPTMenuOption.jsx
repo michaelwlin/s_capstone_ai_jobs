@@ -7,11 +7,28 @@ const AI_COMMANDS = [
   { id: 'wordbank', label: 'Word Bank' },
 ]
 
-const GPTMenuOption = () => {
-  console.log('GPTMenuOption rendered.')
+const paraphrase = () => {
+  //call API endpoint to paraphrase
+}
 
-  const onClick = () => {
-    //TODO: Add GPT integration
+const GPTMenuOption = () => {
+  const onClick = (e) => {
+    switch (e.target.id) {
+      case 'paraphrase':
+        console.log('Paraphrase')
+        break
+      case 'improve':
+        console.log('Improve')
+        break
+      case 'shorten':
+        console.log('Shorten')
+        break
+      case 'wordbank':
+        console.log('Word Bank')
+        break
+      default:
+        break
+    }
   }
 
   return (

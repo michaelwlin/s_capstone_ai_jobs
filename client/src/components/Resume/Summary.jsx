@@ -1,5 +1,6 @@
 import { TextEditorBlock } from 'react-web-editor'
 import { useState, useEffect } from 'react'
+import { GPTMenuOption } from './index'
 
 const Summary = ({
   parentStyle,
@@ -27,7 +28,7 @@ const Summary = ({
         unit={parentStyle.unit}
         initialText={'SUMMARY'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
         customClasses={'font-bold'}
       />
@@ -41,8 +42,9 @@ const Summary = ({
         unit={parentStyle.unit}
         initialText={summary}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
+        customMenuOptions={() => <GPTMenuOption />}
       />
     </div>
   )
