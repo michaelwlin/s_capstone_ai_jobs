@@ -125,7 +125,7 @@ router.post('/validate', async (req, res) => {
                 return res.sendStatus(403).json({ isAuthenticated: false }); // Invalid token
             }
         } else {
-            return res.json({ isAuthenticated: true, user: user });
+            return res.json({ isAuthenticated: true, user: user.userName });
         }
     });
 });
@@ -139,8 +139,8 @@ router.post('/login', async (req, res) => {
     else {
         try {
             if (await bcryptjs.compare(req.body.password, user.password)) {
-                const userPayload = { userId: user._id };
-                console.log("this is auth.js", user._id, userPayload)
+                const userPayload = { userName: user.userName, userID: user._id };
+
                 generateAccessToken(userPayload, res);
                 const refreshToken = await generateRefreshToken(userPayload, res);
 

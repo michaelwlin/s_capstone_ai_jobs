@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({ isAuthenticated: false, user: null });
 
   const validateToken = useCallback(async () => {
-    console.log("Validate Called");
     console.log("auth = ", auth)
     try {
       const response =

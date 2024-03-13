@@ -20,15 +20,14 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/jobs" element={<FetchJob />} />
-          <Route path="/users" element={<FetchUsers />} />
           <Route path="/app" element={<FetchApp />} />
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/resume/:_id" element={<Resume />} />
-          <Route path="/user-search" element={<UserSearch />} />
 
           {/* Protected Route */}
           <Route element={<RequireAuth />}>
-            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/users" element={<FetchUsers />} />
+            <Route path="/resume" element={<Resume />} />
+            <Route path="/resume/:_id" element={<Resume />} />
+            <Route path="/user-search" element={<UserSearch />} />
           </Route>
         </Routes>
       </div>

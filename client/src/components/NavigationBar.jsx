@@ -32,7 +32,7 @@ const NavigationBar = () => {
           <Dropdown.Header>
             <span className="block text-sm">User Profile</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              {auth.user}
             </span>
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>
