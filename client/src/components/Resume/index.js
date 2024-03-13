@@ -11,6 +11,7 @@ import GPTMenuOption from './GPTMenuOption'
 import UploadModal from './UploadModal'
 import ResumeSidebar from './Sidebar'
 import HistoryModal from './HistoryModal'
+import WordbankModal from './WordbankModal'
 import SuggestionModal from './SuggestionModal'
 
 export {
@@ -27,5 +28,6 @@ export {
   UploadModal,
   ResumeSidebar,
   HistoryModal,
+  WordbankModal,
   SuggestionModal,
 }

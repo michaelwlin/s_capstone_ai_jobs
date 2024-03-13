@@ -160,3 +160,22 @@ def match_jobs(request):
         job['matchScore'] = job.get('matchingSkillsCount', 0)
 
     return JsonResponse({'jobs': ranked_jobs, 'userSkills': user_skills}, safe=False)
+
+
+def stringify_resume_obj(resume):
+    result_string = ""
+    for key, value in resume.items():
+        if isinstance(value, dict):
+            result_string += stringify_resume_obj(value) + " "
+        else:
+            result_string += str(value) + " "
+    print(result_string)
+    return result_string
+
+
+def wordbank(request):
+    resume = request.body.decode("utf-8")
+    body = json.loads(resume)
+    data = dt()
+    wordbank = data.wordbank(json.dumps(body))
+    return JsonResponse(wordbank)
