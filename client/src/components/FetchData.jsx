@@ -13,12 +13,12 @@ function FetchData() {
     const getJobs = async () => {
         setIsLoading(true);
         try {
-            const url = `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}&usersName=${usersName}`;
+            const url = `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`;
             const response = await axios.get(url);
-            setJobs(response.data.jobs || response.data);
-            if (useSkills && response.data.userSkills) {
-                setUserSkills(response.data.userSkills);
-            }
+            setJobs(response.data.jobs || []);
+            if (useSkills) {
+                setUserSkills(response.data.userSkills || []);
+              }
             setIsLoading(false);
         } catch (error) {
             console.error('Failed to fetch jobs:', error);

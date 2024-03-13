@@ -66,7 +66,7 @@ const LandingPage = () => {
 
   const navigate = useNavigate()
 
-  usersname = 'resumetest';
+  const usersName = 'resumetest';
 
   const onSubmit = (e) => {
     navigate('/search-results', { state: { keyword, location, useSkills, usersName } });

@@ -23,12 +23,14 @@ router.get('/', async (req, res) => {
   let pipeline = [{ "$match": matchQuery }];
 
   let userSkills = [];
+  let userSkillsResponse = [];
+
   if (useSkills === 'true' && usersName) {
     const user = await Users.findOne({ userName: usersName });
-    if (user && user.skills) {
-      console.log("User found:" + user)  
-      userSkills = user.skills;
 
+    if (user) { 
+      userSkills = user.get('skills', []);
+      userSkillsResponse = userSkills;
         pipeline.push(
             { "$addFields": {
                 "matchScore": { 
@@ -41,14 +43,12 @@ router.get('/', async (req, res) => {
             }},
             { "$sort": { "matchScore": -1 } }
         );
-    } else {
-      console.log("User not found:" + user)
     }
   }
 
   try {
       const jobs = await Jobs.aggregate(pipeline);
-      res.json(jobs);
+      res.json({jobs, userSkills: userSkillsResponse});
   } catch (error) {
       console.error('Failed to fetch and rank jobs:', error);
       res.status(500).send('Internal server error');
