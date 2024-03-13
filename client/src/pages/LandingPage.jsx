@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, TextInput } from 'flowbite-react'
+import { Button, TextInput, ToggleSwitch } from 'flowbite-react'
 import { Hero } from '../components'
 import { FaSearch, FaMapPin } from 'react-icons/fa'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -12,6 +12,7 @@ const LandingPage = () => {
   const [signedIn, setSignedIn] = useState(false)
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
+  const [useSkills, setUseSkills] = useState(false)
 
   const schema = yup.object().shape({
     location: yup
@@ -64,9 +65,13 @@ const LandingPage = () => {
   })
 
   const navigate = useNavigate()
+
+  const usersName = 'resumetest';
+
   const onSubmit = (e) => {
-    navigate('/search-results', { state: { keyword, location } })
-  }
+    navigate('/search-results', { state: { keyword, location, useSkills, usersName } });
+    console.log("Sent search: " + keyword, location, useSkills, usersName);
+  };
 
   const onChange = (e, type) => {
     if (type === 'keyword') {
@@ -141,6 +146,20 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
+          <ToggleSwitch
+            id="signedInOut"
+            checked={signedIn}
+            onChange={setSignedIn}
+            label="Set Signed In/Out"
+          />
+          {signedIn && (
+          <ToggleSwitch
+            id="useSkills"
+            checked={useSkills}
+            onChange={setUseSkills}
+            label="Enhance search with my skills"
+          />
+          )}
         </div>
       </div>
     </div>
