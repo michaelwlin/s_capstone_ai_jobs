@@ -23,9 +23,14 @@ const Skills = ({
   }
 
   useEffect(() => {
-    const height = skills.length === 0 ? 80 : skillsHeight
-    setSkillsHeight(height)
-  }, [skills, skillsHeight, setSkillsHeight])
+    setSkillsHeight(() => {
+      const calculatedHeight =
+        resumeSkills && resumeSkills.length
+          ? resumeSkills.length * 1
+          : skillsHeight
+      return calculatedHeight
+    })
+  }, [resumeSkills, skillsHeight, setSkillsHeight])
 
   useEffect(() => {
     setSkills(resumeSkills || [])
@@ -35,6 +40,7 @@ const Skills = ({
     return (
       <>
         <TextEditorBlock
+          key={'skills-languages'}
           width={parentStyle.width}
           top={skillsTop + 30}
           height={30}
@@ -44,10 +50,11 @@ const Skills = ({
           initialText={languages}
           onChange={(e) => setLanguages(e.target.initialText)}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.headerFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
+          key={'skills-databases'}
           width={parentStyle.width}
           top={skillsTop + 60}
           height={30}
@@ -57,10 +64,11 @@ const Skills = ({
           initialText={databases}
           onChange={(e) => setDatabases(e.target.initialText)}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
         <TextEditorBlock
+          key={'skills-other'}
           width={parentStyle.width}
           top={skillsTop + 90}
           height={30}
@@ -70,7 +78,7 @@ const Skills = ({
           initialText={other}
           onChange={(e) => setOther(e.target.initialText)}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
       </>
@@ -78,8 +86,9 @@ const Skills = ({
   }
 
   return (
-    <div>
+    <div className="skills-container">
       <TextEditorBlock
+        key={'skills-header'}
         width={parentStyle.width}
         top={skillsTop}
         height={40}
@@ -88,21 +97,23 @@ const Skills = ({
         unit={parentStyle.unit}
         initialText={'SKILLS'}
         initialFontColor={'black'}
-        initialFontSize={0.2}
+        initialFontSize={parentStyle.headerFontSize}
         initialFontName={'roboto'}
+        customClasses={'font-bold'}
       />
 
       {skills.length > 0 ? (
         <TextEditorBlock
+          key={'formatted-skills'}
           width={parentStyle.width}
-          top={skillsTop + 30}
+          top={skillsTop}
           height={30}
           left={defaultLeft}
           parentStyle={parentStyle}
           unit={parentStyle.unit}
           initialText={formattedSkills()}
           initialFontColor={'black'}
-          initialFontSize={0.17}
+          initialFontSize={parentStyle.textFontSize}
           initialFontName={'roboto'}
         />
       ) : (

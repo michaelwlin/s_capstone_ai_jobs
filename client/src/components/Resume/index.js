@@ -9,6 +9,10 @@ import Projects from './Projects'
 import ProjectItem from './ProjectItem'
 import GPTMenuOption from './GPTMenuOption'
 import UploadModal from './UploadModal'
+import ResumeSidebar from './Sidebar'
+import HistoryModal from './HistoryModal'
+import WordbankModal from './WordbankModal'
+import SuggestionModal from './SuggestionModal'
 
 export {
   Experience,
@@ -22,4 +26,8 @@ export {
   ProjectItem,
   GPTMenuOption,
   UploadModal,
+  ResumeSidebar,
+  HistoryModal,
+  WordbankModal,
+  SuggestionModal,
 }

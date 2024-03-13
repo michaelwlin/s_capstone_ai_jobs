@@ -1,9 +1,10 @@
 import { Footer, Card } from 'flowbite-react'
+import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram, FaTwitter, FaGithubAlt } from 'react-icons/fa'
 
 const SiteFooter = () => {
   return (
-    <Footer bgDark container className="footer">
+    <Footer bgDark container className="footer bottom-0">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
@@ -43,7 +44,9 @@ const SiteFooter = () => {
             <div>
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">MatchIQ</Footer.Link>
+                <Footer.Link to="/about-us" as={Link}>
+                  MatchIQ
+                </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>

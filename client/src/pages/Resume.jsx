@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 import { EditableBoard } from 'react-web-editor'
-import { Sidebar } from 'flowbite-react'
-import { IoMdAddCircle } from 'react-icons/io'
-import { FaUpload, FaSpellCheck, FaHistory } from 'react-icons/fa'
-import { BiSolidCustomize } from 'react-icons/bi'
 import axios from 'axios'
+import generatePDF, { Margin } from 'react-to-pdf'
 import {
   Header,
   Summary,
@@ -13,92 +11,120 @@ import {
   Skills,
   Projects,
   UploadModal,
+  ResumeSidebar,
+  HistoryModal,
+  WordbankModal
 } from '../components/Resume/index.js'
 
 const Resume = () => {
+  let { _id } = useParams()
+  const boardRef = useRef(null)
+
   const defaultLeft = 20
   const parentWidth = 1150
-  const parentStyle = {
+  const childSpacer = 5
+  const summaryTop = 50
+  const skillsTop = summaryTop + 20
+
+  const [boardHeight, setBoardHeight] = useState(1754)
+  const [parentStyle, setParentStyle] = useState({
     parentWidth: parentWidth,
     width: parentWidth - defaultLeft,
-    height: 1754,
+    height: boardHeight,
     unit: 'px',
-  }
-  const childSpacer = 5
-  const summaryTop = 30 + 90 + 30
-  const skillsTop = summaryTop + 80
-
-  const [openModal, setOpenModal] = useState(false)
+    headerFontSize: 0.24,
+    textFontSize: 0.2,
+  })
+  const [openUploadModal, setOpenUploadModal] = useState(false)
+  const [openHistoryModal, setOpenHistoryModal] = useState(false)
   const [resume, setResume] = useState({})
   const [signedIn, setSignedIn] = useState(false)
-  const [skillsHeight, setSkillsHeight] = useState(140)
-  const [experienceHeight, setExperienceHeight] = useState(260)
-  const [projectsHeight, setProjectsHeight] = useState(170)
+  const [skillsHeight, setSkillsHeight] = useState(100)
+  const [experienceHeight, setExperienceHeight] = useState(250)
+  const [projectsHeight, setProjectsHeight] = useState(20)
+  const [openWordBankModal, setOpenWordBankModal] = useState(false)
 
-  const experienceTop = () => {
-    return skillsTop + skillsHeight
+  const experienceTop = skillsTop + skillsHeight
+  const projectsTop = experienceTop + experienceHeight
+  const educationTop = projectsTop + projectsHeight
+
+  const saveAsPdf = () => {
+    const printRef = boardRef.current.children[0]
+    return generatePDF(() => printRef, {
+      method: 'save',
+      filename: 'resume.pdf',
+      resolution: 10,
+      page: { margin: Margin.MEDIUM },
+      overrides: {
+        pdf: {
+          compress: false,
+        },
+      },
+    })
   }
-
-  const projectsTop = () => {
-    return experienceTop() + experienceHeight
-  }
-
-  const educationTop = () => {
-    return projectsTop() + projectsHeight
-  }
-
-  const getUserResume = async () => {
-    try {
-      //TODO: only call when signed in
-      const res = await axios.get(
-        'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
-      )
-      setResume(res.data.resume[0])
-      setSignedIn(true)
-    } catch (error) {
-      console.error('There was an error fetching the resume data:', error)
-    }
-  }
-
-  console.log(resume)
 
   useEffect(() => {
+    const getUserResume = async () => {
+      try {
+        //TODO: only call when signed in
+        const res = await axios.get(
+          'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
+        )
+        if (res && res.data.resume.length === 0) {
+          return
+        }
+        setResume(
+          _id
+            ? res.data.resume.find((r) => r._id === _id)['resume_data']
+            : res.data.resume.pop()['resume_data'],
+        )
+        setSignedIn(true)
+      } catch (error) {
+        //TODO: add error handling
+        console.error('There was an error fetching the resume data:', error)
+      }
+    }
     getUserResume()
-  }, [])
+  }, [_id])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setBoardHeight((prevHeight) => {
+        const calculatedHeight = boardRef.current
+          ? boardRef.current.scrollHeight + 20
+          : prevHeight
+        return calculatedHeight
+      })
+    }, 1000)
+  }, [resume, boardRef, boardRef.current?.scrollHeight])
 
   return (
-    <div className="resume mx-5 mb-20 container min-h-max flex flex-row gap-1">
-      {openModal && (
-        <UploadModal openModal={openModal} setOpenModal={setOpenModal} />
+    <div className="resume mx-5 mb-20 min-h-full flex flex-row gap-1">
+      {openUploadModal && (
+        <UploadModal
+          openModal={openUploadModal}
+          setOpenModal={setOpenUploadModal}
+        />
       )}
-      <Sidebar style={{ minHeight: parentStyle.height }}>
-        <Sidebar.Items>
-          <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={IoMdAddCircle}>
-              Add Section
-            </Sidebar.Item>
-            <Sidebar.Item icon={FaUpload} onClick={() => setOpenModal(true)}>
-              Upload Resume
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={FaSpellCheck}>
-              AI Proof Read
-            </Sidebar.Item>
-          </Sidebar.ItemGroup>
-          <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={FaHistory}>
-              History
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={BiSolidCustomize}>
-              Tailor for Job
-            </Sidebar.Item>
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
-      <div className="resume-wrapper">
+      {openHistoryModal && (
+        <HistoryModal
+          openModal={openHistoryModal}
+          setOpenModal={setOpenHistoryModal}
+        />
+      )}
+      <ResumeSidebar
+        boardHeight={boardHeight}
+        setOpenUploadModal={setOpenUploadModal}
+        setOpenHistoryModal={setOpenHistoryModal}
+        saveAsPdf={saveAsPdf}
+        setOpenWordBankModal={setOpenWordBankModal}
+      />
+      <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard
+          key={`resume-board-${boardHeight}`}
           className="resume-board"
           width={parentStyle.parentWidth}
-          height={parentStyle.height}
+          height={boardHeight}
           unit={parentStyle.unit}
           backgroundColor={'#fff'}
         >
@@ -128,7 +154,7 @@ const Resume = () => {
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            experienceTop={experienceTop()}
+            experienceTop={experienceTop}
             resumeExperience={resume.experience}
             experienceHeight={experienceHeight}
             setExperienceHeight={setExperienceHeight}
@@ -137,7 +163,7 @@ const Resume = () => {
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            projectsTop={projectsTop()}
+            projectsTop={projectsTop}
             resumeProjects={resume.selected_projects}
             projectsHeight={projectsHeight}
             setProjectsHeight={setProjectsHeight}
@@ -146,11 +172,18 @@ const Resume = () => {
             parentStyle={parentStyle}
             defaultLeft={defaultLeft}
             childSpacer={childSpacer}
-            educationTop={educationTop()}
+            educationTop={educationTop}
             resumeEducation={resume.education}
           />
         </EditableBoard>
       </div>
+      {openWordBankModal && (
+        <WordbankModal
+          openModal={openWordBankModal}
+          setOpenModal={setOpenWordBankModal}
+          resume={resume}
+        />
+      )}
     </div>
   )
 }

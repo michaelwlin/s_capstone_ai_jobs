@@ -1,5 +1,5 @@
 import { TextEditorBlock } from 'react-web-editor'
-import { useState, useEffect, useMemo } from 'react'
+import { useState } from 'react'
 
 const EducationItem = ({
   parentStyle,
@@ -17,69 +17,46 @@ const EducationItem = ({
     educationItem?.location || 'Location',
   )
 
-  console.log(educationItem)
-
-  useEffect(() => {
-    setDegree(educationItem?.degree || 'Degree')
-    setSchool(educationItem?.school_university || 'School/University')
-    setDates(educationItem?.dates || 'Dates')
-    setLocation(educationItem?.location || 'Location')
-  }, [educationItem])
-
   return (
     <div>
       <TextEditorBlock
-        key={`education-header`}
-        width={parentStyle.width}
-        top={educationTop}
-        height={40}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={'EDUCATION'}
-        initialFontColor={'black'}
-        initialFontSize={0.2}
-        initialFontName={'roboto'}
-      />
-      <TextEditorBlock
-        key={`education-${degree}`}
-        width={parentStyle.width}
-        top={educationTop + 30}
-        height={30}
-        left={defaultLeft}
-        parentStyle={parentStyle}
-        unit={parentStyle.unit}
-        initialText={degree}
-        initialFontColor={'black'}
-        initialFontSize={0.17}
-        initialFontName={'roboto'}
-      />
-
-      <TextEditorBlock
         key={`education-${school}`}
         width={parentStyle.width}
-        top={educationTop + 60}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
         initialText={school}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
+        initialFontName={'roboto'}
+      />
+      <TextEditorBlock
+        key={`education-${degree}`}
+        width={parentStyle.width}
+        top={educationTop}
+        height={30}
+        left={defaultLeft}
+        parentStyle={parentStyle}
+        unit={parentStyle.unit}
+        initialText={degree}
+        initialFontColor={'black'}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
 
       <TextEditorBlock
         key={`education-${dates}`}
         width={parentStyle.width}
-        top={educationTop + 90}
+        top={educationTop}
         height={30}
         left={defaultLeft}
         parentStyle={parentStyle}
         unit={parentStyle.unit}
         initialText={`${dates}, ${location}`}
         initialFontColor={'black'}
-        initialFontSize={0.17}
+        initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
     </div>
