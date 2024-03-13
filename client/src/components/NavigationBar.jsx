@@ -12,7 +12,7 @@ const NavigationBar = () => {
 
   const signIn = () => {
     // Navigate to register/sign-up page
-    navigate('/login');
+    navigate('/signin');
   };
   const register = () => {
     // Navigate to register/sign-up page
@@ -22,7 +22,7 @@ const NavigationBar = () => {
   const handleSignOut = async () => {
     await logout();
 
-    navigate('/SignIn');
+    navigate('/signin');
   }
 
   const userNavigation = () => {
@@ -44,7 +44,7 @@ const NavigationBar = () => {
       return (
         <div>
           <NavLink
-            to="/signin"
+            to="/signIn"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           >
             Sign In
@@ -89,7 +89,7 @@ const NavigationBar = () => {
         <Dropdown
           arrowIcon={false}
           inline
-          label={<Avatar alt="User settings" img={FaUser} rounded />}
+          label={<Avatar alt="User settings" img={FaUser} rounded className={auth.isAuthenticated ? 'text-green-500' : ''} />}
         >
           {userNavigation()}
         </Dropdown>
