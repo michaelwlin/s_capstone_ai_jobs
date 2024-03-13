@@ -1,6 +1,6 @@
 import { TextEditorBlock } from 'react-web-editor'
 import { useState } from 'react'
-import { GPTMenuOption } from './index'
+import { GPTMenuOption, SuggestionModal } from './index'
 
 const ProjectItem = ({
   parentStyle,
@@ -9,19 +9,40 @@ const ProjectItem = ({
   projectsTop,
   projectItem,
 }) => {
+  const [showModalLoading, setModalLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [projectName, setProjectName] = useState(
     projectItem?.name || 'Project Name',
   )
-  const [projectDescription, setProjectDescription] = useState(
+  const [projectAchievements, setProjectAchievements] = useState(
     projectItem?.description || [
       'Achievements',
       'Achievements',
       'Achievements',
     ],
   )
+  const [suggestions, setSuggestions] = useState({
+    originalText: '',
+    suggestedChanges: '',
+    header: '', // Header to be used for modal
+    acceptChanges: () => {}, //Takes a function to set the value
+  })
+
+  const setProjectAchievement = (index, value) => {
+    const newAchievements = [...projectAchievements]
+    newAchievements[index] = value
+    setProjectAchievements(newAchievements)
+  }
 
   return (
-    <div>
+    <div className="projects-item-container">
+      <SuggestionModal
+        suggestions={suggestions}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setSuggestions={setSuggestions}
+        loading={showModalLoading}
+      />
       <TextEditorBlock
         width={parentStyle.width}
         top={projectsTop}
@@ -34,7 +55,7 @@ const ProjectItem = ({
         initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
       />
-      {projectDescription.map((description, index) => {
+      {projectAchievements.map((achievement, index) => {
         return (
           <TextEditorBlock
             key={index}
@@ -44,11 +65,20 @@ const ProjectItem = ({
             left={defaultLeft}
             parentStyle={parentStyle}
             unit={parentStyle.unit}
-            initialText={`• ${description}`}
+            initialText={`• ${achievement}`}
             initialFontColor={'black'}
             initialFontSize={parentStyle.textFontSize}
             initialFontName={'roboto'}
-            customMenuOptions={() => <GPTMenuOption />}
+            customMenuOptions={() => (
+              <GPTMenuOption
+                value={achievement}
+                valueIndex={index}
+                setValue={setProjectAchievement}
+                setShowModal={setShowModal}
+                setSuggestions={setSuggestions}
+                setModalLoading={setModalLoading}
+              />
+            )}
           />
         )
       })}
