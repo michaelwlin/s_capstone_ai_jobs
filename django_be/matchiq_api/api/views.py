@@ -6,6 +6,7 @@ import logging
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -68,6 +69,47 @@ def scrape_description(request):
 
     return JsonResponse(formatted_response)
 
+
+def proofread(request):
+    if request.method == 'POST':
+        try:
+            resume_text = request.POST.get('resume_text', '').strip()
+            if not resume_text:
+                return JsonResponse({'error': 'No text provided'}, status=400)
+
+            data = dt()
+            proofread_text = data.proofread(resume_text)
+            return JsonResponse(proofread_text)
+        except Exception as e:
+            logger.error(
+                f"Error proofreading text: {type(e).__name__} - {str(e)}")
+            return JsonResponse({'error': f'Error proofreading text: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def enhance(request):
+    print('hello', request.POST)
+    if request.method == 'POST':
+        try:
+            json_data = json.loads(request.body)
+            resume_text = json_data.get('resume_text', '').strip()
+            if not resume_text:
+                return JsonResponse({'error': 'No text provided'}, status=400)
+
+            data = dt()
+            enhanced_text = data.enhance(resume_text)
+            return JsonResponse(enhanced_text)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+        except Exception as e:
+            logger.error(
+                f"Error proofreading text: {type(e).__name__} - {str(e)}")
+            return JsonResponse({'error': f'Error enhancing text: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
 def match_jobs(request):
     keyword = request.GET.get('keyword', '')
     location = request.GET.get('location', '')
@@ -76,7 +118,7 @@ def match_jobs(request):
     load_dotenv()
     db_uri = os.environ.get("DB_URI", "mongodb://db:27017/matchiq")
     client = MongoClient(db_uri)
-    
+
     db = client.matchiq
     user_collection = db.users
     job_collection = db.jobs
@@ -85,7 +127,7 @@ def match_jobs(request):
     if not user:
         return JsonResponse({'error': 'User not found'}, status=404)
     user_skills = user.get('skills', [])
-    
+
     match_query = {}
     if keyword:
         match_query["$or"] = [
@@ -94,7 +136,7 @@ def match_jobs(request):
         ]
     if location:
         match_query["location"] = {"$regex": location, "$options": "i"}
-    
+
     # MongoDB aggregation pipeline for matching and ranking jobs
     pipeline = [
         {"$match": match_query},
@@ -110,7 +152,7 @@ def match_jobs(request):
         {"$sort": {"totalWeight": -1, "matchingSkillsCount": -1}}
     ]
     ranked_jobs = list(job_collection.aggregate(pipeline))
-    
+
     for job in ranked_jobs:
         job['_id'] = str(job['_id'])
         job['matchScore'] = job.get('matchingSkillsCount', 0)

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { TextEditorBlock } from 'react-web-editor'
-import { GPTMenuOption } from './index'
+import { GPTMenuOption, SuggestionModal } from './index'
 
 const ExperienceItem = ({
   parentStyle,
@@ -10,6 +10,7 @@ const ExperienceItem = ({
   experienceItem,
   index,
 }) => {
+  const [showModal, setShowModal] = useState(false)
   const [position, setPosition] = useState(
     experienceItem?.position || 'Position',
   )
@@ -28,9 +29,25 @@ const ExperienceItem = ({
   const [location, setLocation] = useState(
     experienceItem?.location || 'Location',
   )
+  const [suggestions, setSuggestions] = useState({
+    originalText: '',
+    suggestedChanges: '',
+    header: '', // Header to be used for modal
+    acceptChanges: () => {}, //Takes a function to set the value
+  })
+
+  useEffect(() => {
+    console.log('Description updated:', description)
+  }, [description])
 
   return (
     <div className="experience-item-container">
+      <SuggestionModal
+        suggestions={suggestions}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setSuggestions={setSuggestions}
+      />
       <TextEditorBlock
         key={`experience-company-${index}`}
         width={parentStyle.width}
@@ -82,7 +99,16 @@ const ExperienceItem = ({
         initialFontColor={'black'}
         initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
+        customMenuOptions={() => (
+          <GPTMenuOption
+            value={description}
+            setValue={setDescription}
+            setShowModal={setShowModal}
+            setSuggestions={setSuggestions}
+          />
+        )}
       />
+
       <div className="container achievements">
         {achievements &&
           achievements.map((achievement, index) => (
@@ -98,7 +124,7 @@ const ExperienceItem = ({
               initialFontColor={'black'}
               initialFontSize={parentStyle.textFontSize}
               initialFontName={'roboto'}
-              customMenuOptions={() => <GPTMenuOption />}
+              customMenuOptions={() => <GPTMenuOption value={achievement} />}
             />
           ))}
       </div>

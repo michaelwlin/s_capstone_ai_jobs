@@ -11,6 +11,7 @@ import GPTMenuOption from './GPTMenuOption'
 import UploadModal from './UploadModal'
 import ResumeSidebar from './Sidebar'
 import HistoryModal from './HistoryModal'
+import SuggestionModal from './SuggestionModal'
 
 export {
   Experience,
@@ -25,5 +26,6 @@ export {
   GPTMenuOption,
   UploadModal,
   ResumeSidebar,
-  HistoryModal
+  HistoryModal,
+  SuggestionModal,
 }
