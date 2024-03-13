@@ -26,9 +26,6 @@ const SignIn = () => {
         })
             .then(response => {
                 if (response.ok) {
-                    // console.log('Before setAuth:', setAuth); // Assuming 'auth' is accessible here, otherwise skip
-                    // setAuth({ user: userName }); // Update auth state
-                    // setLoginStatus('Login successful');
                     setUserName('');
                     setPassword('');
                     setLoginStatus('Login successful'); // Update login status
@@ -36,7 +33,6 @@ const SignIn = () => {
                     setTimeout(() => {
                         setShouldNavigate(true);
                     }, 1500);
-                    // navigate(from, { replace: true });
 
                 } else {
                     setLoginStatus('Login failed. Please check your username and password.'); // Update login status

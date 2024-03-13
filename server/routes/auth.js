@@ -12,7 +12,6 @@ const saltRounds = 10;
 
 
 router.post("/register", async (req, res) => {
-    // const { userName, password, email, premiumUser, firstName, lastName } = req.body;
     const { userName, password, email, premiumUser } = req.body;
     if (!userName || !password) {
         return res.status(400).send("Username and password are required.");
@@ -27,8 +26,7 @@ router.post("/register", async (req, res) => {
             password: hashedPassword,
             email,
             premiumUser,
-            // firstName,
-            // lastName,
+
         });
 
         await user.save();

@@ -15,7 +15,6 @@ auth_server.use(cors({
     credentials: true,
 }));
 auth_server.use(express.json());
-// const bcryptjs = require("bcryptjs");
 auth_server.use("/api/", homeRoutes);
 auth_server.use("/api/auth", authRoutes);
 

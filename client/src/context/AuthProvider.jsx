@@ -39,8 +39,7 @@ export const AuthProvider = ({ children }) => {
     validateToken();
 
     // Optional: Set an interval to periodically validate token
-    // const interval = setInterval(validateToken, 15 * 60 * 1000); // Every 15 minutes
-    const interval = setInterval(validateToken, 15 * 1000); // Every 15 seconds
+    const interval = setInterval(validateToken, 15 * 60 * 1000); // Every 15 minutes
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);

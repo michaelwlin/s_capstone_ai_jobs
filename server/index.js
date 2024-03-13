@@ -1,10 +1,3 @@
-// import { config } from "dotenv"
-// import { connectToDB } from "./connect.js"
-
-// config()
-// await connectToDB(process.env.DB_URI)
-
-
 const app = require("./app");
 const auth_server = require("./auth_server")
 const db = require("./db");
