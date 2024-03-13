@@ -1,5 +1,4 @@
 import { Button, Modal, Spinner } from 'flowbite-react'
-import { useState } from 'react'
 
 const SuggestionModal = ({
   suggestions,

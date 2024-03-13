@@ -22,7 +22,7 @@
     "react-router-dom": "^6.20.1",
     "react-scripts": "^5.0.1",
     "react-to-pdf": "^1.0.1",
-    "react-web-editor": "git+https://github.com/joyceawt/react-web-editor.git",
+    "react-web-editor": "git+https://github.com/joyceawt/react-web-editor.git#main",
     "tailwindcss": "^3.3.6",
     "web-vitals": "^2.1.4",
     "yup": "^1.3.3"
