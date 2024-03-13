@@ -29,9 +29,6 @@ const ResumeSidebar = ({
           >
             Upload Resume
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={FaSpellCheck}>
-            AI Proof Read
-          </Sidebar.Item>
           <Sidebar.Item href="#" icon={FaBox} onClick={setOpenWordBankModal}>
             AI Wordbank
           </Sidebar.Item>
