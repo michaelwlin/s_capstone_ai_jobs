@@ -5,18 +5,20 @@ import { useLocation } from 'react-router-dom';
 
 function FetchData() {
     const [jobs, setJobs] = useState([]);
+    const [userSkills, setUserSkills] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
-    const { keyword, location: locationName, useSkills } = location.state || {};
-
+    const { keyword, location: locationName, useSkills, usersName } = location.state || {};
+    
     const getJobs = async () => {
         setIsLoading(true);
         try {
-            const url = useSkills ? 
-                `http://localhost:8000/api/match-jobs?keyword=${keyword}&location=${locationName}` : 
-                `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}`;
+            const url = `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}&usersName=${usersName}`;
             const response = await axios.get(url);
             setJobs(response.data.jobs || response.data);
+            if (useSkills && response.data.userSkills) {
+                setUserSkills(response.data.userSkills);
+            }
             setIsLoading(false);
         } catch (error) {
             console.error('Failed to fetch jobs:', error);
@@ -26,13 +28,18 @@ function FetchData() {
 
     useEffect(() => {
         getJobs();
-    }, [keyword, locationName, useSkills]);
+    }, [keyword, locationName, useSkills, usersName]);
 
     const [selectedJob, setSelectedJob] = useState(null);
 
     return (
         <div>
             {isLoading && <ProgressBar />}
+            <div className="flex flex-col">
+                {/* {useSkills && userSkills.length > 0 && ( */}
+                {useSkills && (
+                <p className="mb-4">Matching jobs with your skills: {userSkills.join(', ')}</p>
+                )}
             <div className="flex" style={{ maxHeight: 'calc(100vh - 400px)', overflow: 'hidden' }}>
                 <div className="h-screen overflow-y-auto w-1/3" style={{ maxHeight: '100%' }}>
                     {jobs.map((job, index) => (
@@ -58,6 +65,7 @@ function FetchData() {
                         <p><strong>Skills:</strong> {selectedJob.skills ? selectedJob.skills.join(', ') : 'N/A'}</p>
                     </div>
                 )}
+            </div>
             </div>
         </div>
     );

@@ -1,13 +1,59 @@
 const express = require('express')
 const validateID = require('../middleware/validateID')
 const Jobs = require('../models/jobs')
+const Users = require('../models/user')
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-  const jobs = await Jobs.find().sort('name')
-  res.send(jobs)
-})
+  const { keyword, location, useSkills, usersName } = req.query;
+  const matchQuery = {};
+
+  if (keyword) {
+    matchQuery["$or"] = [
+      { "title": { "$regex": keyword, "$options": "i" } },
+      { "description": { "$regex": keyword, "$options": "i" } }
+    ];
+  }
+
+  if (location) {
+    matchQuery["location"] = { "$regex": location, "$options": "i" };
+  }
+
+  let pipeline = [{ "$match": matchQuery }];
+
+  let userSkills = [];
+  if (useSkills === 'true' && usersName) {
+    const user = await Users.findOne({ userName: usersName });
+    if (user && user.skills) {
+      console.log("User found:" + user)  
+      userSkills = user.skills;
+
+        pipeline.push(
+            { "$addFields": {
+                "matchScore": { 
+                    "$size": { 
+                        "$setIntersection": [{ 
+                            "$ifNull": [ "$skills", [] ]
+                        }, userSkills] 
+                    } 
+                }
+            }},
+            { "$sort": { "matchScore": -1 } }
+        );
+    } else {
+      console.log("User not found:" + user)
+    }
+  }
+
+  try {
+      const jobs = await Jobs.aggregate(pipeline);
+      res.json(jobs);
+  } catch (error) {
+      console.error('Failed to fetch and rank jobs:', error);
+      res.status(500).send('Internal server error');
+  }
+});
 
 router.get('/:id', validateID, async (req, res) => {
   const job = await Jobs.findById(req.params.id)
