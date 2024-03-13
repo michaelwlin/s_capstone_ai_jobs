@@ -35,13 +35,12 @@ function FetchData() {
     return (
         <div>
             {isLoading && <ProgressBar />}
-            <div className="flex flex-col">
+            <div className="flex">
                 {/* {useSkills && userSkills.length > 0 && ( */}
                 {useSkills && (
                 <p className="mb-4">Matching jobs with your skills: {userSkills.join(', ')}</p>
                 )}
-            <div className="flex" style={{ maxHeight: 'calc(100vh - 400px)', overflow: 'hidden' }}>
-                <div className="h-screen overflow-y-auto w-1/3" style={{ maxHeight: '100%' }}>
+            <div className="h-screen overflow-y-auto w-1/2">
                     {jobs.map((job, index) => (
                         <div key={index} className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200" onClick={() => setSelectedJob(job)}>
                             <p className="text-xl" style={{ color: 'blue', fontWeight: 'bold' }}>{job.title}</p>
@@ -67,7 +66,6 @@ function FetchData() {
                 )}
             </div>
             </div>
-        </div>
     );
 }
 
