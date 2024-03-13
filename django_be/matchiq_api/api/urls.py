@@ -9,4 +9,5 @@ urlpatterns = [
     path("scrape_desc", views.scrape_description, name="scrape_description"),
     path("upload_resume", csrf_exempt(views.upload_resume), name="upload_resume"),
     path('match-jobs', views.match_jobs, name='match_jobs'),
+    path('wordbank', csrf_exempt(views.wordbank), name="wordbank"),
 ]
