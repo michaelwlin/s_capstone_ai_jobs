@@ -36,6 +36,12 @@ const ExperienceItem = ({
     acceptChanges: () => {}, //Takes a function to set the value
   })
 
+  const setAchievement = (index, value) => {
+    const newAchievements = [...achievements]
+    newAchievements[index] = value
+    setAchievements(newAchievements)
+  }
+
   return (
     <div className="experience-item-container">
       <SuggestionModal
@@ -57,6 +63,7 @@ const ExperienceItem = ({
         initialFontColor={'black'}
         initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
+        customClasses={'font-bold'}
       />
       <TextEditorBlock
         key={`experience-position-${index}`}
@@ -122,7 +129,16 @@ const ExperienceItem = ({
               initialFontColor={'black'}
               initialFontSize={parentStyle.textFontSize}
               initialFontName={'roboto'}
-              customMenuOptions={() => <GPTMenuOption value={achievement} />}
+              customMenuOptions={() => (
+                <GPTMenuOption
+                  value={achievement}
+                  valueIndex={index}
+                  setValue={setAchievement}
+                  setShowModal={setShowModal}
+                  setSuggestions={setSuggestions}
+                  setModalLoading={setModalLoading}
+                />
+              )}
             />
           ))}
       </div>

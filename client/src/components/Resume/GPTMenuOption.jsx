@@ -32,6 +32,7 @@ const enhance = async (value) => {
 
 const GPTMenuOption = ({
   value,
+  valueIndex = null,
   setValue,
   setShowModal,
   setSuggestions,
@@ -48,7 +49,10 @@ const GPTMenuOption = ({
             originalText: value,
             suggestedChanges: enhancedText,
             header: 'Suggested Enhancements',
-            acceptChanges: () => setValue(enhancedText),
+            acceptChanges: () =>
+              valueIndex
+                ? setValue(valueIndex, enhancedText)
+                : setValue(enhancedText),
           })
           setModalLoading(false)
           break
