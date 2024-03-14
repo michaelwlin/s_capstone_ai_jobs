@@ -67,20 +67,21 @@ const Resume = () => {
 
   useEffect(() => {
     const getUserResume = async () => {
+      console.log('in here')
       try {
-        if (auth?.isAuthorized) {
-          const res = await axios.get(
-            `http://localhost:4000/api/users/${auth.userId}`,
-          )
-          if (res && res.data.resume.length === 0) {
-            return
-          }
-          setResume(
-            _id
-              ? res.data.resume.find((r) => r._id === _id)['resume_data']
-              : res.data.resume.pop()['resume_data'],
-          )
+        console.log('hello')
+        const res = await axios.get(
+          `http://localhost:4000/api/users/${auth.userId}`,
+        )
+        console.log('res', res)
+        if (res && res.data.resume.length === 0) {
+          return
         }
+        setResume(
+          _id
+            ? res.data.resume.find((r) => r._id === _id)['resume_data']
+            : res.data.resume.pop()['resume_data'],
+        )
       } catch (error) {
         //TODO: add error handling
         console.error('There was an error fetching the resume data:', error)
