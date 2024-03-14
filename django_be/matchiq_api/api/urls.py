@@ -12,4 +12,5 @@ urlpatterns = [
     path('wordbank', csrf_exempt(views.wordbank), name='wordbank'),
     path('proofread', csrf_exempt(views.proofread), name='proofread'),
     path('enhance', csrf_exempt(views.enhance), name='enhance'),
+    path('get_score', csrf_exempt(views.get_score), name='get_score')
 ]

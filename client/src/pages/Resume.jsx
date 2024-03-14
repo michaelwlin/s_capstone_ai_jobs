@@ -15,6 +15,8 @@ import {
   ResumeSidebar,
   HistoryModal,
   WordbankModal,
+  EnhanceModal,
+  QuickSearchModal,
 } from '../components/Resume/index.js'
 
 const Resume = () => {
@@ -45,6 +47,8 @@ const Resume = () => {
   const [experienceHeight, setExperienceHeight] = useState(250)
   const [projectsHeight, setProjectsHeight] = useState(20)
   const [openWordBankModal, setOpenWordBankModal] = useState(false)
+  const [openEnhanceModal, setOpenEnhanceModal] = useState(false)
+  const [openQSModal, setOpenQSModal] = useState(false)
 
   const experienceTop = skillsTop + skillsHeight
   const projectsTop = experienceTop + experienceHeight
@@ -121,6 +125,8 @@ const Resume = () => {
         setOpenHistoryModal={setOpenHistoryModal}
         saveAsPdf={saveAsPdf}
         setOpenWordBankModal={setOpenWordBankModal}
+        setOpenEnhanceModal={setOpenEnhanceModal}
+        setOpenQSModal={setOpenQSModal}
       />
       <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard
@@ -180,10 +186,24 @@ const Resume = () => {
           />
         </EditableBoard>
       </div>
+      {openEnhanceModal && (
+        <EnhanceModal
+          openModal={openEnhanceModal}
+          setOpenModal={setOpenEnhanceModal}
+          resume={resume}
+        />
+      )}
       {openWordBankModal && (
         <WordbankModal
           openModal={openWordBankModal}
           setOpenModal={setOpenWordBankModal}
+          resume={resume}
+        />
+      )}
+      {openQSModal && (
+        <QuickSearchModal
+          openModal={openQSModal}
+          setOpenModal={setOpenQSModal}
           resume={resume}
         />
       )}
