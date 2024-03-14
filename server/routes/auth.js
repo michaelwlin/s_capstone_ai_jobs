@@ -108,12 +108,12 @@ router.post('/validate', async (req, res) => {
             // If token expired or any other error
             if (err.name === 'TokenExpiredError') {
                 try {
-                    const user = await authenticateRefreshToken();
-                    if (!user) {
+                    const newUser = await authenticateRefreshToken();
+                    if (!newUser) {
                         return res.sendStatus(401).json({ isAuthenticated: false }); // Token expired
                     } else {
-                        generateAccessToken(user, res);
-                        return res.json({ isAuthenticated: true, user: user.userName });
+                        generateAccessToken(newUser, res);
+                        return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
                     }
                 } catch (refreshError) {
                     console.error(refreshError);
@@ -123,7 +123,8 @@ router.post('/validate', async (req, res) => {
                 return res.sendStatus(403).json({ isAuthenticated: false }); // Invalid token
             }
         } else {
-            return res.json({ isAuthenticated: true, user: user.userName });
+            console.log(user.userId)
+            return res.json({ isAuthenticated: true, user: user.userName, userId: user.userId });
         }
     });
 });
@@ -137,7 +138,7 @@ router.post('/login', async (req, res) => {
     else {
         try {
             if (await bcryptjs.compare(req.body.password, user.password)) {
-                const userPayload = { userName: user.userName, userID: user._id };
+                const userPayload = { userName: user.userName, userId: user._id.toString() };
 
                 generateAccessToken(userPayload, res);
                 const refreshToken = await generateRefreshToken(userPayload, res);
