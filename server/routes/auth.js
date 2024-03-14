@@ -18,7 +18,6 @@ router.post("/register", async (req, res) => {
     }
 
     try {
-        console.log("Registration attempted");
         const hashedPassword = await bcryptjs.hash(password, saltRounds);
 
         const user = new User({
@@ -123,7 +122,6 @@ router.post('/validate', async (req, res) => {
                 return res.sendStatus(403).json({ isAuthenticated: false }); // Invalid token
             }
         } else {
-            console.log(user.userId)
             return res.json({ isAuthenticated: true, user: user.userName, userId: user.userId });
         }
     });
@@ -144,7 +142,6 @@ router.post('/login', async (req, res) => {
                 const refreshToken = await generateRefreshToken(userPayload, res);
 
 
-                console.log("refresh = ", refreshToken)
                 res.status(200).send('Login Successful');
 
             } else {
