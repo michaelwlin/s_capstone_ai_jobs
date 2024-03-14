@@ -36,7 +36,7 @@ function FetchData() {
         <div>
             {isLoading && <ProgressBar />}
             {useSkills && (
-                <p className="mb-4">Matching jobs with your skills: {userSkills.join(', ')}</p>
+                <p className="mb-4">Matching jobs with your skills: <i>{userSkills.join(', ')}</i></p>
                 )}
             <div className="flex">
             <div className="h-screen overflow-y-auto w-1/2">
@@ -48,7 +48,7 @@ function FetchData() {
                                 <span style={{ fontStyle: 'italic' }}>{job.location}</span>
                             </div>
                             {useSkills && (
-                                <p className="text-md"><strong>Matching Skills:</strong> {job.matchScore}</p>
+                                <p className="text-md"><strong>Matching Skills:</strong> <i>{job.matchScore}</i></p>
                                 )}
                         </div>
                     ))}
