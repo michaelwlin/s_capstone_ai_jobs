@@ -16,6 +16,8 @@ services:
     build: ./server
     ports:
       - 4000:4000
+      - 4500:4500
+
     environment:
       DB_URL: mongodb://db:27017/matchiq
     volumes:
@@ -28,10 +30,10 @@ services:
     container_name: mongodb
     restart: always
     ports:
-      - 27018:27017
+      - 27017:27017
     volumes:
       - matchiq:/data/db
-  
+
   django:
     container_name: django
     build: ./django_be

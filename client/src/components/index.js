@@ -5,6 +5,7 @@ import FetchApp from './FetchApp'
 import FetchData from './FetchData'
 import FetchJob from './FetchJob'
 import FetchUsers from './FetchUsers'
+import RequireAuth from './RequireAuth'
 
 export {
   NavigationBar,
@@ -14,4 +15,5 @@ export {
   FetchData,
   FetchJob,
   FetchUsers,
+  RequireAuth,
 }

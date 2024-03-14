@@ -1,35 +1,50 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, Avatar } from 'flowbite-react'
-import { FaUser } from 'react-icons/fa'
+import { FaUser } from 'react-icons/fa';
+import useAuth from '../hooks/useAuth';
+import useLogout from '../api/logout';
 
 const NavigationBar = () => {
-  const [signedIn, setSignedIn] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const navigate = useNavigate();
+  const { auth } = useAuth();
+  const logout = useLogout();
 
-  const signIn = () => {}
-  const register = () => {}
+  const signIn = () => {
+    // Navigate to register/sign-up page
+    navigate('/signin');
+  };
+  const register = () => {
+    // Navigate to register/sign-up page
+    navigate('/register');
+  };
+
+  const handleSignOut = async () => {
+    await logout();
+
+    navigate('/signin');
+  }
 
   const userNavigation = () => {
-    if (signedIn) {
+    if (auth.isAuthenticated) {
       return (
         <div>
           <Dropdown.Header>
             <span className="block text-sm">User Profile</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              {auth.user}
             </span>
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>
           <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
       )
     } else {
       return (
         <div>
           <NavLink
-            to="/signin"
+            to="/signIn"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           >
             Sign In
@@ -74,7 +89,7 @@ const NavigationBar = () => {
         <Dropdown
           arrowIcon={false}
           inline
-          label={<Avatar alt="User settings" img={FaUser} rounded />}
+          label={<Avatar alt="User settings" img={FaUser} rounded className={auth.isAuthenticated ? 'text-green-500' : ''} />}
         >
           {userNavigation()}
         </Dropdown>

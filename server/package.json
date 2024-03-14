@@ -6,7 +6,8 @@
   "scripts": {
     "db:up": "migrate-mongo up",
     "start": "nodemon -L --ignore './tests' index.js",
-    "dev": "nodemon app.js",
+    "devStart": "nodemon app.js",
+    "devStartAuth": "nodemon auth_server.js",
     "database": "node index.js",
     "test": "jest"
   },
@@ -19,10 +20,12 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.2",
+    "dotenv": "^16.4.4",
     "express": "^4.18.2",
     "forever": "^4.0.3",
+    "jsonwebtoken": "^9.0.2",
     "migrate-mongo": "^11.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
@@ -39,3 +42,4 @@
     }
   }
 }
+

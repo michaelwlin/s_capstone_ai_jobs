@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "flowbite-react": "^0.7.0",
+    "nodemon": "^3.1.0",
     "postcss": "^8.4.32",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",
+    "eslint-config-react-app": "^7.0.1",
     "husky": "^8.0.3",
     "prettier": "3.2.4",
     "pretty-quick": "^4.0.0"
