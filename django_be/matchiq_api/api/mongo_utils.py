@@ -30,31 +30,30 @@ def save_to_mongodb(data):
     client.close()
 
 
-def save_resume_to_mongodb(data):
+def save_resume_to_mongodb(data, userID):
     load_dotenv()
     path = os.environ.get("DB_URI", "mongodb://db:27017/matchiq")
-    print("saving to mongodb")
     client = MongoClient(path)
 
-    collection = client.matchiq.users
-    user_filter = {"userName": "testUser"}  # TODO: Update to logged in user
-    existing_user = collection.find_one(user_filter)
+    try:
+        collection = client.matchiq.users
+        user_filter = {"_id": ObjectId(userID)}
+        existing_user = collection.find_one(user_filter)
 
-    resume_entry = {
-        "_id": ObjectId(),
-        "resume_data": data,
-        "date_added": datetime.now()
-    }
+        resume_entry = {
+            "_id": ObjectId(),
+            "resume_data": data,
+            "date_added": datetime.now()
+        }
 
-    if existing_user:
-        collection.update_one(user_filter, {"$push": {"resume": resume_entry}})
-        print("Resume inserted into MongoDB.")
-    else:
-        user = {"userName": "testUser2", "resume": [
-            data], "email": "test@gmail.com"}
-        result = collection.insert_one(user)
-
-        print(
-            f"New user and resume inserted into MongoDB. {result.inserted_id}")
-
-    client.close()
+        if existing_user:
+            collection.update_one(
+                user_filter, {"$push": {"resume": resume_entry}})
+            print("Resume inserted into MongoDB.")
+            client.close()
+        else:
+            client.close()
+            return {"error": "User not found."}
+    except Exception as e:
+        client.close()
+        return {'error': f'Error saving resume: {str(e)}'}
