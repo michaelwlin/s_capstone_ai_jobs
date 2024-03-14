@@ -212,7 +212,7 @@ class DataTools:
 
     def get_score(self, resume_obj, job_obj):
         system_prompt = "You are a job headhunter trying match people to specific jobs."
-        user_prompt = "Take in consideration the following resume and job posting. Keep in mind the experience, skills and education of the applicant. If they do not meet any qualifications, give them a 0 out of 100. Return a matching score 0 out of 100 for this candidate's resume compared to the following job posting: \n {}\n\n Job Posting:\n {}\n\n return the score and reasoning in a JSON format. Be brutal with the score. If they do not have any qualifications of the job, do not give them a good score.".format(
+        user_prompt = "Take in consideration the following resume and job posting. Keep in mind the experience, skills and education of the applicant. If they do not meet any qualifications, give them a 0 out of 100. Return a matching score 0 out of 100 for this candidate's resume compared to the following job posting. Resume \n {}\n\n Job Posting:\n {}\n\n return the score and reasoning in a JSON format. Be brutal with the score. If they do not have any qualifications of the job, do not give them a good score. The reasoning should be in the format as if you were giving them direct feedback. Use 'you' when you refer to them.".format(
             resume_obj, job_obj
         )
         schema = {
@@ -224,7 +224,7 @@ class DataTools:
                 },
                 "reasoning": {
                     "type": "string",
-                    "description": "Provide reasoning for the matching score out of 100.",
+                    "description": "Provide reasoning for the matching score out of 100. Provide the reasoning as if you were giving them direct feedback.",
                 },
             },
         }
@@ -260,6 +260,9 @@ class DataTools:
         matching_score = self.get_score(obj_resume, obj_job_desc)
 
         return matching_score
+    
+        
+
 
     def proofread(self, resume_text):
         system_prompt = "You are a resume reviewer that proofreads resumes."

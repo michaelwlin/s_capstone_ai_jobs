@@ -13,6 +13,8 @@ import ResumeSidebar from './Sidebar'
 import HistoryModal from './HistoryModal'
 import WordbankModal from './WordbankModal'
 import SuggestionModal from './SuggestionModal'
+import EnhanceModal from './EnhanceModal'
+import QuickSearchModal from './QuickSearchModal'
 
 export {
   Experience,
@@ -30,4 +32,6 @@ export {
   HistoryModal,
   WordbankModal,
   SuggestionModal,
+  EnhanceModal,
+  QuickSearchModal
 }

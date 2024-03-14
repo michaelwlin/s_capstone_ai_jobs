@@ -2,12 +2,11 @@ import { Modal, Button, Spinner} from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
 
-const WordbankModal = ({ openModal, setOpenModal, resume }) => {
+const EnhanceModal = ({ openModal, setOpenModal, resume }) => {
   const [inputFile, setInputFile] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [adjectives, setAdjectives] = useState([])
-  const [verbs, setVerbs] = useState([])
+  const [enhancements, setEnhancements] = useState([])
   const [done, setDone] = useState(false)
 
   const onClickGenerate = () => {
@@ -15,28 +14,11 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
     generateWordBank(resume);
   }
 
-  // const stringifyResume = (resume) => {
-  //   let resultString = "";
-
-  //   for (const key in resume) {
-  //     if (Object.hasOwnProperty.call(resume, key)) {
-  //       const value = resume[key];
-  //       if (typeof value === 'object' && value !== null) {
-  //         resultString += stringifyResume(value) + " ";
-  //       } else {
-  //         resultString += value + " ";
-  //       }
-  //     }
-  //   }
-
-  //   return resultString;
-  // }
-
   const generateWordBank = async (resume) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/wordbank',
+        'http://localhost:8000/api/enhance',
         {
           resume_text: JSON.stringify(resume),
         },
@@ -47,8 +29,9 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
         },
       )
       if (response.data) {
-        setAdjectives(response.data.adjectives);
-        setVerbs(response.data.verbs)
+        console.log(response.data);
+        var enhancements = response.data.enhancements;
+        setEnhancements(enhancements);
         setLoading(false)
         setDone(true)
       }
@@ -59,23 +42,28 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
   }
   return (
     <Modal show={openModal} position={'bottom-right'} backdropClasses={'bg-blue-500 dark:bg-blue-400'} onClose={() => setOpenModal(false)}>
-      <Modal.Header>AI Wordbank</Modal.Header>
+      <Modal.Header>AI Refiner</Modal.Header>
       <Modal.Body>
         <div className="space-y-6 p-6">
           <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-            Unlock your potential with our AI-powered wordbank feature that dynamically generates verbs and
-            adjectives tailored to your resume, ensuring each word resonates with your unique skills and experiences.
+                Elevate your resume with our AI-powered Refiner feature. Dynamically analyzing your 
+                resume, it generates tailored enhancements, ensuring every word resonates with your unique 
+                skills and experiences. 
           </p>
           {loading ? <Spinner size="xl" className="mr-2" /> : ''}
-          {done ? <p className='text-indigo-800 font-bold'>MatchIQ found {adjectives.length} adjective(s) and {verbs.length} verb(s) for you to try out!</p> : ''}
+          {done ? <p className='text-indigo-800 font-bold'>MatchIQ found {enhancements.length} refinement(s) for you to try out!</p> : ''}
           <hr></hr>
-          {done ? <h2><strong>Adjectives</strong></h2> : ''}
-          {loading ? '': adjectives.map((adj) =>
-            <li>{adj}</li>
-          )}
-          {done ? <h2><strong>Verbs</strong></h2> : ''}
-          {loading ? '': verbs.map((verb) =>
-            <li>{verb}</li>
+          {loading ? '': enhancements.map((enhancement) =>
+            <div>
+                <p className='pb-1'>
+                    <h3 className='text-gray-500 font-medium'>Original</h3>
+                    <li className='list-none'>{enhancement.original}</li>
+                </p>
+                <p>
+                    <h3 className='text-indigo-800 font-medium'>MatchIQ Suggestion</h3>
+                    <li className='list-none'>{enhancement.new_element}</li>
+                </p>
+            </div>
           )}
         </div>
       </Modal.Body>
@@ -94,4 +82,4 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
   )
 }
 
-export default WordbankModal
+export default EnhanceModal

@@ -179,3 +179,10 @@ def wordbank(request):
     data = dt()
     wordbank = data.wordbank(json.dumps(body))
     return JsonResponse(wordbank)
+
+def get_score(request):
+    resume = request.body.decode("utf-8")
+    body = json.loads(resume)
+    data = dt()
+    score = data.get_score(body['resume_text'], body['job_desc'])
+    return JsonResponse(score)

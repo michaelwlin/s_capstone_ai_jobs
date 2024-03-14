@@ -15,6 +15,8 @@ const ResumeSidebar = ({
   setOpenHistoryModal,
   saveAsPdf,
   setOpenWordBankModal,
+  setOpenEnhanceModal,
+  setOpenQSModal
 }) => {
   return (
     <Sidebar style={{ minHeight: boardHeight }}>
@@ -35,9 +37,9 @@ const ResumeSidebar = ({
           <Sidebar.Item
             href="#"
             icon={FaRegLightbulb}
-            onClick={setOpenWordBankModal}
+            onClick={setOpenEnhanceModal}
           >
-            AI Suggestions
+            AI Refiner
           </Sidebar.Item>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
@@ -47,8 +49,8 @@ const ResumeSidebar = ({
           >
             History
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={BiSolidCustomize}>
-            Tailor for Job
+          <Sidebar.Item href="#" icon={BiSolidCustomize} onClick={setOpenQSModal}>
+            Quicksearch & Score
           </Sidebar.Item>
           <Sidebar.Item icon={FaDownload} onClick={saveAsPdf}>
             Download as PDF
