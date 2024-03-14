@@ -15,7 +15,8 @@ const Hero = ({ setKeyword }) => {
           <FaBriefcase className="inline-block align-bottom" />
         </h1>
         <p className="mt-6 text-lg leading-8 text-gray-600">
-          MatchIQ uses AI to help find the best job for you!
+          MatchIQ uses AI to help find the best job for you!<br />
+          <i>Choose from some of these popular searches:</i>
         </p>
       </div>
       <div className="mt-10 text-center">
