@@ -7,9 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { maliciousChars } from '../utils/maliciousChars'
+import useAuth from '../hooks/useAuth';
 
 const LandingPage = () => {
-  const [signedIn, setSignedIn] = useState(false)
+  const { auth } = useAuth()
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
   const [useSkills, setUseSkills] = useState(false)
@@ -82,13 +83,16 @@ const LandingPage = () => {
     clearErrors(type)
   }
 
-  const uploadResume = () => {}
+  const uploadResume = () => {
+    navigate('/resume');
+  }
+
   const signIn = () => {
-    setSignedIn(true)
+    navigate('/signin');
   }
 
   const uploadResumeOrSignIn = () => {
-    if (signedIn) {
+    if (auth.isAuthenticated) {
       return (
         <Button color="blue" className="mt-4 w-200" onClick={uploadResume}>
           Upload Resume
@@ -146,7 +150,7 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          <ToggleSwitch
+          {/* <ToggleSwitch
             id="signedInOut"
             checked={signedIn}
             onChange={setSignedIn}
@@ -159,7 +163,7 @@ const LandingPage = () => {
             onChange={setUseSkills}
             label="Enhance search with my skills"
           />
-          )}
+          )} */}
         </div>
       </div>
     </div>

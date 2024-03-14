@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { EditableBoard } from 'react-web-editor'
 import axios from 'axios'
 import generatePDF, { Margin } from 'react-to-pdf'
+import useAuth from '../hooks/useAuth.js'
 import {
   Header,
   Summary,
@@ -35,10 +36,11 @@ const Resume = () => {
     headerFontSize: 0.24,
     textFontSize: 0.2,
   })
+
   const [openUploadModal, setOpenUploadModal] = useState(false)
   const [openHistoryModal, setOpenHistoryModal] = useState(false)
   const [resume, setResume] = useState({})
-  const [signedIn, setSignedIn] = useState(false)
+  const { auth } = useAuth()
   const [skillsHeight, setSkillsHeight] = useState(100)
   const [experienceHeight, setExperienceHeight] = useState(250)
   const [projectsHeight, setProjectsHeight] = useState(20)
@@ -66,19 +68,20 @@ const Resume = () => {
   useEffect(() => {
     const getUserResume = async () => {
       try {
-        //TODO: only call when signed in
-        const res = await axios.get(
-          'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
-        )
-        if (res && res.data.resume.length === 0) {
-          return
+        if (auth?.isAuthorized) {
+          const res = await axios.get(
+            'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
+          )
+          if (res && res.data.resume.length === 0) {
+            return
+          }
+          setResume(
+            _id
+              ? res.data.resume.find((r) => r._id === _id)['resume_data']
+              : res.data.resume.pop()['resume_data'],
+          )
         }
-        setResume(
-          _id
-            ? res.data.resume.find((r) => r._id === _id)['resume_data']
-            : res.data.resume.pop()['resume_data'],
-        )
-        setSignedIn(true)
+
       } catch (error) {
         //TODO: add error handling
         console.error('There was an error fetching the resume data:', error)
