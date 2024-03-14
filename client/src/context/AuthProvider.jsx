@@ -3,7 +3,7 @@ import { createContext, useState, useEffect, useCallback } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({ isAuthenticated: false, user: null });
+  const [auth, setAuth] = useState({ isAuthenticated: false, user: null, userId: null });
   const [isLoading, setIsLoading] = useState(true); // Initialize loading state
 
   const validateToken = useCallback(async () => {
@@ -18,20 +18,20 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         if (data.isAuthenticated) {
-          setAuth({ isAuthenticated: true, user: data.user });
+          setAuth({ isAuthenticated: true, user: data.user, userId: data.userId });
 
         } else {
-          setAuth({ isAuthenticated: false, user: null });
+          setAuth({ isAuthenticated: false, user: null, userId: null });
 
         }
       } else {
         // If the token is invalid or not present, set auth to false
-        setAuth({ isAuthenticated: false, user: null });
+        setAuth({ isAuthenticated: false, user: null, userId: null });
 
       }
     } catch (error) {
       console.error('Error validating token:', error);
-      setAuth({ isAuthenticated: false, user: null });
+      setAuth({ isAuthenticated: false, user: null, userId: null });
 
     } finally {
       setIsLoading(false); // Set loading to false after validation is complete
