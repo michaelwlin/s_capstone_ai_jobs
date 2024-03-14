@@ -3,10 +3,15 @@ import useAuth from '../hooks/useAuth';
 
 const RequireAuth = () => {
 
-    const { auth } = useAuth();
+    const { auth, isLoading } = useAuth();
     console.log("auth in RequireAuth = ", auth)
     const location = useLocation();
     console.log("RequireAuth accessed!")
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         auth?.isAuthenticated
             ? <Outlet />

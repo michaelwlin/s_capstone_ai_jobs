@@ -4,8 +4,10 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({ isAuthenticated: false, user: null });
+  const [isLoading, setIsLoading] = useState(true); // Initialize loading state
 
   const validateToken = useCallback(async () => {
+    setIsLoading(true);
     console.log("auth = ", auth)
     try {
       const response =
@@ -31,6 +33,8 @@ export const AuthProvider = ({ children }) => {
       console.error('Error validating token:', error);
       setAuth({ isAuthenticated: false, user: null });
 
+    } finally {
+      setIsLoading(false); // Set loading to false after validation is complete
     }
     console.log("auth end of validate = ", auth)
   }, []);
@@ -46,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   }, [validateToken]);
 
   // Include validateToken in the context value
-  const value = { auth, setAuth, validateToken };
+  const value = { auth, setAuth, validateToken, isLoading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
