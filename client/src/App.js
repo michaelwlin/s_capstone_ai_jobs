@@ -29,7 +29,6 @@ const App = () => {
             <Route path="/resume/:_id" element={<Resume />} />
             <Route path="/user-search" element={<UserSearch />} />
           </Route>
-          <Footer/>
         </Routes>
         <Footer />
       </div>
