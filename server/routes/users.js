@@ -5,10 +5,46 @@ const validateID = require("../middleware/validateID");
 const { authenticateAccessToken, authenticateRefreshToken } = require("../middleware/authenticateToken");
 const User = require("../models/user");
 const router = express.Router();
+const { ObjectId } = require('mongoose').Types;
 
 router.get("/", async (req, res) => {
-    const users = await User.find().sort("userName");
-    res.send(users);
+    const { userName, email, role, _id } = req.query;
+    let query = {};
+
+    if (userName) {
+        query.userName = userName;
+    }
+
+    if (email) {
+        query.email = email;
+    }
+
+    if (role) {
+        query.role = role;
+    }
+
+    if (_id) {
+        if (ObjectId.isValid(_id)) {
+            query._id = _id;
+        } else {
+            return res.status(400).send("Invalid _id format");
+        }
+    }
+
+    try {
+        let users;
+
+        if (Object.keys(query).length > 0) {
+            users = await User.find(query).sort("userName");
+        } else {
+            users = await User.find().sort("userName");
+        }
+
+        return res.send(users);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return res.status(500).send("Internal server error");
+    }
 });
 
 router.get("/loggedInData", authenticateAccessToken, async (req, res) => {

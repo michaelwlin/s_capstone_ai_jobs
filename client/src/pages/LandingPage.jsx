@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, TextInput, ToggleSwitch } from 'flowbite-react'
 import { Hero } from '../components'
@@ -8,12 +8,15 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { maliciousChars } from '../utils/maliciousChars'
 import useAuth from '../hooks/useAuth';
+import axios from "axios";
 
 const LandingPage = () => {
   const { auth } = useAuth()
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
   const [useSkills, setUseSkills] = useState(false)
+  const [userSkills, setUserSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const schema = yup.object().shape({
     location: yup
@@ -67,11 +70,25 @@ const LandingPage = () => {
 
   const navigate = useNavigate()
 
-  const usersName = 'resumetest';
+  useEffect(() => {
+    const fetchUserSkills = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/users?userName=${auth.user}`);
+        setUserSkills(response.data.skills || []);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch user skills:', error);
+        setLoading(false);
+      }
+    };
+
+    if (auth.isAuthenticated) {
+      fetchUserSkills();
+    }
+  }, [auth.isAuthenticated, auth.user]);
 
   const onSubmit = (e) => {
-    navigate('/search-results', { state: { keyword, location, useSkills, usersName } });
-    console.log("Sent search: " + keyword, location, useSkills, usersName);
+    navigate('/search-results', { state: { keyword, location, useSkills, usersName: auth.user } });
   };
 
   const onChange = (e, type) => {
@@ -110,7 +127,8 @@ const LandingPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Hero setKeyword={setKeyword} />
-      <div className="text-center mt-12">
+      <div className="text-center mt-12 flex flex-col items-center justify-center">
+
         <form
           className="flex flex-row items-start gap-2"
           onSubmit={handleSubmit(onSubmit)}
@@ -150,12 +168,12 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          { auth?.isAuthenticated &&
+          { auth?.isAuthenticated && !loading &&
             (<ToggleSwitch
               id="useSkills"
               checked={useSkills}
               onChange={setUseSkills}
-              label="Enhance search with my skills"
+              label={`Enhance search with skills for ${auth.user}: ${userSkills.join(', ')}`}
             />)
           }
         </div>
