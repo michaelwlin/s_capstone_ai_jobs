@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, TextInput, ToggleSwitch } from 'flowbite-react'
+import { Button, TextInput, Checkbox } from 'flowbite-react'
 import { Hero } from '../components'
 import { FaSearch, FaMapPin } from 'react-icons/fa'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -70,22 +70,21 @@ const LandingPage = () => {
 
   const navigate = useNavigate()
 
+  const fetchUserSkills = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/users/${auth.userId}/skills`);
+      setUserSkills(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user skills:', error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchUserSkills = async () => {
-      try {
-        const response = await axios.get(`http://localhost:4000/api/users?userName=${auth.user}`);
-        setUserSkills(response.data.skills || []);
-        setLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch user skills:', error);
-        setLoading(false);
-      }
-    };
-
     if (auth.isAuthenticated) {
       fetchUserSkills();
     }
-  }, [auth.isAuthenticated, auth.user]);
+  }, [auth.isAuthenticated, auth.userId]);
 
   const onSubmit = (e) => {
     navigate('/search-results', { state: { keyword, location, useSkills, usersName: auth.user } });
@@ -168,14 +167,19 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          { auth?.isAuthenticated && !loading &&
-            (<ToggleSwitch
-              id="useSkills"
-              checked={useSkills}
-              onChange={setUseSkills}
-              label={`Enhance search with skills for ${auth.user}: ${userSkills.join(', ')}`}
-            />)
-          }
+          { auth?.isAuthenticated && !loading && userSkills.length > 0 && (
+            <div className="flex items-start skills-container">
+              <div className="custom-checkbox">
+                <Checkbox
+                  id="useSkills"
+                  checked={useSkills}
+                  onChange={(e) => setUseSkills(e.target.checked)}
+                  className="mr-2"
+                />
+              </div>
+              <label htmlFor="useSkills"> Check here to enhance search with your skills: {userSkills.join(', ')}</label>
+            </div>
+          )}
         </div>
       </div>
     </div>

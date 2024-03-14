@@ -62,7 +62,7 @@ const Register = () => {
                 password: '',
                 confirmPassword: '',
             });
-            navigate('/signIn'); // Redirect to signIn page after successful registration
+            navigate('/signIn');
         } catch (error) {
             console.error('Error registering user:', error);
             alert('Error registering user');
