@@ -37,7 +37,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       if (res) {
         setLoading(false)
         setOpenModal(false)
-        navigate('/resume')
+        navigate(0)
       }
     } catch (err) {
       //TODO: display error message
@@ -89,7 +89,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
   }
 
   return (
-    <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+    <Modal show={openModal} onClose={() => setOpenModal(false)}>
       <Modal.Header>Upload Resume</Modal.Header>
       <Modal.Body>
         <div className="flex w-full items-center justify-center">

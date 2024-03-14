@@ -1,6 +1,6 @@
 import { TextEditorBlock } from 'react-web-editor'
 import { useState, useEffect } from 'react'
-import { GPTMenuOption } from './index'
+import { GPTMenuOption, SuggestionModal } from './index'
 
 const Summary = ({
   parentStyle,
@@ -12,6 +12,14 @@ const Summary = ({
   const [summary, setSummary] = useState(
     resumeSummary?.toString() || 'Summary Description',
   )
+  const [showModalLoading, setModalLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [suggestions, setSuggestions] = useState({
+    originalText: '',
+    suggestedChanges: '',
+    header: '', // Header to be used for modal
+    acceptChanges: () => {}, //Takes a function to set the value
+  })
 
   useEffect(() => {
     setSummary(resumeSummary?.toString() || 'Summary Description')
@@ -19,6 +27,13 @@ const Summary = ({
 
   return (
     <div className="container">
+      <SuggestionModal
+        suggestions={suggestions}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setSuggestions={setSuggestions}
+        loading={showModalLoading}
+      />
       <TextEditorBlock
         width={parentStyle.width}
         top={summaryTop}
@@ -44,7 +59,15 @@ const Summary = ({
         initialFontColor={'black'}
         initialFontSize={parentStyle.textFontSize}
         initialFontName={'roboto'}
-        customMenuOptions={() => <GPTMenuOption />}
+        customMenuOptions={() => (
+          <GPTMenuOption
+            value={summary}
+            setValue={setSummary}
+            setShowModal={setShowModal}
+            setSuggestions={setSuggestions}
+            setModalLoading={setModalLoading}
+          />
+        )}
       />
     </div>
   )
