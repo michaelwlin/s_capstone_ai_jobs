@@ -55,7 +55,7 @@ const Register = () => {
         }
 
         try {
-            await axios.post(`http://localhost:5000/api/auth/register`, formData);
+            await axios.post(`http://localhost:4500/api/auth/register`, formData);
             alert('User registered successfully');
             setFormData({
                 userName: '',
