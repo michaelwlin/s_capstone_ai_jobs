@@ -83,7 +83,7 @@ const LandingPage = () => {
     clearErrors(type)
   }
 
-  const uploadResume = () => { 
+  const uploadResume = () => {
     navigate('/resume');
   }
 
@@ -150,7 +150,7 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          <ToggleSwitch
+          {/* <ToggleSwitch
             id="signedInOut"
             checked={signedIn}
             onChange={setSignedIn}
@@ -163,7 +163,7 @@ const LandingPage = () => {
             onChange={setUseSkills}
             label="Enhance search with my skills"
           />
-          )}
+          )} */}
         </div>
       </div>
     </div>
