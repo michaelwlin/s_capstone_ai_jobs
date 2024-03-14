@@ -71,13 +71,10 @@ const Resume = () => {
 
   useEffect(() => {
     const getUserResume = async () => {
-      console.log('in here')
       try {
-        console.log('hello')
         const res = await axios.get(
           `http://localhost:4000/api/users/${auth.userId}`,
         )
-        console.log('res', res)
         if (res && res.data.resume.length === 0) {
           return
         }

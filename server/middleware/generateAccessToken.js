@@ -23,9 +23,7 @@ async function generateRefreshToken(userPayload, res) {
 
 
     const refreshToken = jwt.sign(userPayload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
-    const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - millisecond
-
-    console.log(userPayload)
+    const refreshExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // day - hour - minute - second - milliseconds
 
     await new RefreshToken({
       user: userPayload,
