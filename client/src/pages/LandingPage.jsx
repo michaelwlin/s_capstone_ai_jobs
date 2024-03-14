@@ -83,7 +83,7 @@ const LandingPage = () => {
     clearErrors(type)
   }
 
-  const uploadResume = () => {  
+  const uploadResume = () => { 
     navigate('/resume');
   }
 

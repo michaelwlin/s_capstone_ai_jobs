@@ -8,7 +8,7 @@ const homeRoutes = require("./routes/index");
 const userRoutes = require("./routes/users");
 const jobRoutes = require("./routes/jobs");
 
-const openRoutes = ['/api/jobs'];
+const openRoutes = ['/api/jobs', '/api/users']
 const openHomeRoute = ['/api', '/api/'];
 
 const app = express() // We need to instantiate an express object to interact with the server in our code

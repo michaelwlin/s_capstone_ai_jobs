@@ -28,6 +28,7 @@ def upload_resume(request):
     if request.method == 'POST':
         try:
             resume = request.FILES['resume']
+            userID = request.POST['userID']
         except KeyError:
             return JsonResponse({'error': 'No resume file provided'}, status=400)
 
@@ -38,7 +39,7 @@ def upload_resume(request):
 
             response = JsonResponse(parsed_resume)
 
-            mongo_utils.save_resume_to_mongodb(parsed_resume)
+            mongo_utils.save_resume_to_mongodb(parsed_resume, userID)
 
             return response
 
@@ -179,3 +180,10 @@ def wordbank(request):
     data = dt()
     wordbank = data.wordbank(json.dumps(body))
     return JsonResponse(wordbank)
+
+def get_score(request):
+    resume = request.body.decode("utf-8")
+    body = json.loads(resume)
+    data = dt()
+    score = data.get_score(body['resume_text'], body['job_desc'])
+    return JsonResponse(score)
