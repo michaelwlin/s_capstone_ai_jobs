@@ -295,7 +295,7 @@ class DataTools:
 
     def enhance(self, resume_text):
         system_prompt = "You are a resume reviewer that helps enhance resumes."
-        user_prompt = "Identify specific sentences or phrases that can be improved, enhanced or better worded. Respond with a JSON object that consist of a list of the context and the fixed version of the element you found that can be enhanced.\n{}".format(
+        user_prompt = "Identify specific sentences or phrases that can be improved, enhanced or better worded. Respond with a JSON object that consist of a list of the context and the fixed version of the element you found that can be enhanced. Keep the length of the text the same.\n{}".format(
             resume_text
         )
         schema = {

@@ -30,8 +30,8 @@ const App = () => {
             <Route path="/user-search" element={<UserSearch />} />
           </Route>
         </Routes>
+        <Footer />
       </div>
-      <Footer />
     </div>
   )
 }

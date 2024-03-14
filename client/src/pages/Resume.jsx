@@ -14,6 +14,7 @@ import {
   UploadModal,
   ResumeSidebar,
   HistoryModal,
+  WordbankModal
 } from '../components/Resume/index.js'
 
 const Resume = () => {
@@ -43,6 +44,7 @@ const Resume = () => {
   const [skillsHeight, setSkillsHeight] = useState(100)
   const [experienceHeight, setExperienceHeight] = useState(250)
   const [projectsHeight, setProjectsHeight] = useState(20)
+  const [openWordBankModal, setOpenWordBankModal] = useState(false)
 
   const experienceTop = skillsTop + skillsHeight
   const projectsTop = experienceTop + experienceHeight
@@ -118,6 +120,7 @@ const Resume = () => {
         setOpenUploadModal={setOpenUploadModal}
         setOpenHistoryModal={setOpenHistoryModal}
         saveAsPdf={saveAsPdf}
+        setOpenWordBankModal={setOpenWordBankModal}
       />
       <div className="resume-wrapper" ref={boardRef}>
         <EditableBoard
@@ -177,6 +180,13 @@ const Resume = () => {
           />
         </EditableBoard>
       </div>
+      {openWordBankModal && (
+        <WordbankModal
+          openModal={openWordBankModal}
+          setOpenModal={setOpenWordBankModal}
+          resume={resume}
+        />
+      )}
     </div>
   )
 }

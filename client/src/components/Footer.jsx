@@ -1,4 +1,5 @@
 import { Footer, Card } from 'flowbite-react'
+import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram, FaTwitter, FaGithubAlt } from 'react-icons/fa'
 
 const SiteFooter = () => {
@@ -43,7 +44,9 @@ const SiteFooter = () => {
             <div>
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">MatchIQ</Footer.Link>
+                <Footer.Link to="/about-us" as={Link}>
+                  MatchIQ
+                </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
