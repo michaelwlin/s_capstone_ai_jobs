@@ -28,6 +28,7 @@ def upload_resume(request):
     if request.method == 'POST':
         try:
             resume = request.FILES['resume']
+            userID = request.POST['userID']
         except KeyError:
             return JsonResponse({'error': 'No resume file provided'}, status=400)
 
@@ -38,7 +39,7 @@ def upload_resume(request):
 
             response = JsonResponse(parsed_resume)
 
-            mongo_utils.save_resume_to_mongodb(parsed_resume)
+            mongo_utils.save_resume_to_mongodb(parsed_resume, userID)
 
             return response
 
