@@ -109,7 +109,7 @@ const LandingPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Hero />
+      <Hero setKeyword={setKeyword} />
       <div className="text-center mt-12">
         <form
           className="flex flex-row items-start gap-2"
