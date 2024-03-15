@@ -10,10 +10,6 @@ const User = mongoose.model('User', new mongoose.Schema({
     type: String,
     required: false
   },
-  premiumUser: {
-    type: Boolean,
-    required: false
-  },
   password: {
     type: String,
     required: true
@@ -35,9 +31,14 @@ const User = mongoose.model('User', new mongoose.Schema({
     type: Date,
     required: false
   },
+  skills: {
+    type: [String],
+    required: false
+  },
   resume: {
     type: Array,
     required: false
   }
 }));
+
 module.exports = User;

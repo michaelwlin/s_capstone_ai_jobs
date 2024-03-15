@@ -14,7 +14,6 @@ const Register = () => {
         email: '',
         password: '',
         confirmPassword: '',
-        premiumUser: false,
     });
     const [isEmailValid, setIsEmailValid] = useState(null);
     const [isPasswordValid, setIsPasswordValid] = useState(null);
@@ -62,9 +61,8 @@ const Register = () => {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                premiumUser: false,
             });
-            navigate('/signIn'); // Redirect to signIn page after successful registration
+            navigate('/signIn');
         } catch (error) {
             console.error('Error registering user:', error);
             alert('Error registering user');
@@ -177,11 +175,6 @@ const Register = () => {
                         <span className="font-medium">Oops!</span> Passwords do not match.
                     </div>
                 )}
-
-                <label style={{ fontWeight: 'bold' }}>
-                    <input name="premiumUser" type="checkbox" checked={formData.premiumUser} onChange={handleChange} style={{ marginRight: '8px' }} />
-                    <span>I want to be a premium user</span>
-                </label>
 
                 <button
                     type="submit"

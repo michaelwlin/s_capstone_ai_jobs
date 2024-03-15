@@ -28,6 +28,7 @@ def upload_resume(request):
     if request.method == 'POST':
         try:
             resume = request.FILES['resume']
+            userID = request.POST['userID']
         except KeyError:
             return JsonResponse({'error': 'No resume file provided'}, status=400)
 
@@ -38,7 +39,7 @@ def upload_resume(request):
 
             response = JsonResponse(parsed_resume)
 
-            mongo_utils.save_resume_to_mongodb(parsed_resume)
+            mongo_utils.save_resume_to_mongodb(parsed_resume, userID)
 
             return response
 
@@ -111,57 +112,6 @@ def enhance(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
-def match_jobs(request):
-    keyword = request.GET.get('keyword', '')
-    location = request.GET.get('location', '')
-    user_email = 'resumetest@example.com'  # Example user email REMEMBER TO CHANGE!
-
-    load_dotenv()
-    db_uri = os.environ.get("DB_URI", "mongodb://db:27017/matchiq")
-    client = MongoClient(db_uri)
-
-    db = client.matchiq
-    user_collection = db.users
-    job_collection = db.jobs
-
-    user = user_collection.find_one({'email': user_email})
-    if not user:
-        return JsonResponse({'error': 'User not found'}, status=404)
-    user_skills = user.get('skills', [])
-
-    match_query = {}
-    if keyword:
-        match_query["$or"] = [
-            {"title": {"$regex": keyword, "$options": "i"}},
-            {"description": {"$regex": keyword, "$options": "i"}}
-        ]
-    if location:
-        match_query["location"] = {"$regex": location, "$options": "i"}
-
-    # MongoDB aggregation pipeline for matching and ranking jobs
-    pipeline = [
-        {"$match": match_query},
-        {"$addFields": {
-            "locationWeight": {"$cond": [{"$regexMatch": {"input": "$location", "regex": location, "options": "i"}}, 3, 0]},
-            "titleWeight": {"$cond": [{"$regexMatch": {"input": "$title", "regex": keyword, "options": "i"}}, 2, 0]},
-            "matchingSkillsCount": {"$size": {"$setIntersection": ["$skills", user_skills]}},
-        }},
-        {"$addFields": {
-            "totalWeight": {"$add": ["$locationWeight", "$titleWeight", "$matchingSkillsCount"]}
-        }},
-        {"$match": {"matchingSkillsCount": {"$gt": 0}}},
-        {"$sort": {"totalWeight": -1, "matchingSkillsCount": -1}}
-    ]
-    ranked_jobs = list(job_collection.aggregate(pipeline))
-
-    for job in ranked_jobs:
-        job['_id'] = str(job['_id'])
-        job['matchScore'] = job.get('matchingSkillsCount', 0)
-
-    return JsonResponse({'jobs': ranked_jobs, 'userSkills': user_skills}, safe=False)
-
-
 def stringify_resume_obj(resume):
     result_string = ""
     for key, value in resume.items():
@@ -179,3 +129,10 @@ def wordbank(request):
     data = dt()
     wordbank = data.wordbank(json.dumps(body))
     return JsonResponse(wordbank)
+
+def get_score(request):
+    resume = request.body.decode("utf-8")
+    body = json.loads(resume)
+    data = dt()
+    score = data.get_score(body['resume_text'], body['job_desc'])
+    return JsonResponse(score)

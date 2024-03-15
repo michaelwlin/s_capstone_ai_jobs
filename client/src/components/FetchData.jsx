@@ -35,12 +35,11 @@ function FetchData() {
     return (
         <div>
             {isLoading && <ProgressBar />}
-            <div className="flex">
-                {/* {useSkills && userSkills.length > 0 && ( */}
-                {useSkills && (
-                    <p className="mb-4">Matching jobs with your skills: {userSkills.join(', ')}</p>
+            {useSkills && (
+                <p className="mb-4">Matching jobs with your skills: <i>{userSkills.join(', ')}</i></p>
                 )}
-                <div className="h-screen overflow-y-auto w-1/2">
+            <div className="flex">
+            <div className="h-screen overflow-y-auto w-1/2">
                     {jobs.map((job, index) => (
                         <div key={index} className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200" onClick={() => setSelectedJob(job)}>
                             <p className="text-xl" style={{ color: 'blue', fontWeight: 'bold' }}>{job.title}</p>
@@ -48,7 +47,9 @@ function FetchData() {
                                 <p style={{ fontWeight: 'normal', margin: 0 }}>{job.company}</p>
                                 <span style={{ fontStyle: 'italic' }}>{job.location}</span>
                             </div>
-                            <p className="text-md"><strong>Matching Skills:</strong> {job.matchScore}</p>
+                            {useSkills && (
+                                <p className="text-md"><strong>Matching Skills:</strong> <i>{job.matchScore}</i></p>
+                                )}
                         </div>
                     ))}
                 </div>

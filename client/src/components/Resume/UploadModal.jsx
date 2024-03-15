@@ -4,12 +4,14 @@ import { FaUpload } from 'react-icons/fa'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { getCSRFToken } from '../../api/csrfToken.js'
+import useAuth from '../../hooks/useAuth.js'
 
 const UploadModal = ({ openModal, setOpenModal }) => {
   const navigate = useNavigate()
   const [inputFile, setInputFile] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const { auth } = useAuth()
 
   const onClickUpload = () => {
     parseResume(inputFile)
@@ -22,6 +24,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       setLoading(true)
       const formData = new FormData()
       formData.append('resume', file)
+      formData.append('userID', auth.userId)
 
       const res = await axios.post(
         'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/upload_resume',

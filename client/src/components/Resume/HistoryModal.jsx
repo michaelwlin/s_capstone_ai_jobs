@@ -2,9 +2,11 @@ import { Modal, Button, Table } from 'flowbite-react'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import useAuth from '../../hooks/useAuth.js'
 
 const HistoryModal = ({ openModal, setOpenModal }) => {
   const [resumes, setResumes] = useState([])
+  const { auth } = useAuth()
   const dateOptions = {
     weekday: 'long',
     year: 'numeric',
@@ -21,7 +23,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
     const getAllResumes = async () => {
       try {
         const res = await axios.get(
-          'https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/65e6aa83c0bce2ba3047c638',
+          'https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/${auth.userId}',
         )
         if (res && res.data.resume.length === 0) {
           return

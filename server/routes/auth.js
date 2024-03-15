@@ -18,7 +18,6 @@ router.post("/register", async (req, res) => {
     }
 
     try {
-        console.log("Registration attempted");
         const hashedPassword = await bcryptjs.hash(password, saltRounds);
 
         const user = new User({
@@ -110,8 +109,12 @@ router.post('/validate', async (req, res) => {
                 try {
                     const newUser = await authenticateRefreshToken();
                     if (!newUser) {
+                    const newUser = await authenticateRefreshToken();
+                    if (!newUser) {
                         return res.sendStatus(401).json({ isAuthenticated: false }); // Token expired
                     } else {
+                        generateAccessToken(newUser, res);
+                        return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
                         generateAccessToken(newUser, res);
                         return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
                     }
@@ -139,12 +142,12 @@ router.post('/login', async (req, res) => {
         try {
             if (await bcryptjs.compare(req.body.password, user.password)) {
                 const userPayload = { userName: user.userName, userId: user._id.toString() };
+                const userPayload = { userName: user.userName, userId: user._id.toString() };
 
                 generateAccessToken(userPayload, res);
                 const refreshToken = await generateRefreshToken(userPayload, res);
 
 
-                console.log("refresh = ", refreshToken)
                 res.status(200).send('Login Successful');
 
             } else {

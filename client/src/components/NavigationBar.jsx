@@ -22,7 +22,7 @@ const NavigationBar = () => {
   const handleSignOut = async () => {
     await logout();
 
-    navigate('/signin');
+    navigate('/');
   }
 
   const userNavigation = () => {
@@ -30,13 +30,13 @@ const NavigationBar = () => {
       return (
         <div>
           <Dropdown.Header>
-            <span className="block text-sm">User Profile</span>
+            <span className="block text-sm">User:</span>
             <span className="block truncate text-sm font-medium">
               {auth.user}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
+          <Dropdown.Item>Dashboard (Non-functional)</Dropdown.Item>
+          <Dropdown.Item>Settings (Non-functional)</Dropdown.Item>
           <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
       )

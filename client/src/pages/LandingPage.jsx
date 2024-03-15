@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, TextInput, ToggleSwitch } from 'flowbite-react'
+import { Button, TextInput, Checkbox } from 'flowbite-react'
 import { Hero } from '../components'
 import { FaSearch, FaMapPin } from 'react-icons/fa'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -8,12 +8,15 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { maliciousChars } from '../utils/maliciousChars'
 import useAuth from '../hooks/useAuth';
+import axios from "axios";
 
 const LandingPage = () => {
   const { auth } = useAuth()
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
   const [useSkills, setUseSkills] = useState(false)
+  const [userSkills, setUserSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const schema = yup.object().shape({
     location: yup
@@ -67,11 +70,24 @@ const LandingPage = () => {
 
   const navigate = useNavigate()
 
-  const usersName = 'resumetest';
+  const fetchUserSkills = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/users/${auth.userId}/skills`);
+      setUserSkills(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user skills:', error);
+    }
+  };
+  
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      fetchUserSkills();
+    }
+  }, [auth.isAuthenticated, auth.userId]);
 
   const onSubmit = (e) => {
-    navigate('/search-results', { state: { keyword, location, useSkills, usersName } });
-    console.log("Sent search: " + keyword, location, useSkills, usersName);
+    navigate('/search-results', { state: { keyword, location, useSkills, usersName: auth.user } });
   };
 
   const onChange = (e, type) => {
@@ -83,7 +99,7 @@ const LandingPage = () => {
     clearErrors(type)
   }
 
-  const uploadResume = () => {
+  const uploadResume = () => { 
     navigate('/resume');
   }
 
@@ -109,8 +125,9 @@ const LandingPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Hero />
-      <div className="text-center mt-12">
+      <Hero setKeyword={setKeyword} />
+      <div className="text-center mt-12 flex flex-col items-center justify-center">
+
         <form
           className="flex flex-row items-start gap-2"
           onSubmit={handleSubmit(onSubmit)}
@@ -150,20 +167,19 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          {/* <ToggleSwitch
-            id="signedInOut"
-            checked={signedIn}
-            onChange={setSignedIn}
-            label="Set Signed In/Out"
-          />
-          {signedIn && (
-          <ToggleSwitch
-            id="useSkills"
-            checked={useSkills}
-            onChange={setUseSkills}
-            label="Enhance search with my skills"
-          />
-          )} */}
+          { auth?.isAuthenticated && !loading && userSkills.length > 0 && (
+            <div className="flex items-start skills-container">
+              <div className="custom-checkbox">
+                <Checkbox
+                  id="useSkills"
+                  checked={useSkills}
+                  onChange={(e) => setUseSkills(e.target.checked)}
+                  className="mr-2"
+                />
+              </div>
+              <label htmlFor="useSkills"> Check here to enhance search with your skills: {userSkills.join(', ')}</label>
+            </div>
+          )}
         </div>
       </div>
     </div>
