@@ -27,10 +27,9 @@ const App = () => {
             <Route path="/users" element={<FetchUsers />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/resume/:_id" element={<Resume />} />
-            <Route path="/user-search" element={<UserSearch />} />
           </Route>
         </Routes>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   )
