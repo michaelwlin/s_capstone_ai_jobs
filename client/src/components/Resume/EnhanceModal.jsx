@@ -18,7 +18,7 @@ const EnhanceModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/enhance', {
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/enhance', {
         withCredentials: true // Add this line to include cookies
       },
         {

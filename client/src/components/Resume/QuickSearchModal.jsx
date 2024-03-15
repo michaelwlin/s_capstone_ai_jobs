@@ -19,7 +19,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
 
   const onClickFind = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/jobs?keyword=${keyword}&location=${location}`)
+      const response = await axios.get(`https://matchiq-api-8d1eb08929d0.herokuapp.com/api/jobs?keyword=${keyword}&location=${location}`)
       if (response.data) {
         setJobs(response.data.jobs)
       }
@@ -37,7 +37,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/get_score',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/get_score',
         {
           resume_text: JSON.stringify(resume),
           job_desc: job['description']
@@ -69,7 +69,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/match',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/match',
         {
           resume_text: JSON.stringify(resume),
         },

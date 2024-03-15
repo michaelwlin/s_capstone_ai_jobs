@@ -8,7 +8,7 @@ beforeEach(async () => {
   users = generateUsers(10);
 
   for (let user of users) {
-    await axios.post('http://localhost:4000/api/users', user, { timeout: 5000 });
+    await axios.post('https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users', user, { timeout: 5000 });
   }
   });
   
@@ -29,7 +29,7 @@ function generateUsers(count) {
 
 // Test for adding users to mongodb
 test('should add users to mongodb', async () => {
-  const response = await axios.get('http://localhost:4000/api/users');
+  const response = await axios.get('https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users');
   const usersInDb = response.data;
   expect(usersInDb).not.toBeNull();
   // how many users are in the database

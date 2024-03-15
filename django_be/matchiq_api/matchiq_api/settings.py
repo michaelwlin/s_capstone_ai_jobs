@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "https://matchiq-client-803d913faaf2.herokuapp.com"]
 CSRF_COOKIE_SECURE = False
 CORS_ALLOW_METHODS = [
     'DELETE',

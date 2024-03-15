@@ -1,4 +1,4 @@
-POST http://localhost:4000/api/users
+POST https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:4000/api/users/loggedInData
+GET https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/loggedInData
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0MGRiMDUyYjEyYmEzZjM0MGZjNGIiLCJpYXQiOjE3MDkwODczNjUsImV4cCI6MTcwOTA4NzM4MH0.Q8TXYsuqQ92RVVWjeLXfs207oeSlE9iSvHapuCSFO1A
 
 ###
@@ -37,7 +37,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:4000/api/users/65cf0b5625612a1ea04ceb8c
+DELETE https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/65cf0b5625612a1ea04ceb8c
 Content-Type: application/json
 
 
