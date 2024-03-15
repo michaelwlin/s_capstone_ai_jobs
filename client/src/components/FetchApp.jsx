@@ -5,7 +5,7 @@ function FetchApp() {
     const [applications, setApplications] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/applications/')
+        axios.get('https://matchiq-django-48494c1c8d6c.herokuapp.com/api/applications/')
             .then(response => {
                 setApplications(response.data);
             })

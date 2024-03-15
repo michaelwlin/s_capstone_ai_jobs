@@ -21,7 +21,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
     const getAllResumes = async () => {
       try {
         const res = await axios.get(
-          'http://localhost:4000/api/users/65e6aa83c0bce2ba3047c638',
+          'https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/65e6aa83c0bce2ba3047c638',
         )
         if (res && res.data.resume.length === 0) {
           return

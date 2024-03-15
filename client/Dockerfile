@@ -1,15 +1,38 @@
-FROM node:lts-alpine3.18
+# Stage 1: Build the React application
+FROM node:lts-alpine3.18 as build
 
-ENV NODE_VERSION 20.11.0
+# Set the openssl-legacy-provider option
 ENV NODE_OPTIONS="--openssl-legacy-provider"
 
-RUN addgroup app && adduser -S -G app app
-
+# Set working directory
 WORKDIR /app
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy the rest of your app's source code
 COPY . .
 
-EXPOSE 3000
+# Ensure the environment variable is used during the build process
+RUN npm run build
 
-CMD ["npm", "start"]
+# Stage 2: Serve the app using a simple static file server
+FROM node:lts-alpine3.18
+
+# Install 'serve' to run the application
+RUN npm install -g serve
+
+# Set working directory
+WORKDIR /app
+
+# Copy build artifacts from the 'build' stage
+COPY --from=build /app/build /app
+
+# Heroku dynamically assigns a port, so use the PORT environment variable
+CMD ["sh", "-c", "serve -s -l $PORT"]
+
+# Indicate we are listening on the dynamic port
+EXPOSE $PORT

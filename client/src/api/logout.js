@@ -6,7 +6,7 @@ const useLogout = () => {
     const { validateToken } = useContext(AuthContext);
 
     const logout = () => {
-        fetch('http://localhost:4500/api/auth/logout', {
+        fetch('https://matchiq-api-8d1eb08929d0.herokuapp.com/auth/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

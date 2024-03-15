@@ -33,7 +33,7 @@ const ExperienceItem = ({
     originalText: '',
     suggestedChanges: '',
     header: '', // Header to be used for modal
-    acceptChanges: () => {}, //Takes a function to set the value
+    acceptChanges: () => { }, //Takes a function to set the value
   })
 
   const setAchievement = (index, value) => {

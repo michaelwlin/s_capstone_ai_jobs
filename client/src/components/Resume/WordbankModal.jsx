@@ -1,4 +1,4 @@
-import { Modal, Button, Spinner} from 'flowbite-react'
+import { Modal, Button, Spinner } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
 
@@ -36,7 +36,7 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/wordbank',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/wordbank',
         {
           resume_text: JSON.stringify(resume),
         },
@@ -68,25 +68,25 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
           </p>
           {loading ? <Spinner size="xl" className="mr-2" /> : ''}
           {done ? <h2>Adjectives</h2> : ''}
-          {loading ? '': adjectives.map((adj) =>
+          {loading ? '' : adjectives.map((adj) =>
             <li>{adj}</li>
           )}
           {done ? <h2>Verbs</h2> : ''}
-          {loading ? '': verbs.map((verb) =>
+          {loading ? '' : verbs.map((verb) =>
             <li>{verb}</li>
           )}
         </div>
       </Modal.Body>
       <Modal.Footer>
 
-            <Button onClick={onClickGenerate}>
-            {done ? 'Generate Again' : 'Generate'}
-          </Button>
-          <Button color="gray" onClick={() => setOpenModal(false)}>
+        <Button onClick={onClickGenerate}>
+          {done ? 'Generate Again' : 'Generate'}
+        </Button>
+        <Button color="gray" onClick={() => setOpenModal(false)}>
           {done ? 'Finish' : 'Later'}
-          </Button>
-    
-    
+        </Button>
+
+
       </Modal.Footer>
     </Modal>
   )

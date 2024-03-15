@@ -6,7 +6,7 @@ const AI_COMMANDS = [{ id: 'improve', label: 'Improve' }]
 const enhance = async (value) => {
   try {
     const response = await axios.post(
-      'http://localhost:8000/api/enhance',
+      'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/enhance',
       {
         resume_text: JSON.stringify(value),
       },

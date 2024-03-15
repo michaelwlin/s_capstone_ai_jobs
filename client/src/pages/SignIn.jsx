@@ -16,7 +16,7 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch('http://localhost:4500/api/auth/login', {
+        fetch('https://matchiq-api-8d1eb08929d0.herokuapp.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

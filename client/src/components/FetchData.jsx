@@ -9,16 +9,16 @@ function FetchData() {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const { keyword, location: locationName, useSkills, usersName } = location.state || {};
-    
+
     const getJobs = async () => {
         setIsLoading(true);
         try {
-            const url = `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`;
+            const url = `https://matchiq-api-8d1eb08929d0.herokuapp.com/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`;
             const response = await axios.get(url);
             setJobs(response.data.jobs || []);
             if (useSkills) {
                 setUserSkills(response.data.userSkills || []);
-              }
+            }
             setIsLoading(false);
         } catch (error) {
             console.error('Failed to fetch jobs:', error);
@@ -38,9 +38,9 @@ function FetchData() {
             <div className="flex">
                 {/* {useSkills && userSkills.length > 0 && ( */}
                 {useSkills && (
-                <p className="mb-4">Matching jobs with your skills: {userSkills.join(', ')}</p>
+                    <p className="mb-4">Matching jobs with your skills: {userSkills.join(', ')}</p>
                 )}
-            <div className="h-screen overflow-y-auto w-1/2">
+                <div className="h-screen overflow-y-auto w-1/2">
                     {jobs.map((job, index) => (
                         <div key={index} className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200" onClick={() => setSelectedJob(job)}>
                             <p className="text-xl" style={{ color: 'blue', fontWeight: 'bold' }}>{job.title}</p>
@@ -53,7 +53,7 @@ function FetchData() {
                     ))}
                 </div>
                 {selectedJob && (
-                    <div className="overflow-y-auto h-screen w-2/3 p-5 bg-gray-100"  style={{ maxHeight: '100%' }}>
+                    <div className="overflow-y-auto h-screen w-2/3 p-5 bg-gray-100" style={{ maxHeight: '100%' }}>
                         <p className="text-xl mb-2" style={{ color: 'blue', fontWeight: 'bold' }}>{selectedJob.title}</p>
                         <p style={{ fontWeight: 'normal' }}>{selectedJob.company}</p>
                         <span style={{ fontStyle: 'italic', display: 'block', marginBottom: '1rem' }}>{selectedJob.location}</span>
@@ -65,7 +65,7 @@ function FetchData() {
                     </div>
                 )}
             </div>
-            </div>
+        </div>
     );
 }
 

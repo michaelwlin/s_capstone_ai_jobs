@@ -4,8 +4,8 @@ import axios from "axios";
 function FetchUsers() {
     const [users, setUsers] = useState([]);
 
-    useEffect(() => { 
-        axios.get(`http://localhost:8000/api/users/`)
+    useEffect(() => {
+        axios.get(`https://matchiq-django-48494c1c8d6c.herokuapp.com/api/users/`)
             .then(response => {
                 setUsers(response.data);
             })

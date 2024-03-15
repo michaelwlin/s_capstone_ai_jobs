@@ -24,7 +24,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       formData.append('resume', file)
 
       const res = await axios.post(
-        'http://localhost:8000/api/upload_resume',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/upload_resume',
         formData,
         {
           headers: {

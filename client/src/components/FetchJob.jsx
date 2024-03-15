@@ -5,7 +5,7 @@ function FetchJob() {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/jobs/')
+        axios.get('https://matchiq-django-48494c1c8d6c.herokuapp.com/api/jobs/')
             .then(response => {
                 setJobs(response.data);
             })

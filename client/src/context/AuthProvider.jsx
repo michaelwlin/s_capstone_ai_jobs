@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     console.log("auth = ", auth)
     try {
       const response =
-        await fetch('http://localhost:4500/api/auth/validate', {
+        await fetch('https://matchiq-api-8d1eb08929d0.herokuapp.com/api/auth/validate', {
           method: 'POST',
           credentials: 'include', // Necessary to include cookies
         });
