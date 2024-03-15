@@ -108,3 +108,22 @@ code {
   color: green;
   margin-left: 5px;
 }
+
+.skills-container {
+  max-width: 550px;
+  margin: 0 auto;
+  text-align: center;
+}
+.custom-checkbox input[type="checkbox"] {
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid #4a90e2;
+  padding: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: #4a90e2;
+  border-color: #4a90e2;
+}

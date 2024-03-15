@@ -55,5 +55,15 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+router.get("/:id/skills", validateID, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).send('User not found');
+
+        res.json(user.skills);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = router;

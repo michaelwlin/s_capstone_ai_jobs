@@ -29,7 +29,6 @@ def save_to_mongodb(data):
 
     client.close()
 
-
 def save_resume_to_mongodb(data, userID):
     load_dotenv()
     path = os.environ.get("DB_URI", "mongodb://db:27017/matchiq")
@@ -46,10 +45,19 @@ def save_resume_to_mongodb(data, userID):
             "date_added": datetime.now()
         }
 
+        skills = data.get("skills", [])
+        
         if existing_user:
             collection.update_one(
-                user_filter, {"$push": {"resume": resume_entry}})
+                user_filter, {"$push": {"resume": resume_entry}}
+            )
             print("Resume inserted into MongoDB.")
+
+            collection.update_one(
+                user_filter, {"$addToSet": {"skills": {"$each": skills}}}
+            )
+            print("Skills copied to user's skills array.")
+
             client.close()
         else:
             client.close()
