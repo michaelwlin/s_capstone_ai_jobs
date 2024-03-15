@@ -118,6 +118,7 @@ router.post('/validate', async (req, res) => {
                         generateAccessToken(newUser, res);
                         return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
                     }
+                }
                 } catch (refreshError) {
                     console.error(refreshError);
                     return res.status(500).send('Error refreshing token').json({ isAuthenticated: false });
@@ -141,7 +142,6 @@ router.post('/login', async (req, res) => {
     else {
         try {
             if (await bcryptjs.compare(req.body.password, user.password)) {
-                const userPayload = { userName: user.userName, userId: user._id.toString() };
                 const userPayload = { userName: user.userName, userId: user._id.toString() };
 
                 generateAccessToken(userPayload, res);
