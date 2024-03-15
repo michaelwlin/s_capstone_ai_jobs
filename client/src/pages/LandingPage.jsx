@@ -72,14 +72,16 @@ const LandingPage = () => {
 
   const fetchUserSkills = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/users/${auth.userId}/skills`);
+      const response = await axios.get(`https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/${auth.userId}/skills`, {
+        withCredentials: true // Add this line to include cookies
+      });
       setUserSkills(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching user skills:', error);
     }
   };
-  
+
   useEffect(() => {
     if (auth.isAuthenticated) {
       fetchUserSkills();
@@ -99,7 +101,7 @@ const LandingPage = () => {
     clearErrors(type)
   }
 
-  const uploadResume = () => { 
+  const uploadResume = () => {
     navigate('/resume');
   }
 
@@ -167,7 +169,7 @@ const LandingPage = () => {
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          { auth?.isAuthenticated && !loading && userSkills.length > 0 && (
+          {auth?.isAuthenticated && !loading && userSkills.length > 0 && (
             <div className="flex items-start skills-container">
               <div className="custom-checkbox">
                 <Checkbox
