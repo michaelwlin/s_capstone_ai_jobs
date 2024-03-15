@@ -19,7 +19,9 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
 
   const onClickFind = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/jobs?keyword=${keyword}&location=${location}`)
+      const response = await axios.get(`https://matchiq-api-8d1eb08929d0.herokuapp.com/api/jobs?keyword=${keyword}&location=${location}`, {
+        withCredentials: true // Add this line to include cookies
+      })
       if (response.data) {
         setJobs(response.data.jobs)
       }
@@ -27,9 +29,9 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
       console.error('Error getting jobs', error)
     }
   }
-  
+
   const onClickScore = async (jobIdx) => {
-    
+
     let thisJobIdx = jobIdx['idx'];
     let job = jobs[thisJobIdx]
 
@@ -37,7 +39,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/get_score',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/get_score',
         {
           resume_text: JSON.stringify(resume),
           job_desc: job['description']
@@ -50,8 +52,8 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
       )
       if (response.data) {
         var score = {
-          "score" : response.data.score,
-          "reasoning" : response.data.reasoning
+          "score": response.data.score,
+          "reasoning": response.data.reasoning
         }
         const old_jobs = [...jobs]
         old_jobs[thisJobIdx]['score'] = score;
@@ -69,7 +71,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/match',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/match',
         {
           resume_text: JSON.stringify(resume),
         },
@@ -133,28 +135,28 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
             <Button onClick={onClickFind}>Quick Search</Button>
           </form>
           {jobs.length > 0 ?
-          <Accordion collapseAll>
-            {
-            jobs.map((job, idx) =>
-                <Accordion.Panel>
-                  <Accordion.Title>{job.title} - {job.company} ({job.location})</Accordion.Title>
-                  <Accordion.Content>
-                    <p className='mb-3'>
-                    {'score' in job ? 
-                    <Button gradientMonochrome='purple' className='float-right mb-3'>Matching Score: {job.score.score} <br></br>Reasoning: {job.score.reasoning}</Button>
+            <Accordion collapseAll>
+              {
+                jobs.map((job, idx) =>
+                  <Accordion.Panel>
+                    <Accordion.Title>{job.title} - {job.company} ({job.location})</Accordion.Title>
+                    <Accordion.Content>
+                      <p className='mb-3'>
+                        {'score' in job ?
+                          <Button gradientMonochrome='purple' className='float-right mb-3'>Matching Score: {job.score.score} <br></br>Reasoning: {job.score.reasoning}</Button>
 
-                    :
-                    
-                    <Button pill gradientMonochrome='purple' className='float-right mb-3' onClick={() => onClickScore({idx})}>Get MatchIQ Score</Button>
-                    }
-                    </p>
-                    <p className="mb-2 text-gray-500 dark:text-gray-400">
-                      {job.description}
-                    </p>
-                  </Accordion.Content>
-                </Accordion.Panel>
-            )
-            }     
+                          :
+
+                          <Button pill gradientMonochrome='purple' className='float-right mb-3' onClick={() => onClickScore({ idx })}>Get MatchIQ Score</Button>
+                        }
+                      </p>
+                      <p className="mb-2 text-gray-500 dark:text-gray-400">
+                        {job.description}
+                      </p>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                )
+              }
             </Accordion>
             : ''}
         </div>

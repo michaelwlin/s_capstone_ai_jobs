@@ -1,4 +1,4 @@
-import { Modal, Button, Spinner} from 'flowbite-react'
+import { Modal, Button, Spinner } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
 
@@ -19,7 +19,9 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/wordbank',
+        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/wordbank', {
+        withCredentials: true // Add this line to include cookies
+      },
         {
           resume_text: JSON.stringify(resume),
         },
