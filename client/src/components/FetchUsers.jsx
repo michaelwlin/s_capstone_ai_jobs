@@ -5,7 +5,9 @@ function FetchUsers() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://matchiq-django-48494c1c8d6c.herokuapp.com/api/users/`)
+        axios.get(`https://matchiq-django-48494c1c8d6c.herokuapp.com/api/users/`, {
+            credentials: 'include', // Necessary to include cookies
+        })
             .then(response => {
                 setUsers(response.data);
             })

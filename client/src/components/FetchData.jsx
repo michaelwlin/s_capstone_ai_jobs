@@ -14,7 +14,9 @@ function FetchData() {
         setIsLoading(true);
         try {
             const url = `https://matchiq-api-8d1eb08929d0.herokuapp.com/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`;
-            const response = await axios.get(url);
+            const response = await axios.get(url, {
+                credentials: 'include', // Necessary to include cookies
+            });
             setJobs(response.data.jobs || []);
             if (useSkills) {
                 setUserSkills(response.data.userSkills || []);
@@ -37,9 +39,9 @@ function FetchData() {
             {isLoading && <ProgressBar />}
             {useSkills && (
                 <p className="mb-4">Matching jobs with your skills: <i>{userSkills.join(', ')}</i></p>
-                )}
+            )}
             <div className="flex">
-            <div className="h-screen overflow-y-auto w-1/2">
+                <div className="h-screen overflow-y-auto w-1/2">
                     {jobs.map((job, index) => (
                         <div key={index} className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200" onClick={() => setSelectedJob(job)}>
                             <p className="text-xl" style={{ color: 'blue', fontWeight: 'bold' }}>{job.title}</p>
@@ -49,7 +51,7 @@ function FetchData() {
                             </div>
                             {useSkills && (
                                 <p className="text-md"><strong>Matching Skills:</strong> <i>{job.matchScore}</i></p>
-                                )}
+                            )}
                         </div>
                     ))}
                 </div>
