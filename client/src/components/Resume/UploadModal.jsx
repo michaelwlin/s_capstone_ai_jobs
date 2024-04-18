@@ -108,7 +108,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
     }
   }
 
-  const labelColor = error ? 'failure' : 'success'
+  const labelColor = error ? 'failure' : 'gray'
 
   return (
     <Modal show={openModal} onClose={() => setOpenModal(false)}>
