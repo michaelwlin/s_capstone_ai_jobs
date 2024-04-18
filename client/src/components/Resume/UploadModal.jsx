@@ -65,12 +65,18 @@ const UploadModal = ({ openModal, setOpenModal }) => {
   }
 
   const handleInputFile = (e) => {
+    clearUpload()
     const file = e.target.files[0]
     setInputFile(file)
   }
 
-  const cancelUpload = () => {
+  const clearUpload = () => {
     setInputFile(null)
+    setError('')
+  }
+
+  const cancelUpload = () => {
+    clearUpload()
     setOpenModal(false)
   }
 
