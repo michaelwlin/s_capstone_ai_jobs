@@ -1,28 +1,28 @@
 import { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, Avatar } from 'flowbite-react'
-import { FaUser } from 'react-icons/fa';
-import useAuth from '../hooks/useAuth';
-import useLogout from '../api/logout';
+import { FaUser } from 'react-icons/fa'
+import useAuth from '../hooks/useAuth'
+import useLogout from '../api/logout'
 
 const NavigationBar = () => {
-  const navigate = useNavigate();
-  const { auth } = useAuth();
-  const logout = useLogout();
+  const navigate = useNavigate()
+  const { auth } = useAuth()
+  const logout = useLogout()
 
   const signIn = () => {
     // Navigate to register/sign-up page
-    navigate('/signin');
-  };
+    navigate('/signin')
+  }
   const register = () => {
     // Navigate to register/sign-up page
-    navigate('/register');
-  };
+    navigate('/register')
+  }
 
   const handleSignOut = async () => {
-    await logout();
+    await logout()
 
-    navigate('/');
+    navigate('/')
   }
 
   const userNavigation = () => {
@@ -83,13 +83,27 @@ const NavigationBar = () => {
         <Navbar.Link to="/about-us" as={NavLink}>
           About Us
         </Navbar.Link>
+        {auth.isAuthenticated ? (
+          <Navbar.Link to="/resume" as={NavLink}>
+            Resume
+          </Navbar.Link>
+        ) : (
+          ''
+        )}
       </Navbar.Collapse>
 
       <div className="flex md:order-2 user-profile">
         <Dropdown
           arrowIcon={false}
           inline
-          label={<Avatar alt="User settings" img={FaUser} rounded className={auth.isAuthenticated ? 'text-green-500' : ''} />}
+          label={
+            <Avatar
+              alt="User settings"
+              img={FaUser}
+              rounded
+              className={auth.isAuthenticated ? 'text-green-500' : ''}
+            />
+          }
         >
           {userNavigation()}
         </Dropdown>
