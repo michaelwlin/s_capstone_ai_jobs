@@ -10,15 +10,6 @@ const NavigationBar = () => {
   const { auth } = useAuth();
   const logout = useLogout();
 
-  const signIn = () => {
-    // Navigate to register/sign-up page
-    navigate('/signin');
-  };
-  const register = () => {
-    // Navigate to register/sign-up page
-    navigate('/register');
-  };
-
   const handleSignOut = async () => {
     await logout();
 
@@ -35,7 +26,7 @@ const NavigationBar = () => {
               {auth.user}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard (Non-functional)</Dropdown.Item>
+          <Dropdown.Item as={NavLink} to="/dashboard">Dashboard</Dropdown.Item>
           <Dropdown.Item>Settings (Non-functional)</Dropdown.Item>
           <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
@@ -43,16 +34,10 @@ const NavigationBar = () => {
     } else {
       return (
         <div>
-          <NavLink
-            to="/signIn"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
+          <NavLink to="/signIn" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
             Sign In
           </NavLink>
-          <NavLink
-            to="/register"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
+          <NavLink to="/register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
             Register
           </NavLink>
         </div>
