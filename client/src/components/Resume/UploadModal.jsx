@@ -19,6 +19,8 @@ const UploadModal = ({ openModal, setOpenModal }) => {
 
   const parseResume = async (file) => {
     const csrfToken = getCSRFToken()
+    const validFile = validateFileType(file)
+    if (!validFile) return
 
     try {
       setLoading(true)
@@ -43,18 +45,38 @@ const UploadModal = ({ openModal, setOpenModal }) => {
         navigate(0)
       }
     } catch (err) {
-      //TODO: display error message
+      setLoading(false)
       setError('Error uploading file')
     }
   }
 
+  const validateFileType = (file) => {
+    const fileType = file.type
+    if (
+      fileType !== 'application/pdf' &&
+      fileType !==
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ) {
+      setError('Invalid file type. Please upload a PDF or .docx file')
+      return false
+    } else {
+      return true
+    }
+  }
+
   const handleInputFile = (e) => {
+    clearUpload()
     const file = e.target.files[0]
     setInputFile(file)
   }
 
-  const cancelUpload = () => {
+  const clearUpload = () => {
     setInputFile(null)
+    setError('')
+  }
+
+  const cancelUpload = () => {
+    clearUpload()
     setOpenModal(false)
   }
 
@@ -86,10 +108,13 @@ const UploadModal = ({ openModal, setOpenModal }) => {
           <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
             {inputFile.name}
           </p>
+          <p className="mb-4 text-sm text-red-500 dark:text-red-400">{error}</p>
         </>
       )
     }
   }
+
+  const labelColor = error ? 'failure' : 'gray'
 
   return (
     <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -100,7 +125,8 @@ const UploadModal = ({ openModal, setOpenModal }) => {
           {!loading && (
             <Label
               htmlFor="dropzone-file"
-              className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              color={labelColor}
+              className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed dark:hover:border-gray-500 dark:hover:bg-gray-600"
             >
               <div className="flex flex-col items-center justify-center pb-6 pt-5">
                 <FaUpload className="uploadIcon" />
@@ -116,7 +142,10 @@ const UploadModal = ({ openModal, setOpenModal }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={onClickUpload} disabled={!inputFile || loading}>
+        <Button
+          onClick={onClickUpload}
+          disabled={!inputFile || loading || error}
+        >
           Upload
         </Button>
         <Button color="gray" onClick={cancelUpload}>
