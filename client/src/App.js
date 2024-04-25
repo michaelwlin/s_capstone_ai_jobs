@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavigationBar, Footer } from './components'
 import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume } from './pages'
-import { FetchApp, FetchUsers, FetchJob, RequireAuth } from './components'
+import { FetchApp, FetchJob, RequireAuth } from './components'
 
 const App = () => {
 
@@ -24,7 +24,6 @@ const App = () => {
 
           {/* Protected Route */}
           <Route element={<RequireAuth />}>
-            <Route path="/users" element={<FetchUsers />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/resume/:_id" element={<Resume />} />
           </Route>
