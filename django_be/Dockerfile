@@ -33,6 +33,4 @@ EXPOSE 8000
 # Define the entry point script
 ENTRYPOINT ["sh", "./entrypoint.sh"]
 
-# Start the application using Gunicorn, assuming your Django project is named 'your_project_name'
-# Replace 'your_project_name' with the actual name of your Django project
 CMD ["sh", "-c", "gunicorn your_project_name.wsgi:application --bind 0.0.0.0:8000 & cron -f"]

@@ -1,6 +1,7 @@
 import { Modal, Button, Spinner, Label, TextInput, Accordion } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
+import config from '../../clientConfig';
 
 const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
   const [inputFile, setInputFile] = useState(null)
@@ -19,7 +20,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
 
   const onClickFind = async () => {
     try {
-      const response = await axios.get(`https://matchiq-api-8d1eb08929d0.herokuapp.com/api/jobs?keyword=${keyword}&location=${location}`, {
+      const response = await axios.get(`${config.API_URL}/jobs?keyword=${keyword}&location=${location}`, {
         withCredentials: true // Add this line to include cookies
       })
       if (response.data) {
@@ -39,7 +40,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/get_score',
+        `${config.API_URL}/get_score`,
         {
           resume_text: JSON.stringify(resume),
           job_desc: job['description']
@@ -71,7 +72,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/match',
+        `${config.API_URL}/match`,
         {
           resume_text: JSON.stringify(resume),
         },

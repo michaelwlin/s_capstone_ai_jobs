@@ -18,6 +18,7 @@ import {
   EnhanceModal,
   QuickSearchModal,
 } from '../components/Resume/index.js'
+import config from '../clientConfig.js';
 
 const Resume = () => {
   let { _id } = useParams()
@@ -73,7 +74,7 @@ const Resume = () => {
     const getUserResume = async () => {
       try {
         const res = await axios.get(
-          `https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/${auth.userId}`,
+          `${config.API_URL}/users/${auth.userId}`,
         )
         if (res && res.data.resume.length === 0) {
           return

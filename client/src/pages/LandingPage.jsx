@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { maliciousChars } from '../utils/maliciousChars'
 import useAuth from '../hooks/useAuth';
 import axios from "axios";
+import config from '../clientConfig';
 
 const LandingPage = () => {
   const { auth } = useAuth()
@@ -72,7 +73,7 @@ const LandingPage = () => {
 
   const fetchUserSkills = async () => {
     try {
-      const response = await axios.get(`https://matchiq-api-8d1eb08929d0.herokuapp.com/api/users/${auth.userId}/skills`, {
+      const response = await axios.get(`${config.API_URL}/users/${auth.userId}/skills`, {
         withCredentials: true // Add this line to include cookies
       });
       setUserSkills(response.data);

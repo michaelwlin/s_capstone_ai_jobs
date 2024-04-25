@@ -1,12 +1,13 @@
 import { MenuOption, DropDown } from 'react-web-editor'
 import axios from 'axios'
+import config from '../../clientConfig';
 
 const AI_COMMANDS = [{ id: 'improve', label: 'Improve' }]
 
 const enhance = async (value) => {
   try {
     const response = await axios.post(
-      'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/enhance',
+      `${config.API_URL}/enhance`,
       {
         resume_text: JSON.stringify(value),
       },

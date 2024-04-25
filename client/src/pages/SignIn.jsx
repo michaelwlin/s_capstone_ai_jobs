@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'flowbite-react';
 import useAuth from '../hooks/useAuth'; // Adjust the path as needed
 import { useNavigate, useLocation } from 'react-router-dom';
+import config from '../clientConfig';
 
 const SignIn = () => {
     const { validateToken } = useAuth();
@@ -16,7 +17,7 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch('https://matchiq-api-8d1eb08929d0.herokuapp.com/api/auth/login', {
+        fetch(`${config.AUTH_URL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

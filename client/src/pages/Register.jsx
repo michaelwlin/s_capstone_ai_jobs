@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from '../clientConfig';
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/;
@@ -54,7 +55,7 @@ const Register = () => {
         }
 
         try {
-            await axios.post(`https://matchiq-api-8d1eb08929d0.herokuapp.com/api/auth/register`, formData);
+            await axios.post(`${config.AUTH_URL}/register`, formData);
             alert('User registered successfully');
             setFormData({
                 userName: '',

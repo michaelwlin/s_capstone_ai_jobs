@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../clientConfig';
 
 function FetchApp() {
     const [applications, setApplications] = useState([]);
 
     useEffect(() => {
-        axios.get('https://matchiq-django-48494c1c8d6c.herokuapp.com/api/applications/',{
-        credentials: 'include', // Necessary to include cookies
-      })
+        axios.get(`${config.DJANGO_URL}/applications/`, {
+            credentials: 'include', // Necessary to include cookies
+        })
             .then(response => {
                 setApplications(response.data);
             })

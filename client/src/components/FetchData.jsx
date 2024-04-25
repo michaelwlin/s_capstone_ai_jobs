@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProgressBar from "./LoadingBar";
 import { useLocation } from 'react-router-dom';
+import config from '../clientConfig';
 
 function FetchData() {
     const [jobs, setJobs] = useState([]);
@@ -13,7 +14,7 @@ function FetchData() {
     const getJobs = async () => {
         setIsLoading(true);
         try {
-            const url = `https://matchiq-api-8d1eb08929d0.herokuapp.com/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`;
+            const url = `${config.API_URL}/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`;
             const response = await axios.get(url, {
                 credentials: 'include', // Necessary to include cookies
             });

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../clientConfig';
 
 function FetchJob() {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-        axios.get('https://matchiq-django-48494c1c8d6c.herokuapp.com/api/jobs/', {
+        axios.get(`${config.API_URL}/jobs/`, {
             credentials: 'include', // Necessary to include cookies
         })
             .then(response => {

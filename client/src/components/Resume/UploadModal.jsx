@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { getCSRFToken } from '../../api/csrfToken.js'
 import useAuth from '../../hooks/useAuth.js'
+import config from '../../clientConfig.js';
 
 const UploadModal = ({ openModal, setOpenModal }) => {
   const navigate = useNavigate()
@@ -27,9 +28,9 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       formData.append('userID', auth.userId)
 
       const res = await axios.post(
-        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/upload_resume', {
-          withCredentials: true // Add this line to include cookies
-        },
+        `${config.API_URL}/upload_resume`, {
+        withCredentials: true // Add this line to include cookies
+      },
         formData,
         {
           headers: {

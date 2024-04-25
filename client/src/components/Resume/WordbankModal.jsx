@@ -1,6 +1,7 @@
 import { Modal, Button, Spinner } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
+import config from '../../clientConfig';
 
 const WordbankModal = ({ openModal, setOpenModal, resume }) => {
   const [inputFile, setInputFile] = useState(null)
@@ -19,7 +20,7 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'https://matchiq-django-48494c1c8d6c.herokuapp.com/api/wordbank', {
+        `${config.API_URL}/wordbank`, {
         withCredentials: true // Add this line to include cookies
       },
         {

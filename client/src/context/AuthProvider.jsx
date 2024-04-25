@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
+import config from '../clientConfig';
 
 export const AuthContext = createContext()
 
@@ -14,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(true)
     try {
       const response =
-        await fetch('https://matchiq-api-8d1eb08929d0.herokuapp.com/api/auth/validate', {
+        await fetch(`${config.AUTH_URL}/validate`, {
           method: 'POST',
           credentials: 'include', // Necessary to include cookies
         });

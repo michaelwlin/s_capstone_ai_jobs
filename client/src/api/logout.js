@@ -1,12 +1,13 @@
 // authUtils.js
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import config from '../clientConfig';
 
 const useLogout = () => {
     const { validateToken } = useContext(AuthContext);
 
     const logout = () => {
-        fetch('https://matchiq-api-8d1eb08929d0.herokuapp.com/auth/logout', {
+        fetch(`${config.AUTH_URL}/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
