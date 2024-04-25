@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React from 'react'
 import { jest } from '@jest/globals'
 import '@testing-library/jest-dom'
 import LandingPage from './LandingPage'
