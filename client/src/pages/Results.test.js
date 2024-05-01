@@ -8,9 +8,9 @@ import '@testing-library/jest-dom'
 const mockLocationState = { keyword: 'Engineer', location: 'New York' }
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn(() => ({
+  useLocation: () => ({
     state: mockLocationState,
-  })),
+  }),
 }))
 
 jest.mock('../components/FetchData', () => {
