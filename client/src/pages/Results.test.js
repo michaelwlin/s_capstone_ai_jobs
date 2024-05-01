@@ -32,4 +32,23 @@ describe('Results', () => {
   test('renders without errors', () => {
     expect(renderComponent).toBeTruthy()
   })
+
+  test('displays the correct heading', () => {
+    renderComponent()
+    const heading = screen.getByText(/Results for "Engineer" in "New York"/)
+    expect(heading).toBeInTheDocument()
+  })
+
+  test('renders FetchData component with correct props', () => {
+    const mockLocationState = { keyword: 'Engineer', location: 'New York' }
+    render(
+      <BrowserRouter>
+        <Results location={{ state: mockLocationState }} />
+      </BrowserRouter>,
+    )
+    expect(FetchData).toHaveBeenCalledWith(
+      { keyword: 'Engineer', location: 'New York' },
+      expect.anything(),
+    )
+  })
 })
