@@ -20,19 +20,40 @@ afterEach(() => {
 
 describe('FetchData', () => {
     // Test fetch data component renders
+    const renderComponent = async () => {
+        await act(async () => {
+            render(
+                <MemoryRouter>
+                    <FetchData />
+                </MemoryRouter>
+            );
+        });
+    }
+
+    test('renders FetchData component', async () => {
+        console.error = jest.fn();
+        await renderComponent();
+    })
+
     // Test shows progress bar when loading
+    // test('shows progress bar when loading', async () => {
+    //     await renderComponent();
+    //     expect(screen.getByTestId('progress-bar')).toBeInTheDocument();
+    // })
+
     // Test shows jobs when loaded
+    
     // Handles error for fetchdata
+    test('handles error for fetchdata', async () => {
+        axios.get.mockRejectedValueOnce(new Error());       // Mock axios get request to return an error
+        console.error = jest.fn();                          // Mock console.error to prevent error from being displayed
+        await renderComponent();                
+        expect(console.error).toHaveBeenCalledTimes(1); 
+    })
 
     // Describe jobs
     // Test should render job listings
     // Test should render job details when job listing clicked
-
-    // Describe select component
-    // Test should render select component without errors
-    // Test should call onChange when first option selected 
-    // Test should call onChange when second option selected
-    // Test should call onChange when third option selected
 
     // Describe filters
     // Test should have employment type dropdown
