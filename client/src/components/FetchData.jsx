@@ -139,7 +139,7 @@ function FetchData() {
                 <p className="mb-4">Matching jobs with your skills: <i>{userSkills.join(', ')}</i></p>
                 )}
             <div className="flex">
-            <div className="h-screen overflow-y-auto w-1/2">
+            <div data-testid="job-listings" className="h-screen overflow-y-auto w-1/2">
             {(filteredJobs.length > 0 ? filteredJobs : jobs).map((job, index) => (
                         <div key={index} className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200" onClick={() => setSelectedJob(job)}>
                             <p className="text-xl font-bold text-blue-500">{job.title}</p>
