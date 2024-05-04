@@ -154,13 +154,13 @@ function FetchData() {
                     ))}
                 </div>
                 {selectedJob && (
-                    <div className="overflow-y-auto h-screen w-2/3 p-5 bg-gray-100"  style={{ maxHeight: '100%' }}>
+                    <div data-testid="job-details" className="overflow-y-auto h-screen w-2/3 p-5 bg-gray-100"  style={{ maxHeight: '100%' }}>
                         <p className="text-xl mb-2 font-bold text-blue-500">{selectedJob.title}</p>
                         <p style={{ fontWeight: 'normal' }}>{selectedJob.company}</p>
                         <span style={{ fontStyle: 'italic', display: 'block', marginBottom: '1rem' }}>{selectedJob.location}</span>
-                        <p style={{ display: 'block', marginBottom: '1rem' }}><strong>Employment Type:</strong> {selectedJob.employment_type}</p>
-                        <p style={{ display: 'block', marginBottom: '1rem' }}><strong>Seniority Level:</strong> {selectedJob.seniority_level}</p>
-                        <p><strong>Description:</strong></p>
+                        <p data-testid ="job-emp" style={{ display: 'block', marginBottom: '1rem' }}><strong>Employment Type:</strong> {selectedJob.employment_type}</p>
+                        <p data-testid ="job-seniority" style={{ display: 'block', marginBottom: '1rem' }}><strong>Seniority Level:</strong> {selectedJob.seniority_level}</p>
+                        <p data-testid ="job-desc"><strong>Description:</strong></p>
                         <p style={{ whiteSpace: 'pre-wrap', marginBottom: '1rem' }}>{selectedJob.description}</p>
                         <p><strong>Skills:</strong> {selectedJob.skills ? selectedJob.skills.join(', ') : 'N/A'}</p>
                     </div>

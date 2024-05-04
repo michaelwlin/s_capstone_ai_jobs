@@ -53,12 +53,9 @@ describe('FetchData', () => {
                     "Self-starter who enjoys solving difficult problems"
                 ],
                 skills: [
-                    "Computer Science",
-                    "Software Engineering",
-                    "Go",
-                    "Python"
+                    "test skills"
                 ],
-                location: "New York, NY"
+                location: "test location"
             },
             { _id: "2", 
                 title: "Software Engineer - Backend",
@@ -197,8 +194,19 @@ describe('FetchData', () => {
         await renderComponent(); // Render the component
         expect(screen.getByTestId('job-listings')).toBeInTheDocument(); // Check if job listings are rendered
     })
-    
+
     // Test should render job details when job listing clicked
+    test('test should render job details when job listing clicked', async () => {
+        axios.get.mockResolvedValueOnce({ data: jobs }) 
+        await renderComponent(); 
+        fireEvent.click(screen.getByText('Company A')); // Click on a job listing
+        expect(screen.getByTestId('job-details')).toBeInTheDocument(); // Check if job details are rendered
+
+        // Check if job details are correct
+        expect(screen.getByTestId('job-emp')).toBeInTheDocument();
+        expect(screen.getByTestId('job-seniority')).toBeInTheDocument();
+        expect(screen.getByTestId('job-desc')).toBeInTheDocument();
+    })
 
     // Describe filters
     // Test should have employment type dropdown
