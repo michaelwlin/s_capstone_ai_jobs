@@ -35,12 +35,6 @@ describe('FetchData', () => {
         await renderComponent();
     })
 
-    // Test shows progress bar when loading
-    // test('shows progress bar when loading', async () => {
-    //     await renderComponent();
-    //     expect(screen.getByTestId('progress-bar')).toBeInTheDocument();
-    // })
-
     // Test shows jobs when loaded
     
     // Handles error for fetchdata
