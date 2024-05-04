@@ -209,12 +209,33 @@ describe('FetchData', () => {
     })
 
     // Describe filters
+    describe('Filters', () => {
+
     // Test should have employment type dropdown
+    test('should employment type dropdown', async ()=> {
+        axios.get.mockResolvedValueOnce({ data: jobs }) 
+        await renderComponent(); 
+        expect(screen.getByText('Employment Type')).toBeInTheDocument();
+    })
+
     // Test should have seniority level dropdown
+    test('should seniority level dropdown', async ()=> {
+        axios.get.mockResolvedValueOnce({ data: jobs }) 
+        await renderComponent(); 
+        expect(screen.getByText('Seniority Level')).toBeInTheDocument();
+    })
+
     // Test should have skills dropdown
+    test('should skills dropdown', async ()=> {
+        axios.get.mockResolvedValueOnce({ data: jobs }) 
+        await renderComponent(); 
+        expect(screen.getByText('Skills')).toBeInTheDocument();
+    })
+    
     // Test should filter jobs based on selected filters
     // Test should trigger filter application when apply button clicked
     // Test should show alert when no jobs match filters
+    })
 })
 
 
