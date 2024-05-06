@@ -56,43 +56,38 @@ router.post("/logout", async (req, res) => {
     const accessToken = req.cookies['accessToken'];
 
     if (!refreshToken) {
-        return res.status(400).send("Token not provided.");
+        console.log("Refresh Token not provided.");
     }
 
     try {
         const result = await RefreshToken.deleteOne({ token: refreshToken });
 
         if (result.deletedCount === 0) {
-            console.log("Token not found for delete")
-            return res.status(404).send("Token not found.");
+            console.log("Refresh Token not found for delete")
         }
-        else {
-            // Clear the refresh token cookie
-            res.clearCookie('refreshToken', {
-                httpOnly: true,
-                secure: true, // Set to true only in production
-                sameSite: 'None',
-                path: '/', // Ensure cookie is valid for all paths
-            });
-
-            res.clearCookie('accessToken', {
-                httpOnly: true,
-                secure: true, // Set to true only in production
-                sameSite: 'None',
-                path: '/', // Ensure cookie is valid for all paths
-            });
-
-            res.send("Logged out successfully.");
-        }
-
-
-
 
     } catch (error) {
         console.error("Logout error:", error);
-        res.status(500).send("An error occurred during logout.");
+        // res.status(500).send("An error occurred during logout.");
     }
 
+    res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: true, // Set to true only in production
+        sameSite: 'None',
+        path: '/', // Ensure cookie is valid for all paths
+    });
+
+    res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: true, // Set to true only in production
+        sameSite: 'None',
+        path: '/', // Ensure cookie is valid for all paths
+    });
+
+
+
+    res.send("Logged out successfully.");
 }
 
 );

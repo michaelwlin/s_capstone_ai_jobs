@@ -1,6 +1,6 @@
 const dev = {
     API_URL: 'http://localhost:4000/api',
-    AUTH_URL: 'http://localhost:4500/api/auth',
+    AUTH_URL: 'http://localhost:4000/api/auth',
     DJANGO_URL: 'http://localhost:8000/api'
 
 };
@@ -12,6 +12,6 @@ const prod = {
 };
 
 const config = process.env.NODE_ENV === 'development' ? dev : prod;
-// const config = prod;
+// const config = dev;
 
 export default config;
