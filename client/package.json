@@ -22,6 +22,7 @@
     "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.20.1",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
     "react-to-pdf": "^1.0.1",
     "react-web-editor": "git+https://github.com/joyceawt/react-web-editor.git#main",
     "tailwindcss": "^3.3.6",
@@ -31,7 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

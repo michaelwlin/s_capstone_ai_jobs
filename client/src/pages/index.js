@@ -7,5 +7,5 @@ import Register from './Register';
 import SignIn from './SignIn';
 import Resume from './Resume'
 
-
 export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Register, SignIn, Resume }
+

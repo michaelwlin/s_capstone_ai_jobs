@@ -109,11 +109,7 @@ code {
   margin-left: 5px;
 }
 
-.skills-container {
-  max-width: 550px;
-  margin: 0 auto;
-  text-align: center;
-}
+
 .custom-checkbox input[type="checkbox"] {
   width: 1.2em;
   height: 1.2em;

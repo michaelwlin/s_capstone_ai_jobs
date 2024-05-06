@@ -16,8 +16,9 @@ const LandingPage = () => {
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
   const [useSkills, setUseSkills] = useState(false)
-  const [userSkills, setUserSkills] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [userSkills, setUserSkills] = useState([])
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   const schema = yup.object().shape({
     location: yup
@@ -69,29 +70,30 @@ const LandingPage = () => {
     resolver: yupResolver(schema),
   })
 
-  const navigate = useNavigate()
-
-  const fetchUserSkills = async () => {
-    try {
-      const response = await axios.get(`${config.API_URL}/users/${auth.userId}/skills`, {
-        withCredentials: true // Add this line to include cookies
-      });
-      setUserSkills(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching user skills:', error);
-    }
-  };
-
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      fetchUserSkills();
-    }
-  }, [auth.isAuthenticated, auth.userId]);
+    const fetchUserSkills = async () => {
+      try {
+        const response = await axios.get(`${config.API_URL}/users/${auth.userId}/skills`, {
+          withCredentials: true // Add this line to include cookies
+        });
 
-  const onSubmit = (e) => {
-    navigate('/search-results', { state: { keyword, location, useSkills, usersName: auth.user } });
-  };
+        setUserSkills(response.data)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching user skills:', error)
+      }
+    }
+
+    if (auth.isAuthenticated) {
+      fetchUserSkills()
+    }
+  }, [auth.isAuthenticated, auth.userId])
+
+  const onSubmit = () => {
+    navigate('/search-results', {
+      state: { keyword, location, useSkills },
+    })
+  }
 
   const onChange = (e, type) => {
     if (type === 'keyword') {
@@ -103,11 +105,11 @@ const LandingPage = () => {
   }
 
   const uploadResume = () => {
-    navigate('/resume');
+    navigate('/resume')
   }
 
   const signIn = () => {
-    navigate('/signin');
+    navigate('/signin')
   }
 
   const uploadResumeOrSignIn = () => {
@@ -130,12 +132,14 @@ const LandingPage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Hero setKeyword={setKeyword} />
       <div className="text-center mt-12 flex flex-col items-center justify-center">
-
         <form
           className="flex flex-row items-start gap-2"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(e) => handleSubmit(onSubmit)(e)}
         >
           <div className="flex flex-col gap-2">
+            <label htmlFor="keywords" hidden={true}>
+              keyword
+            </label>
             <TextInput
               {...register('keyword')}
               id="keywords"
@@ -150,6 +154,9 @@ const LandingPage = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
+            <label htmlFor="location" hidden={true}>
+              location
+            </label>
             <TextInput
               {...register('location')}
               id="location"
@@ -163,7 +170,12 @@ const LandingPage = () => {
               onChange={(e) => onChange(e, 'location')}
             />
           </div>
-          <Button className="w-120" color="blue" type="submit">
+          <Button
+            className="w-120"
+            color="blue"
+            type="submit"
+            data-testid="searchBtn"
+          >
             Search
           </Button>
         </form>
@@ -180,7 +192,11 @@ const LandingPage = () => {
                   className="mr-2"
                 />
               </div>
-              <label htmlFor="useSkills"> Check here to enhance search with your skills: {userSkills.join(', ')}</label>
+              <label htmlFor="useSkills">
+                {' '}
+                Check here to enhance search with your skills:{' '}
+                {userSkills.join(', ')}
+              </label>
             </div>
           )}
         </div>
