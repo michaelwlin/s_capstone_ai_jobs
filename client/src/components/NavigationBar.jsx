@@ -27,7 +27,6 @@ const NavigationBar = () => {
             </span>
           </Dropdown.Header>
           <Dropdown.Item as={NavLink} to="/dashboard">Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings (Non-functional)</Dropdown.Item>
           <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
       )

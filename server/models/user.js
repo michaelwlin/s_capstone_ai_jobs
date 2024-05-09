@@ -38,7 +38,15 @@ const User = mongoose.model('User', new mongoose.Schema({
   resume: {
     type: Array,
     required: false
-  }
+  },
+  location: {
+    type: String,
+    required: false
+  },
+  savedjobs: {
+    type: Array,
+    required: false
+  },
 }));
 
 module.exports = User;
