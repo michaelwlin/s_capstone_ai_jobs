@@ -66,4 +66,59 @@ router.get("/:id/skills", validateID, async (req, res) => {
     }
 });
 
+router.post("/:id/skills", validateID, authenticateAccessToken, async (req, res) => {
+    const { skill } = req.body;
+    if (!skill) {
+        return res.status(400).send("Skill is required.");
+    }
+
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).send('User not found');
+
+        user.skills.push(skill);
+        await user.save();
+        res.status(201).send(user.skills);
+    } catch (error) {
+        res.status(500).send("Error adding skill: " + error.message);
+    }
+});
+router.put("/:id/skills/:skillIndex", validateID, authenticateAccessToken, async (req, res) => {
+    const { skill } = req.body;
+    const { id, skillIndex } = req.params;
+
+    try {
+        const user = await User.findById(id);
+        if (!user) return res.status(404).send('User not found');
+        if (skillIndex >= user.skills.length || skillIndex < 0) {
+            return res.status(400).send("Invalid skill index.");
+        }
+
+        user.skills[skillIndex] = skill;
+        await user.save();
+        res.send(user.skills);
+    } catch (error) {
+        res.status(500).send("Error updating skill: " + error.message);
+    }
+});
+
+router.delete("/:id/skills/:skillIndex", validateID, authenticateAccessToken, async (req, res) => {
+    const { id, skillIndex } = req.params;
+
+    try {
+        const user = await User.findById(id);
+        if (!user) return res.status(404).send('User not found');
+        if (skillIndex >= user.skills.length || skillIndex < 0) {
+            return res.status(400).send("Invalid skill index.");
+        }
+
+        user.skills.splice(skillIndex, 1);
+        await user.save();
+        res.send(user.skills);
+    } catch (error) {
+        res.status(500).send("Error deleting skill: " + error.message);
+    }
+});
+
+
 module.exports = router;

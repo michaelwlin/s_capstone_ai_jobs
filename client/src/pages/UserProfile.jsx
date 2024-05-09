@@ -7,20 +7,19 @@ import useUserSkills from '../hooks/useUserSkills';
 
 const UserProfile = () => {
   const { auth } = useAuth();
-  const { userSkills, setUserSkills, deleteUserSkill, updateUserSkill } = useUserSkills();
+  const { userSkills, setUserSkills, addSkill, updateSkill, deleteSkill } = useUserSkills();
   const [newSkill, setNewSkill] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleAddSkill = () => {
+  const handleAddSkill = async () => {
     if (newSkill) {
-      const updatedSkills = [...userSkills, newSkill];
-      setUserSkills(updatedSkills);
+      await addSkill(newSkill);
       setNewSkill('');
     }
   };
 
-  const handleDeleteSkill = (index) => {
-    deleteUserSkill(index);
+  const handleDeleteSkill = async (index) => {
+    await deleteSkill(index);
   };
 
   const toggleEditMode = () => {
