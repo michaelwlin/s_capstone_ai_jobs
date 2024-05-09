@@ -123,3 +123,12 @@ code {
   background-color: #4a90e2;
   border-color: #4a90e2;
 }
+
+#toast-bottom-right {
+  max-height: 900px;
+}
+
+.scrollable-content {
+  max-height: 700px;
+  overflow-y: auto;
+}
