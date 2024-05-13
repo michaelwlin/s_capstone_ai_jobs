@@ -232,9 +232,14 @@ describe('FetchData', () => {
         expect(screen.getByText('Skills')).toBeInTheDocument();
     })
     
-    // Test should filter jobs based on selected filters
     // Test should trigger filter application when apply button clicked
-    // Test should show alert when no jobs match filters
+    test('should trigger filter application when apply button clicked', async ()=> {
+        axios.get.mockResolvedValueOnce({ data: jobs }) 
+        await renderComponent(); 
+        fireEvent.click(screen.getByText('Apply Filters')); // Click apply button
+        expect(screen.getByTestId('job-listings')).toBeInTheDocument(); // Check if job listings are rendered
+    })
+
     })
 })
 

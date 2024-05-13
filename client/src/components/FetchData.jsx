@@ -26,7 +26,6 @@ function FetchData() {
                 (!skillsFilter.length || job.skills.some(skill => skillsFilter.includes(skill)))
             )
         });
-        console.log("Filtered jobs:", filtered);
         setFilteredJobs(filtered);
 
         // If no jobs match the filters, show popup
