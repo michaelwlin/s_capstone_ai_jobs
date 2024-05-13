@@ -38,6 +38,13 @@ const LandingPage = () => {
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
         },
+      )
+      .test(
+        'numeric',
+        'Location cannot be numeric.',
+        function (value) {
+          return isNaN(value)
+        },
       ),
     keyword: yup
       .string()
@@ -60,7 +67,7 @@ const LandingPage = () => {
       )
       .test(
         'numeric',
-        'Keyword and/or location cannot be numeric.',
+        'Keyword cannot be numeric.',
         function (value) {
           return isNaN(value)
         },
