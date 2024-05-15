@@ -12,12 +12,12 @@ const SidebarItems = () => {
         <Sidebar.Item href="/resume" icon={HiViewBoards}>
           My Resume
         </Sidebar.Item>
-        <Sidebar.Item href="/saved-jobs" icon={HiInbox}>
+        {/* <Sidebar.Item href="/saved-jobs" icon={HiInbox}>
           My Jobs
-        </Sidebar.Item>
-        <Sidebar.Item href="/user-profile" icon={HiUser}>
+        </Sidebar.Item> */}
+        {/* <Sidebar.Item href="/user-profile" icon={HiUser}>
           My Profile
-        </Sidebar.Item>
+        </Sidebar.Item> */}
         <Sidebar.Item href="/user-settings" icon={HiCog}>
           Settings
         </Sidebar.Item>

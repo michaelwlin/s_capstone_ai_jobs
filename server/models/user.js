@@ -43,8 +43,8 @@ const User = mongoose.model('User', new mongoose.Schema({
     type: String,
     required: false
   },
-  savedjobs: {
-    type: Array,
+  role: {
+    type: String,
     required: false
   },
 }));
