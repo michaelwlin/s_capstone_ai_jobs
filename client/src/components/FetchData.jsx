@@ -26,7 +26,6 @@ function FetchData() {
                 (!skillsFilter.length || job.skills.some(skill => skillsFilter.includes(skill)))
             )
         });
-        console.log("Filtered jobs:", filtered);
         setFilteredJobs(filtered);
 
         // If no jobs match the filters, show popup
@@ -139,7 +138,7 @@ function FetchData() {
                 <p className="mb-4">Matching jobs with your skills: <i>{userSkills.join(', ')}</i></p>
                 )}
             <div className="flex">
-            <div className="h-screen overflow-y-auto w-1/2">
+            <div data-testid="job-listings" className="h-screen overflow-y-auto w-1/2">
             {(filteredJobs.length > 0 ? filteredJobs : jobs).map((job, index) => (
                         <div key={index} className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200" onClick={() => setSelectedJob(job)}>
                             <p className="text-xl font-bold text-blue-500">{job.title}</p>
@@ -154,13 +153,13 @@ function FetchData() {
                     ))}
                 </div>
                 {selectedJob && (
-                    <div className="overflow-y-auto h-screen w-2/3 p-5 bg-gray-100"  style={{ maxHeight: '100%' }}>
+                    <div data-testid="job-details" className="overflow-y-auto h-screen w-2/3 p-5 bg-gray-100"  style={{ maxHeight: '100%' }}>
                         <p className="text-xl mb-2 font-bold text-blue-500">{selectedJob.title}</p>
                         <p style={{ fontWeight: 'normal' }}>{selectedJob.company}</p>
                         <span style={{ fontStyle: 'italic', display: 'block', marginBottom: '1rem' }}>{selectedJob.location}</span>
-                        <p style={{ display: 'block', marginBottom: '1rem' }}><strong>Employment Type:</strong> {selectedJob.employment_type}</p>
-                        <p style={{ display: 'block', marginBottom: '1rem' }}><strong>Seniority Level:</strong> {selectedJob.seniority_level}</p>
-                        <p><strong>Description:</strong></p>
+                        <p data-testid ="job-emp" style={{ display: 'block', marginBottom: '1rem' }}><strong>Employment Type:</strong> {selectedJob.employment_type}</p>
+                        <p data-testid ="job-seniority" style={{ display: 'block', marginBottom: '1rem' }}><strong>Seniority Level:</strong> {selectedJob.seniority_level}</p>
+                        <p data-testid ="job-desc"><strong>Description:</strong></p>
                         <p style={{ whiteSpace: 'pre-wrap', marginBottom: '1rem' }}>{selectedJob.description}</p>
                         <p><strong>Skills:</strong> {selectedJob.skills ? selectedJob.skills.join(', ') : 'N/A'}</p>
                     </div>
