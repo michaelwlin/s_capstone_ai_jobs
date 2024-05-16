@@ -39,6 +39,13 @@ const LandingPage = () => {
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
         },
+      )
+      .test(
+        'numeric',
+        'Location cannot be numeric.',
+        function (value) {
+          return isNaN(value)
+        },
       ),
     keyword: yup
       .string()
@@ -57,6 +64,13 @@ const LandingPage = () => {
         'Special characters are not allowed.',
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
+        },
+      )
+      .test(
+        'numeric',
+        'Keyword cannot be numeric.',
+        function (value) {
+          return isNaN(value)
         },
       ),
   })
@@ -90,26 +104,42 @@ const LandingPage = () => {
   }, [auth.isAuthenticated, auth.userId])
 
   const onSubmit = () => {
-    navigate('/search-results', {
-      state: { keyword, location, useSkills },
-    })
+    try {
+      navigate('/search-results', {
+        state: { keyword, location, useSkills },
+      })
+    } catch (error) {
+      console.error('Error during navigation:', error)
+    }
   }
 
   const onChange = (e, type) => {
-    if (type === 'keyword') {
-      setKeyword(e.target.value)
-    } else {
-      setLocation(e.target.value)
+    try {
+      if (type === 'keyword') {
+        setKeyword(e.target.value)
+      } else {
+        setLocation(e.target.value)
+      }
+      clearErrors(type)
+    } catch (error) {
+      console.error('Error updating state:', error)
     }
-    clearErrors(type)
   }
 
   const uploadResume = () => {
-    navigate('/resume')
+    try {
+      navigate('/resume')
+    } catch (error) {
+      console.error('Error during resume upload navigation:', error)
+    }
   }
 
   const signIn = () => {
-    navigate('/signin')
+    try {
+      navigate('/signin')
+    } catch (error) {
+      console.error('Error during sign-in navigation:', error)
+    }
   }
 
   const uploadResumeOrSignIn = () => {

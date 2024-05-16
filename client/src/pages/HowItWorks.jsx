@@ -6,15 +6,15 @@ const HowItWorks = () => {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Step 1 */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center drop-shadow-lg">
           <img
-            src="/images/step1.png"
+            src="/icons/register.gif"
             alt="Step 1"
             className="max-w-full h-auto"
           />
         </div>
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-purple-700">
             Step 1: Sign Up
           </h2>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
@@ -25,7 +25,7 @@ const HowItWorks = () => {
 
         {/* Step 2 */}
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-purple-700">
             Step 2: Upload Resume
           </h2>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
@@ -33,24 +33,24 @@ const HowItWorks = () => {
             information about your skills and experience.
           </p>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center drop-shadow-lg">
           <img
-            src="/images/step2.png"
+            src="/icons/uploadres.gif"
             alt="Step 2"
             className="max-w-full h-auto"
           />
         </div>
 
         {/* Step 3 */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center drop-shadow-lg">
           <img
-            src="/images/step3.png"
+            src="/icons/suggest.gif"
             alt="Step 3"
             className="max-w-full h-auto"
           />
         </div>
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-purple-700">
             Step 3: Get Resume Suggestions
           </h2>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
@@ -61,7 +61,7 @@ const HowItWorks = () => {
 
         {/* Step 4 */}
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-purple-700">
             Step 4: Search Jobs
           </h2>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
@@ -69,24 +69,24 @@ const HowItWorks = () => {
             preferences.
           </p>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center drop-shadow-lg">
           <img
-            src="/images/step4.png"
+            src="/icons/search.gif"
             alt="Step 4"
             className="max-w-full h-auto"
           />
         </div>
 
         {/* Step 5 */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center drop-shadow-lg">
           <img
-            src="/images/step5.png"
+            src="/icons/score.gif"
             alt="Step 5"
             className="max-w-full h-auto"
           />
         </div>
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-purple-700">
             Step 5: Get Skills Match Score
           </h2>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
