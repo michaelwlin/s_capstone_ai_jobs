@@ -59,7 +59,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
         setJobs(old_jobs);
       }
     } catch (error) {
-      console.error('Error getting wordbank', error)
+      console.error('Error getting score', error)
     }
     setLoading(false)
 
@@ -111,6 +111,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
               </div>
               <TextInput
                 id="keyword"
+                data-testid="test-keyword"
                 type="text"
                 placeholder="Software Engineer"
                 required
@@ -127,7 +128,8 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
                 <Label htmlFor="keyword" value="Keyword" />
               </div>
               <TextInput
-                id="keyword"
+                id="location"
+                data-testid="test-location"
                 type="text"
                 placeholder="Los Angeles, CA"
                 required
