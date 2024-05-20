@@ -125,7 +125,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
             </div>
             <div className="max-w-md">
               <div className="mb-2 block">
-                <Label htmlFor="keyword" value="Keyword" />
+                <Label htmlFor="location" value="Location" />
               </div>
               <TextInput
                 id="location"
