@@ -136,6 +136,7 @@ const UploadModal = ({ openModal, setOpenModal }) => {
                 id="dropzone-file"
                 className="hidden"
                 onChange={handleInputFile}
+                data-testid="dropzone-file"
               />
             </Label>
           )}
