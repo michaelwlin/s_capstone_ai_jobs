@@ -40,4 +40,73 @@ Content-Type: application/json
 DELETE http://localhost:4000/api/users/65cf0b5625612a1ea04ceb8c
 Content-Type: application/json
 
+### Auth Endpoints
+
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+    "userName": "NewUser",
+    "password": "newpassword",
+    "email": "newuser@example.com",
+    "premiumUser": false
+}
+
+###
+
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+    "userName": "NewUser",
+    "password": "newpassword"
+}
+
+###
+
+POST http://localhost:4000/api/auth/logout
+Cookie: refreshToken=your_refresh_token_here
+
+###
+
+POST http://localhost:4000/api/auth/validate
+Cookie: accessToken=your_access_token_here
+
+###
+
+POST http://localhost:4000/api/auth/change_password
+Authorization: Bearer your_access_token_here
+Content-Type: application/json
+
+{
+    "userId": "your_user_id_here",
+    "currentPassword": "newpassword",
+    "newPassword": "newpassword2"
+}
+
+###
+
+### Jobs Endpoints
+
+GET http://localhost:4000/api/jobs
+
+###
+
+GET http://localhost:4000/api/jobs/locations
+
+###
+
+GET http://localhost:4000/api/jobs/your_job_id_here
+
+###
+
+POST http://localhost:4000/api/jobs
+Content-Type: application/json
+
+{
+    "title": "Software Engineer",
+    "description": "Develop and maintain software applications.",
+    "location": "San Francisco",
+    "skills": ["JavaScript", "Node.js"]
+}
 
