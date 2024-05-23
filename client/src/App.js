@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavigationBar, Footer } from './components'
-import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume, Dashboard, SavedJobs, UserSettings } from './pages'
-import { FetchApp, FetchUsers, FetchJob, RequireAuth } from './components'
+import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume, Dashboard, UserSettings } from './pages'
+import { RequireAuth } from './components'
 
 const App = () => {
 
@@ -24,11 +24,9 @@ const App = () => {
 
           {/* Protected Route */}
           <Route element={<RequireAuth />}>
-            <Route path="/users" element={<FetchUsers />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/resume/:_id" element={<Resume />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/saved-jobs" element={<SavedJobs />} />
             <Route path="/user-settings" element={<UserSettings />} />
           </Route>
         </Routes>
