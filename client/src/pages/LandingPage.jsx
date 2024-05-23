@@ -203,8 +203,7 @@ const LandingPage = () => {
                 />
               </div>
               <label htmlFor="useSkills">
-                Check here to enhance search with your skills:{' '}
-                {userSkills.join(', ')}
+                Check here to enhance search with your skills!
               </label>
             </div>
           )}
