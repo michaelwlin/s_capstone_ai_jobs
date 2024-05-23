@@ -19,8 +19,6 @@ const App = () => {
           <Route path="/search-results" element={<Results />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/jobs" element={<FetchJob />} />
-          <Route path="/app" element={<FetchApp />} />
 
           {/* Protected Route */}
           <Route element={<RequireAuth />}>

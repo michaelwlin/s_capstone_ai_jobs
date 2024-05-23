@@ -33,6 +33,13 @@ const LandingPage = () => {
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
         },
+      )
+      .test(
+        'numeric',
+        'Location cannot be numeric.',
+        function (value) {
+          return isNaN(value)
+        },
       ),
     keyword: yup
       .string()
@@ -49,6 +56,13 @@ const LandingPage = () => {
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
         },
+      )
+      .test(
+        'numeric',
+        'Keyword cannot be numeric.',
+        function (value) {
+          return isNaN(value)
+        },
       ),
   })
 
@@ -61,30 +75,62 @@ const LandingPage = () => {
     resolver: yupResolver(schema),
   })
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    const fetchUserSkills = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/users/${auth.userId}/skills`,
+        )
 
-  const onSubmit = (data) => {
-    navigate('/search-results', {
-      state: { keyword, location, useSkills, usersName: auth.user },
-    })
+        setUserSkills(response.data)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching user skills:', error)
+      }
+    }
+
+    if (auth.isAuthenticated) {
+      fetchUserSkills()
+    }
+  }, [auth.isAuthenticated, auth.userId])
+
+  const onSubmit = () => {
+    try {
+      navigate('/search-results', {
+        state: { keyword, location, useSkills },
+      })
+    } catch (error) {
+      console.error('Error during navigation:', error)
+    }
   }
 
   const onChange = (e, type) => {
-    const { value } = e.target
-    if (type === 'keyword') {
-      setKeyword(value)
-    } else if (type === 'location') {
-      setLocation(value)
+    try {
+      if (type === 'keyword') {
+        setKeyword(e.target.value)
+      } else {
+        setLocation(e.target.value)
+      }
+      clearErrors(type)
+    } catch (error) {
+      console.error('Error updating state:', error)
     }
-    clearErrors(type)
   }
 
   const uploadResume = () => {
-    navigate('/resume')
+    try {
+      navigate('/resume')
+    } catch (error) {
+      console.error('Error during resume upload navigation:', error)
+    }
   }
 
   const signIn = () => {
-    navigate('/signin')
+    try {
+      navigate('/signin')
+    } catch (error) {
+      console.error('Error during sign-in navigation:', error)
+    }
   }
 
   const uploadResumeOrSignIn = () => {

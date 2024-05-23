@@ -25,6 +25,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
         const res = await axios.get(
           `http://localhost:4000/api/users/${auth.userId}`,
         )
+
         if (res && res.data.resume.length === 0) {
           return
         }
@@ -33,8 +34,9 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
         console.error('There was an error fetching the resume data:', error)
       }
     }
+
     getAllResumes()
-  }, [])
+  }, [auth.userId])
 
   return (
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
