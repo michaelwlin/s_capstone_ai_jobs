@@ -159,7 +159,7 @@ const UserSettings = () => {
             <Sidebar className="w-1/4 bg-gray-200 h-screen">
                 <SidebarItems />
             </Sidebar>
-            <div className="container mx-auto mt-8">
+            <div className="container mx-auto mt-8 pr-20">
                 <h1 className="text-2xl font-semibold mb-4">User Settings</h1>
                 {toast.show && (
                     <Toast>
@@ -175,7 +175,9 @@ const UserSettings = () => {
                         <div className="flex-grow">
                             <label htmlFor={field} className="block mb-1">{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
                             {!editMode[field] ? (
-                                <Badge color="light">{formData[field]}</Badge>
+                                <Badge color="light" className="inline-block" style={{ width: 'auto', backgroundColor: 'white' }}>
+                                    {formData[field]}
+                                </Badge>
                             ) : (
                                 <>
                                     {field.includes('password') && (
@@ -185,21 +187,24 @@ const UserSettings = () => {
                                                 name={`current_${field}`}
                                                 type="password"
                                                 placeholder="Enter current password"
-                                                className="border border-gray-300 p-2 rounded mb-2 w-full"
+                                                className="border border-gray-300 p-2 rounded mb-2"
+                                                maxLength={50}
                                             />
                                             <TextInput
                                                 id={field}
                                                 name={field}
                                                 type="password"
                                                 placeholder={`Enter new ${field}`}
-                                                className="border border-gray-300 p-2 rounded mb-2 w-full"
+                                                className="border border-gray-300 p-2 rounded mb-2"
+                                                maxLength={50}
                                             />
                                             <TextInput
                                                 id={`confirm_${field}`}
                                                 name={`confirm_${field}`}
                                                 type="password"
                                                 placeholder="Confirm new password"
-                                                className="border border-gray-300 p-2 rounded w-full"
+                                                className="border border-gray-300 p-2 rounded"
+                                                maxLength={50}
                                             />
                                         </>
                                     )}
@@ -210,8 +215,9 @@ const UserSettings = () => {
                                             type="text"
                                             value={formData[field]}
                                             onChange={handleChange}
-                                            className="border border-gray-300 p-2 rounded w-full"
+                                            className="border border-gray-300 p-2 rounded"
                                             placeholder={`Enter new ${field}`}
+                                            maxLength={50}
                                         />
                                     )}
                                 </>
@@ -237,6 +243,6 @@ const UserSettings = () => {
             </div>
         </div>
     );    
-}
-
-export default UserSettings;
+    }
+    
+    export default UserSettings;
