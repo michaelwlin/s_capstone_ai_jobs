@@ -7,8 +7,7 @@ import Register from './Register';
 import SignIn from './SignIn';
 import Resume from './Resume'
 import Dashboard from './Dashboard'
-import UserProfile from './UserProfile'
 import SavedJobs from './SavedJobs'
 import UserSettings from './UserSettings'
 
-export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Register, SignIn, Resume, Dashboard, UserProfile, SavedJobs, UserSettings }
+export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Register, SignIn, Resume, Dashboard, SavedJobs, UserSettings }

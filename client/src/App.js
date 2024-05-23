@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavigationBar, Footer } from './components'
-import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume, Dashboard, UserProfile, SavedJobs, UserSettings } from './pages'
+import { Results, FindJobs, HowItWorks, AboutUs, Homepage, Register, SignIn, Resume, Dashboard, SavedJobs, UserSettings } from './pages'
 import { FetchApp, FetchUsers, FetchJob, RequireAuth } from './components'
 
 const App = () => {
@@ -28,7 +28,6 @@ const App = () => {
             <Route path="/resume" element={<Resume />} />
             <Route path="/resume/:_id" element={<Resume />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/saved-jobs" element={<SavedJobs />} />
             <Route path="/user-settings" element={<UserSettings />} />
           </Route>
