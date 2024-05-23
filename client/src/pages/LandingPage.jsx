@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, TextInput, Checkbox } from 'flowbite-react'
 import { Hero } from '../components'
@@ -8,16 +8,14 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { maliciousChars } from '../utils/maliciousChars'
 import useAuth from '../hooks/useAuth'
-import axios from 'axios'
+import useUserSkills from '../hooks/useUserSkills'
 
 const LandingPage = () => {
   const { auth } = useAuth()
+  const { userSkills, loading } = useUserSkills()
   const [keyword, setKeyword] = useState('')
   const [location, setLocation] = useState('')
   const [useSkills, setUseSkills] = useState(false)
-  const [userSkills, setUserSkills] = useState([])
-  const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
 
   const schema = yup.object().shape({
     location: yup
@@ -26,9 +24,6 @@ const LandingPage = () => {
         'atLeastOne',
         'Keyword and/or location cannot be empty.',
         function () {
-          const keyword = this.parent.keyword
-          const location = this.parent.location
-
           return !!keyword || !!location
         },
       )
@@ -37,13 +32,6 @@ const LandingPage = () => {
         'Special characters are not allowed.',
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
-        },
-      )
-      .test(
-        'numeric',
-        'Location cannot be numeric.',
-        function (value) {
-          return isNaN(value)
         },
       ),
     keyword: yup
@@ -52,9 +40,6 @@ const LandingPage = () => {
         'atLeastOne',
         'Keyword and/or location cannot be empty.',
         function () {
-          const keyword = this.parent.keyword
-          const location = this.parent.location
-
           return !!keyword || !!location
         },
       )
@@ -63,13 +48,6 @@ const LandingPage = () => {
         'Special characters are not allowed.',
         function (value) {
           return !maliciousChars.some((char) => value?.includes(char))
-        },
-      )
-      .test(
-        'numeric',
-        'Keyword cannot be numeric.',
-        function (value) {
-          return isNaN(value)
         },
       ),
   })
@@ -83,62 +61,30 @@ const LandingPage = () => {
     resolver: yupResolver(schema),
   })
 
-  useEffect(() => {
-    const fetchUserSkills = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/api/users/${auth.userId}/skills`,
-        )
+  const navigate = useNavigate()
 
-        setUserSkills(response.data)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching user skills:', error)
-      }
-    }
-
-    if (auth.isAuthenticated) {
-      fetchUserSkills()
-    }
-  }, [auth.isAuthenticated, auth.userId])
-
-  const onSubmit = () => {
-    try {
-      navigate('/search-results', {
-        state: { keyword, location, useSkills },
-      })
-    } catch (error) {
-      console.error('Error during navigation:', error)
-    }
+  const onSubmit = (data) => {
+    navigate('/search-results', {
+      state: { keyword, location, useSkills, usersName: auth.user },
+    })
   }
 
   const onChange = (e, type) => {
-    try {
-      if (type === 'keyword') {
-        setKeyword(e.target.value)
-      } else {
-        setLocation(e.target.value)
-      }
-      clearErrors(type)
-    } catch (error) {
-      console.error('Error updating state:', error)
+    const { value } = e.target
+    if (type === 'keyword') {
+      setKeyword(value)
+    } else if (type === 'location') {
+      setLocation(value)
     }
+    clearErrors(type)
   }
 
   const uploadResume = () => {
-    try {
-      navigate('/resume')
-    } catch (error) {
-      console.error('Error during resume upload navigation:', error)
-    }
+    navigate('/resume')
   }
 
   const signIn = () => {
-    try {
-      navigate('/signin')
-    } catch (error) {
-      console.error('Error during sign-in navigation:', error)
-    }
+    navigate('/signin')
   }
 
   const uploadResumeOrSignIn = () => {
@@ -163,12 +109,9 @@ const LandingPage = () => {
       <div className="text-center mt-12 flex flex-col items-center justify-center">
         <form
           className="flex flex-row items-start gap-2"
-          onSubmit={(e) => handleSubmit(onSubmit)(e)}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="keywords" hidden={true}>
-              keyword
-            </label>
             <TextInput
               {...register('keyword')}
               id="keywords"
@@ -183,9 +126,6 @@ const LandingPage = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="location" hidden={true}>
-              location
-            </label>
             <TextInput
               {...register('location')}
               id="location"
@@ -199,19 +139,14 @@ const LandingPage = () => {
               onChange={(e) => onChange(e, 'location')}
             />
           </div>
-          <Button
-            className="w-120"
-            color="blue"
-            type="submit"
-            data-testid="searchBtn"
-          >
+          <Button className="w-120" color="blue" type="submit">
             Search
           </Button>
         </form>
         <div className="flex flex-col items-center gap-2">
           <p className="mt-6">OR</p>
           {uploadResumeOrSignIn()}
-          {auth?.isAuthenticated && !loading && userSkills.length > 0 && (
+          {auth.isAuthenticated && !loading && userSkills.length > 0 && (
             <div className="flex items-start skills-container">
               <div className="custom-checkbox">
                 <Checkbox
@@ -222,7 +157,6 @@ const LandingPage = () => {
                 />
               </div>
               <label htmlFor="useSkills">
-                {' '}
                 Check here to enhance search with your skills:{' '}
                 {userSkills.join(', ')}
               </label>
