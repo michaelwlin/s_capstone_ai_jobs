@@ -182,54 +182,62 @@ const UserSettings = () => {
                                 <>
                                     {field.includes('password') && (
                                         <>
-                                            <TextInput
-                                                id={`current_${field}`}
-                                                name={`current_${field}`}
-                                                type="password"
-                                                placeholder="Enter current password"
-                                                className="border border-gray-300 p-2 rounded mb-2"
-                                                maxLength={50}
-                                            />
-                                            <TextInput
-                                                id={field}
-                                                name={field}
-                                                type="password"
-                                                placeholder={`Enter new ${field}`}
-                                                className="border border-gray-300 p-2 rounded mb-2"
-                                                maxLength={50}
-                                            />
-                                            <TextInput
-                                                id={`confirm_${field}`}
-                                                name={`confirm_${field}`}
-                                                type="password"
-                                                placeholder="Confirm new password"
-                                                className="border border-gray-300 p-2 rounded"
-                                                maxLength={50}
-                                            />
+                                            <div style={{ maxWidth: '300px' }}>
+                                                <TextInput
+                                                    id={`current_${field}`}
+                                                    name={`current_${field}`}
+                                                    type="password"
+                                                    placeholder="Enter current password"
+                                                    className="border border-gray-300 p-2 rounded mb-2"
+                                                    maxLength={50}
+                                                />
+                                            </div>
+                                            <div style={{ maxWidth: '300px' }}>
+                                                <TextInput
+                                                    id={field}
+                                                    name={field}
+                                                    type="password"
+                                                    placeholder={`Enter new ${field}`}
+                                                    className="border border-gray-300 p-2 rounded mb-2"
+                                                    maxLength={50}
+                                                />
+                                            </div>
+                                            <div style={{ maxWidth: '300px' }}>
+                                                <TextInput
+                                                    id={`confirm_${field}`}
+                                                    name={`confirm_${field}`}
+                                                    type="password"
+                                                    placeholder="Confirm new password"
+                                                    className="border border-gray-300 p-2 rounded"
+                                                    maxLength={50}
+                                                />
+                                            </div>
                                         </>
                                     )}
                                     {!field.includes('password') && (
-                                        <TextInput
-                                            id={field}
-                                            name={field}
-                                            type="text"
-                                            value={formData[field]}
-                                            onChange={handleChange}
-                                            className="border border-gray-300 p-2 rounded"
-                                            placeholder={`Enter new ${field}`}
-                                            maxLength={50}
-                                        />
+                                        <div style={{ maxWidth: '300px' }}>
+                                            <TextInput
+                                                id={field}
+                                                name={field}
+                                                type="text"
+                                                value={formData[field]}
+                                                onChange={handleChange}
+                                                className="border border-gray-300 p-2 rounded"
+                                                placeholder={`Enter new ${field}`}
+                                                maxLength={50}
+                                            />
+                                        </div>
                                     )}
                                 </>
                             )}
                         </div>
-                        <div className="ml-4">
+                        <div className="ml-4 flex flex-col">
                             {!editMode[field] ? (
                                 <Button onClick={() => toggleEditMode(field)} size="xs" color="blue">Edit</Button>
                             ) : (
                                 <>
-                                    <Button onClick={(e) => handleSubmit(e, field)} size="xs" color="green">Save</Button>
-                                    <Button onClick={handleCancel} size="xs" color="failure">Cancel</Button>
+                                    <Button onClick={(e) => handleSubmit(e, field)} size="xs" color="green" className="mb-1">Save</Button>
+                                    <Button onClick={handleCancel} size="xs" color="failure" className="mt-1">Cancel</Button>
                                 </>
                             )}
                         </div>
