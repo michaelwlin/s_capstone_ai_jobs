@@ -11,11 +11,9 @@ const NavigationBar = () => {
   const logout = useLogout()
 
   const signIn = () => {
-    // Navigate to register/sign-up page
     navigate('/signin')
   }
   const register = () => {
-    // Navigate to register/sign-up page
     navigate('/register')
   }
 
@@ -35,8 +33,7 @@ const NavigationBar = () => {
               {auth.user}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard (Non-functional)</Dropdown.Item>
-          <Dropdown.Item>Settings (Non-functional)</Dropdown.Item>
+          <Dropdown.Item>Dashboard</Dropdown.Item>
           <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
       )
