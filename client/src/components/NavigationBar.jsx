@@ -1,19 +1,28 @@
 import { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { Dropdown, Navbar, Avatar } from 'flowbite-react'
-import { FaUser } from 'react-icons/fa';
-import useAuth from '../hooks/useAuth';
-import useLogout from '../api/logout';
+import { FaUser } from 'react-icons/fa'
+import useAuth from '../hooks/useAuth'
+import useLogout from '../api/logout'
 
 const NavigationBar = () => {
-  const navigate = useNavigate();
-  const { auth } = useAuth();
-  const logout = useLogout();
+  const navigate = useNavigate()
+  const { auth } = useAuth()
+  const logout = useLogout()
+
+  const signIn = () => {
+    // Navigate to register/sign-up page
+    navigate('/signin')
+  }
+  const register = () => {
+    // Navigate to register/sign-up page
+    navigate('/register')
+  }
 
   const handleSignOut = async () => {
-    await logout();
+    await logout()
 
-    navigate('/');
+    navigate('/')
   }
 
   const userNavigation = () => {
@@ -26,17 +35,24 @@ const NavigationBar = () => {
               {auth.user}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item as={NavLink} to="/dashboard">Dashboard</Dropdown.Item>
+          <Dropdown.Item>Dashboard (Non-functional)</Dropdown.Item>
+          <Dropdown.Item>Settings (Non-functional)</Dropdown.Item>
           <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </div>
       )
     } else {
       return (
         <div>
-          <NavLink to="/signIn" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <NavLink
+            to="/signIn"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
             Sign In
           </NavLink>
-          <NavLink to="/register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <NavLink
+            to="/register"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
             Register
           </NavLink>
         </div>
@@ -67,13 +83,32 @@ const NavigationBar = () => {
         <Navbar.Link to="/about-us" as={NavLink}>
           About Us
         </Navbar.Link>
+        {auth.isAuthenticated ? (
+          <>
+            <Navbar.Link to="/resume" as={NavLink}>
+              Resume
+            </Navbar.Link>
+            <Navbar.Link to="/dashboard" as={NavLink}>
+              Dashboard
+            </Navbar.Link>
+          </>
+        ) : (
+          ''
+        )}
       </Navbar.Collapse>
 
       <div className="flex md:order-2 user-profile">
         <Dropdown
           arrowIcon={false}
           inline
-          label={<Avatar alt="User settings" img={FaUser} rounded className={auth.isAuthenticated ? 'text-green-500' : ''} />}
+          label={
+            <Avatar
+              alt="User settings"
+              img={FaUser}
+              rounded
+              className={auth.isAuthenticated ? 'text-green-500' : ''}
+            />
+          }
         >
           {userNavigation()}
         </Dropdown>
