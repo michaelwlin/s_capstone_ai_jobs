@@ -39,13 +39,9 @@ const LandingPage = () => {
           return !maliciousChars.some((char) => value?.includes(char))
         },
       )
-      .test(
-        'numeric',
-        'Location cannot be numeric.',
-        function (value) {
-          return isNaN(value)
-        },
-      ),
+      .test('numeric', 'Location cannot be numeric.', function (value) {
+        return isNaN(value)
+      }),
     keyword: yup
       .string()
       .test(
@@ -218,7 +214,7 @@ const LandingPage = () => {
                 />
               </div>
               <label htmlFor="useSkills mt-5">
-                - Check here to enhance search with your skills!
+                Check here to enhance search with your skills!
               </label>
             </div>
           )}
