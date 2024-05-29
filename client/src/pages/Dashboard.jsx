@@ -123,21 +123,24 @@ const Dashboard = () => {
           </div>
           {isEditing.skills && (
             <div className="mt-10">
-              <TextInput
-                placeholder="Enter new skill"
-                value={newSkill}
-                onChange={(e) => setNewSkill(e.target.value)}
-              />
-              <Button onClick={handleAddSkill} size="xs" className="mt-5">
-                Add Skill
-              </Button>
+              <div className="inline-flex items-center space-x-4 ">
+                <TextInput
+                  placeholder="Enter new skill"
+                  value={newSkill}
+                  className="w-80"
+                  onChange={(e) => setNewSkill(e.target.value)}
+                />
+                <Button onClick={handleAddSkill} size="sm">
+                  Add Skill
+                </Button>
+              </div>
             </div>
           )}
           <Button
             onClick={() => toggleEditMode('skills')}
             size="xs"
             color="blue"
-            className="mt-4"
+            className="mt-10"
           >
             {isEditing.skills ? 'Finish Editing' : 'Edit Skills'}
           </Button>
