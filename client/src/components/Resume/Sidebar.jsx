@@ -16,15 +16,12 @@ const ResumeSidebar = ({
   saveAsPdf,
   setOpenWordBankModal,
   setOpenEnhanceModal,
-  setOpenQSModal
+  setOpenQSModal,
 }) => {
   return (
     <Sidebar style={{ minHeight: boardHeight }}>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          {/* <Sidebar.Item href="#" icon={IoMdAddCircle}>
-            Add Section
-          </Sidebar.Item> */}
           <Sidebar.Item
             icon={FaUpload}
             onClick={() => setOpenUploadModal(true)}
@@ -49,7 +46,11 @@ const ResumeSidebar = ({
           >
             History
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={BiSolidCustomize} onClick={setOpenQSModal}>
+          <Sidebar.Item
+            href="#"
+            icon={BiSolidCustomize}
+            onClick={setOpenQSModal}
+          >
             Quicksearch & Score
           </Sidebar.Item>
           <Sidebar.Item icon={FaDownload} onClick={saveAsPdf}>

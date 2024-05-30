@@ -214,7 +214,7 @@ const LandingPage = () => {
                 />
               </div>
               <label htmlFor="useSkills mt-5">
-                Check here to enhance search with your skills:{' '}
+                Check here to enhance search with your skills!
               </label>
             </div>
           )}

@@ -52,11 +52,12 @@ code {
   margin-bottom: 20px;
 }
 
-.resume {
+.resume, .dashboard {
   width: 100%;
   height: 100%;
   margin-top: 40px;
 }
+
 
 .resume-wrapper {
   transform: scale(1);
