@@ -24,9 +24,11 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
       const response = await axios.get(`${config.API_URL}/jobs?keyword=${keyword}&location=${location}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
+          'Accept': 'application/json',
+
+        },
+        credentials: 'include', // Include cookies in the request and response
+      },)
       if (response.data) {
         setJobs(response.data.jobs)
       }

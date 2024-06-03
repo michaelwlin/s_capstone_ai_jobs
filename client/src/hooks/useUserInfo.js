@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import useAuth from './useAuth';
 import { getCSRFToken } from '../api/csrfToken';
+import config from '../clientConfig';
 
 const useUserInfo = () => {
     const { auth } = useAuth();
@@ -13,7 +14,7 @@ const useUserInfo = () => {
         if (!auth.isAuthenticated || !auth.userId) return;
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:4000/api/users/${auth.userId}`, {
+            const response = await axios.get(`${config.API_URL}/users/${auth.userId}`, {
                 withCredentials: true,
             });
             setUserInfo(response.data);
@@ -35,7 +36,7 @@ const useUserInfo = () => {
         setLoading(true);
         try {
             const csrfToken = getCSRFToken();
-            const response = await axios.put(`http://localhost:4000/api/users/${auth.userId}`, updates, {
+            const response = await axios.put(`${config.API_URL}/users/${auth.userId}`, updates, {
                 headers: {
                     'X-CSRFToken': csrfToken,
                 },
@@ -56,7 +57,7 @@ const useUserInfo = () => {
         setLoading(true);
         try {
             const csrfToken = getCSRFToken();
-            await axios.delete(`http://localhost:4000/api/users/${auth.userId}`, {
+            await axios.delete(`${config.API_URL}/users/${auth.userId}`, {
                 headers: {
                     'X-CSRFToken': csrfToken,
                 },
@@ -71,7 +72,7 @@ const useUserInfo = () => {
             setLoading(false);
         }
     };
-    
+
 
     return {
         userInfo,
