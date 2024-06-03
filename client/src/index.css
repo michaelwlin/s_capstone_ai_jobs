@@ -126,10 +126,15 @@ code {
 }
 
 #toast-bottom-right {
-  max-height: 900px;
+  max-height: 700px;
 }
 
 .scrollable-content {
-  max-height: 700px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.scrollable-quick-search-content {
+  max-height: 120px;
   overflow-y: auto;
 }

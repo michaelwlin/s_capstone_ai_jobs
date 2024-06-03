@@ -33,11 +33,8 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
           credentials: 'include', // Include cookies in the request and response
         },
         )
-
-        if (res && res.data.resume.length === 0) {
-          return
-        }
-        setResumes(res.data.resume)
+        if (!resume && !resume.data) return
+        setResumes(resume.data)
       } catch (error) {
         console.error('There was an error fetching the resume data:', error)
       }

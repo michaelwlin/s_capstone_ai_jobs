@@ -19,13 +19,13 @@ COPY . /app
 # Give execution rights on the entrypoint script
 RUN chmod +x ./entrypoint.sh
 
-# Install cron
-RUN apt-get update && apt-get install -y cron
+# # Install cron
+# RUN apt-get update && apt-get install -y cron
 
-# Set up the cron job
-COPY ./docker_scripts/scheduler.txt /etc/cron.d/scheduler
-RUN chmod 0644 /etc/cron.d/scheduler
-RUN crontab /etc/cron.d/scheduler
+# # ADD CRON JOB
+# COPY ./docker_scripts/scheduler.txt /etc/cron.d/scheduler
+# RUN chmod 0644 /etc/cron.d/scheduler
+# RUN crontab /etc/cron.d/scheduler
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
@@ -33,4 +33,4 @@ EXPOSE 8000
 # Define the entry point script
 ENTRYPOINT ["sh", "./entrypoint.sh"]
 
-CMD ["sh", "-c", "gunicorn your_project_name.wsgi:application --bind 0.0.0.0:8000 & cron -f"]
+CMD ["sh", "-c", "gunicorn your_project_name.wsgi:application --bind 0.0.0.0:8000"]
