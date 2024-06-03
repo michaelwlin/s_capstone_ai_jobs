@@ -169,6 +169,7 @@ function FetchData() {
           Apply Filters
         </button>
       </div>
+      <div>{filterError && <p>{filterError}</p>}</div>
       {useSkills && <p className="mb-4">Matching jobs with your skills...</p>}
       <div className="flex">
         <div
