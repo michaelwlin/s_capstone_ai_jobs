@@ -165,9 +165,9 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
             </div>
             <Button onClick={onClickFind}>Quick Search</Button>
           </form>
-          {jobs.length > 0 ? (
-            <Accordion collapseAll>
-              <div className="scrollable-quick-search-content">
+          <div className="scrollable-quick-search-content">
+            {jobs.length > 0 ? (
+              <Accordion collapseAll>
                 {jobs.map((job, idx) => (
                   <Accordion.Panel key={`job-${idx}`}>
                     <Accordion.Title>
@@ -202,11 +202,11 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
                     </Accordion.Content>
                   </Accordion.Panel>
                 ))}
-              </div>
-            </Accordion>
-          ) : (
-            ''
-          )}
+              </Accordion>
+            ) : (
+              ''
+            )}
+          </div>
         </div>
       </div>
     </div>
