@@ -3,8 +3,10 @@ import axios from 'axios'
 import ProgressBar from './LoadingBar'
 import { useLocation } from 'react-router-dom'
 import Select from 'react-select'
+import useAuth from '../hooks/useAuth'
 
 function FetchData() {
+  const { auth } = useAuth()
   const [jobs, setJobs] = useState([])
   const [filteredJobs, setFilteredJobs] = useState([]) // New state for filtered jobs
   const [userSkills, setUserSkills] = useState([])
@@ -16,6 +18,7 @@ function FetchData() {
     useSkills,
     usersName,
   } = location.state || {}
+  console.log('location', location)
 
   // New state variables for filters
   const [employmentTypeFilter, setEmploymentTypeFilter] = useState('')
@@ -47,7 +50,7 @@ function FetchData() {
     const getJobs = async () => {
       setIsLoading(true)
       try {
-        const url = `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&usersName=${usersName}`
+        const url = `http://localhost:4000/api/jobs?keyword=${keyword}&location=${locationName}&useSkills=${useSkills}&userId=${auth.userId}`
         const response = await axios.get(url)
         setJobs(response.data.jobs || [])
         if (useSkills) {
@@ -161,11 +164,7 @@ function FetchData() {
           Apply Filters
         </button>
       </div>
-      {useSkills && (
-        <p className="mb-4">
-          Matching jobs with your skills: <i>{userSkills.join(', ')}</i>
-        </p>
-      )}
+      {useSkills && <p className="mb-4">Matching jobs with your skills...</p>}
       <div className="flex">
         <div
           data-testid="job-listings"
