@@ -30,6 +30,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
                 'Accept': 'application/json',
             }},
         )
+
         if (res && res.data.resume.length === 0) {
           return
         }
@@ -38,8 +39,9 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
         console.error('There was an error fetching the resume data:', error)
       }
     }
+
     getAllResumes()
-  }, [])
+  }, [auth.userId])
 
   return (
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import config from '../clientConfig';
+import { Button, TextInput } from 'flowbite-react'
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 const passwordRegex =
@@ -20,33 +21,60 @@ const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(null)
   const [isPasswordValid, setIsPasswordValid] = useState(null)
   const [isUsernameValid, setIsUsernameValid] = useState(null)
+  const [doPasswordsMatch, setDoPasswordsMatch] = useState(null)
+  const [touchedFields, setTouchedFields] = useState({
+    userName: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    try {
+      const { name, value } = e.target
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
 
-    if (name === 'userName') {
-      setIsUsernameValid(usernameRegex.test(value))
-    } else if (name === 'email') {
-      setIsEmailValid(emailRegex.test(value))
-    } else if (name === 'password') {
-      const isValid = passwordRegex.test(value)
-      setIsPasswordValid(isValid)
+      if (name === 'userName') {
+        setIsUsernameValid(usernameRegex.test(value))
+      } else if (name === 'email') {
+        setIsEmailValid(emailRegex.test(value))
+      } else if (name === 'password') {
+        const isValid = passwordRegex.test(value)
+        setIsPasswordValid(isValid)
+        setDoPasswordsMatch(value === formData.confirmPassword)
+      } else if (name === 'confirmPassword') {
+        setDoPasswordsMatch(value === formData.password)
+      }
+    } catch (error) {
+      console.error('Error handling input change:', error)
     }
   }
 
-  const handleEmailBlur = () => {
-    setIsEmailValid(emailRegex.test(formData.email))
+  const handleBlur = (e) => {
+    const { name } = e.target
+    setTouchedFields((prev) => ({
+      ...prev,
+      [name]: true,
+    }))
+
+    if (name === 'email') {
+      setIsEmailValid(emailRegex.test(formData.email))
+    } else if (name === 'password') {
+      setIsPasswordValid(passwordRegex.test(formData.password))
+      setDoPasswordsMatch(formData.password === formData.confirmPassword)
+    } else if (name === 'confirmPassword') {
+      setDoPasswordsMatch(formData.password === formData.confirmPassword)
+    }
   }
 
   const canSubmit = () => {
     return (
       isEmailValid &&
       isPasswordValid &&
-      formData.password === formData.confirmPassword &&
+      doPasswordsMatch &&
       isUsernameValid
     )
   }
@@ -114,22 +142,17 @@ const Register = () => {
         >
           Username
         </label>
-        <input
+        <TextInput
           id="userName"
           name="userName"
           type="text"
           value={formData.userName}
           onChange={handleChange}
-          className={`${
-            isUsernameValid === null
-              ? ''
-              : isUsernameValid
-                ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
-                : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-          } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+          onBlur={handleBlur}
+          color={isUsernameValid === null ? 'gray' : isUsernameValid ? 'green' : 'red'}
           placeholder="Username"
         />
-        {isUsernameValid === false && (
+        {touchedFields.userName && isUsernameValid === false && (
           <p className="mt-2 text-sm text-red-600">
             <span className="font-medium">Oops!</span> Username must be
             alphanumeric and 3-20 characters long.
@@ -142,23 +165,17 @@ const Register = () => {
         >
           Email
         </label>
-        <input
+        <TextInput
           id="email"
           name="email"
           type="email"
           value={formData.email}
           onChange={handleChange}
-          onBlur={handleEmailBlur}
-          className={`${
-            isEmailValid === null
-              ? ''
-              : isEmailValid
-                ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
-                : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-          } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+          onBlur={handleBlur}
+          color={isEmailValid === null ? 'gray' : isEmailValid ? 'green' : 'red'}
           placeholder="Email"
         />
-        {isEmailValid === false && (
+        {touchedFields.email && isEmailValid === false && (
           <p className="mt-2 text-sm text-red-600">
             <span className="font-medium">Oops!</span> Please enter a valid
             email address.
@@ -171,21 +188,21 @@ const Register = () => {
         >
           Password
         </label>
-        <input
+        <TextInput
           id="password"
           name="password"
           type="password"
           value={formData.password}
           onChange={handleChange}
-          className={`${
-            isPasswordValid === null
-              ? ''
-              : isPasswordValid
-                ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
-                : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-          } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+          onBlur={handleBlur}
+          color={isPasswordValid === null ? 'gray' : isPasswordValid ? 'green' : 'red'}
           placeholder="Password"
         />
+        {touchedFields.password && isPasswordValid === false && (
+          <p className="mt-2 text-sm text-red-600">
+            <span className="font-medium">Oops!</span> Password does not meet the requirements.
+          </p>
+        )}
         <div style={{ fontStyle: 'italic', fontSize: '10px' }}>
           <p>Password requirements:</p>
           <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
@@ -196,48 +213,34 @@ const Register = () => {
         </div>
         <label
           htmlFor="confirmPassword"
-          className={`${formData.password && formData.confirmPassword && formData.password === formData.confirmPassword ? 'text-green-700' : 'text-black-700'} block mb-2 text-sm font-medium`}
+          className={`${doPasswordsMatch ? 'text-green-700' : 'text-black-700'} block mb-2 text-sm font-medium`}
         >
           Confirm Password
         </label>
-        <input
+        <TextInput
           id="confirmPassword"
           name="confirmPassword"
           type="password"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className={`${
-            formData.password && formData.confirmPassword
-              ? formData.password === formData.confirmPassword
-                ? 'bg-green-50 border-green-500 text-green-900 placeholder-green-700'
-                : 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
-              : ''
-          } text-sm rounded-lg focus:ring-2 block w-full p-2.5`}
+          onBlur={handleBlur}
+          color={doPasswordsMatch === null ? 'gray' : doPasswordsMatch ? 'green' : 'red'}
           placeholder="Confirm Password"
         />
-        {formData.password &&
-          formData.confirmPassword &&
-          formData.password !== formData.confirmPassword && (
-            <div className="text-red-500 text-sm mt-2">
-              <span className="font-medium">Oops!</span> Passwords do not match.
-            </div>
-          )}
+        {touchedFields.confirmPassword && doPasswordsMatch === false && (
+          <div className="text-red-500 text-sm mt-2">
+            <span className="font-medium">Oops!</span> Passwords do not match.
+          </div>
+        )}
 
-        <button
+        <Button
           type="submit"
           data-testid="registerBtn"
           disabled={!isFormValid()}
-          style={{
-            padding: '10px',
-            backgroundColor: isFormValid() ? '#4CAF50' : '#ccc',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: isFormValid() ? 'pointer' : 'default',
-          }}
+          className={`w-full ${isFormValid() ? 'bg-blue-500' : 'bg-gray-500'} text-white`}
         >
           Register
-        </button>
+        </Button>
       </form>
     </div>
   )

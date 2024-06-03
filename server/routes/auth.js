@@ -161,6 +161,25 @@ router.post('/login', async (req, res) => {
 
 });
 
+router.post("/change_password", authenticateAccessToken, async (req, res) => {
+    const { userId, currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).send("User not found.");
+    }
+
+    const passwordIsValid = await bcryptjs.compare(currentPassword, user.password);
+    if (!passwordIsValid) {
+        return res.status(403).send("Current password is incorrect.");
+    }
+
+    const hashedNewPassword = await bcryptjs.hash(newPassword, saltRounds);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    res.send("Password updated successfully.");
+});
 
 
 module.exports = router;

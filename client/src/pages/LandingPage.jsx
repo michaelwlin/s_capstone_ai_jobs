@@ -40,13 +40,9 @@ const LandingPage = () => {
           return !maliciousChars.some((char) => value?.includes(char))
         },
       )
-      .test(
-        'numeric',
-        'Location cannot be numeric.',
-        function (value) {
-          return isNaN(value)
-        },
-      ),
+      .test('numeric', 'Location cannot be numeric.', function (value) {
+        return isNaN(value)
+      }),
     keyword: yup
       .string()
       .test(
@@ -66,13 +62,9 @@ const LandingPage = () => {
           return !maliciousChars.some((char) => value?.includes(char))
         },
       )
-      .test(
-        'numeric',
-        'Keyword cannot be numeric.',
-        function (value) {
-          return isNaN(value)
-        },
-      ),
+      .test('numeric', 'Keyword cannot be numeric.', function (value) {
+        return isNaN(value)
+      }),
   })
 
   const {
@@ -222,10 +214,8 @@ const LandingPage = () => {
                   className="mr-2"
                 />
               </div>
-              <label htmlFor="useSkills">
-                {' '}
-                Check here to enhance search with your skills:{' '}
-                {userSkills.join(', ')}
+              <label htmlFor="useSkills mt-5">
+                Check here to enhance search with your skills!
               </label>
             </div>
           )}

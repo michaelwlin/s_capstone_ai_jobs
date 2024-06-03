@@ -18,6 +18,7 @@ const enhance = async (value) => {
         },
       },
     )
+
     if (response.data) {
       const enhancements_array = response.data.enhancements.map(
         (enhancement) => {

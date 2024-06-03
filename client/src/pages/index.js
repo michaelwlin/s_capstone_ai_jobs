@@ -6,6 +6,7 @@ import Results from './Results';
 import Register from './Register';
 import SignIn from './SignIn';
 import Resume from './Resume'
+import Dashboard from './Dashboard'
+import UserSettings from './UserSettings'
 
-export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Register, SignIn, Resume }
-
+export { AboutUs, FindJobs, HowItWorks, Homepage, Results, Register, SignIn, Resume, Dashboard, UserSettings }
