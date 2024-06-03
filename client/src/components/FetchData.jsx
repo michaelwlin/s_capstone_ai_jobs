@@ -11,6 +11,8 @@ function FetchData() {
   const [filteredJobs, setFilteredJobs] = useState([]) // New state for filtered jobs
   const [userSkills, setUserSkills] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [filterError, setFilterError] = useState('');
+
   const location = useLocation()
   const {
     keyword,
@@ -39,11 +41,14 @@ function FetchData() {
     })
     setFilteredJobs(filtered)
 
-    // If no jobs match the filters, show popup
-    if (filtered.length === 0) {
-      alert('No jobs match the selected filters.')
-    }
-  }
+        // If no jobs match the filters
+        if (filtered.length === 0) {
+            setFilterError("No jobs match the selected filters.");
+        }
+        else {
+            setFilterError('');
+        }
+    };
 
   // Fetch jobs when the component mounts or search parameters change
   useEffect(() => {
@@ -170,7 +175,7 @@ function FetchData() {
           data-testid="job-listings"
           className="h-screen overflow-y-auto w-1/2"
         >
-          {(filteredJobs.length > 0 ? filteredJobs : jobs).map((job, index) => (
+          {(filterError ? [] : (filteredJobs.length > 0 ? filteredJobs : jobs)).map((job, index) => (
             <div
               key={index}
               className="p-5 cursor-pointer hover:bg-gray-200 border-b border-gray-200"
