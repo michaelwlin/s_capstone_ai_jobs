@@ -29,4 +29,4 @@ EXPOSE 8000
 
 # Start the application
 ENTRYPOINT ["sh", "./entrypoint.sh"]
-CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8000 & cron -f"]
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
