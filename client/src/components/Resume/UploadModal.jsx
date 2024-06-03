@@ -30,13 +30,12 @@ const UploadModal = ({ openModal, setOpenModal }) => {
       formData.append('userID', auth.userId)
 
       const res = await axios.post(
-        `${config.API_URL}/upload_resume`, {
-        withCredentials: true // Add this line to include cookies
-      },
+        `${config.DJANGO_URL}/upload_resume`,
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
             'X-CSRFToken': csrfToken,
           },
         },

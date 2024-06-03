@@ -22,7 +22,10 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
   const onClickFind = async () => {
     try {
       const response = await axios.get(`${config.API_URL}/jobs?keyword=${keyword}&location=${location}`, {
-        withCredentials: true // Add this line to include cookies
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
       })
       if (response.data) {
         setJobs(response.data.jobs)
@@ -41,14 +44,15 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        `${config.API_URL}/get_score`,
+        `${config.DJANGO_URL}/get_score`,
         {
           resume_text: JSON.stringify(resume),
           job_desc: job['description']
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
         },
       )
@@ -73,13 +77,14 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        `${config.API_URL}/match`,
+        `${config.DJANGO_URL}/match`,
         {
           resume_text: JSON.stringify(resume),
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
         },
       )
@@ -172,7 +177,7 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
         </div>
       </div>
     </div>
-   
+
   )
 }
 

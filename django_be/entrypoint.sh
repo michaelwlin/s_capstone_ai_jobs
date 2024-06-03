@@ -1,11 +1,14 @@
 #!/bin/sh
 
 #change directory to /app/matchiq_api directory
-cd /app/matchiq_api
+cd /app
 
 echo "Apply database migrations"
 python manage.py migrate
 
 # Start Django application
 echo "Starting Django application"
-exec "$@"
+gunicorn matchiq_api.wsgi:application --bind 0.0.0.0:PORT &
+
+# Start cron daemon
+cron -f

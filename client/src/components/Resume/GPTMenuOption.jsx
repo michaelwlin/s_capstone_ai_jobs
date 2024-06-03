@@ -7,13 +7,14 @@ const AI_COMMANDS = [{ id: 'improve', label: 'Improve' }]
 const enhance = async (value) => {
   try {
     const response = await axios.post(
-      `${config.API_URL}/enhance`,
+      `${config.DJANGO_URL}/enhance`,
       {
         resume_text: JSON.stringify(value),
       },
       {
         headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       },
     )

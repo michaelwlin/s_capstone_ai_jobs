@@ -7,7 +7,10 @@ function FetchApp() {
 
     useEffect(() => {
         axios.get(`${config.DJANGO_URL}/applications/`, {
-            credentials: 'include', // Necessary to include cookies
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
         })
             .then(response => {
                 setApplications(response.data);

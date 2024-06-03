@@ -20,15 +20,14 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        `${config.API_URL}/wordbank`, {
-        withCredentials: true // Add this line to include cookies
-      },
+        `${config.DJANGO_URL}/wordbank`,
         {
           resume_text: JSON.stringify(resume),
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
         },
       )

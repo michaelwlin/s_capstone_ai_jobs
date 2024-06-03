@@ -24,9 +24,11 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
     const getAllResumes = async () => {
       try {
         const res = await axios.get(
-          `${config.API_URL}/users/${auth.userId}`, {
-          withCredentials: true // Add this line to include cookies
-        },
+          `${config.API_URL}/users/${auth.userId}`,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }},
         )
         if (res && res.data.resume.length === 0) {
           return

@@ -18,7 +18,8 @@ router.get("/loggedInData", authenticateAccessToken, async (req, res) => {
     }
     res.json(user);
 });
-router.get("/:id", validateID, async (req, res) => {
+// router.get("/:id", validateID, async (req, res) => {
+router.get("/:id", async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).send();
     res.send(user);
@@ -54,8 +55,8 @@ router.put("/:id", async (req, res) => {
         res.status(400).send("Error updating user: " + error.message);
     }
 });
-
-router.get("/:id/skills", validateID, async (req, res) => {
+router.get("/:id/skills", async (req, res) => {
+    // router.get("/:id/skills", validateID, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).send('User not found');

@@ -74,8 +74,10 @@ const Resume = () => {
     const getUserResume = async () => {
       try {
         const res = await axios.get(
-          `${config.API_URL}/users/${auth.userId}`,
-        )
+          `${config.API_URL}/users/${auth.userId}`, {
+          withCredentials: true // Add this line to include cookies
+        })
+
         if (res && res.data.resume.length === 0) {
           return
         }
