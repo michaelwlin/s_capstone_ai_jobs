@@ -22,14 +22,11 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
   useEffect(() => {
     const getAllResumes = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:4000/api/users/${auth.userId}`,
+        const resume = await axios.get(
+          `http://localhost:4000/api/users/${auth.userId}/resume`,
         )
-
-        if (res && res.data.resume.length === 0) {
-          return
-        }
-        setResumes(res.data.resume)
+        if (!resume && !resume.data) return
+        setResumes(resume.data)
       } catch (error) {
         console.error('There was an error fetching the resume data:', error)
       }
