@@ -25,6 +25,7 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
         const resume = await axios.get(
           `http://localhost:4000/api/users/${auth.userId}/resume`,
         )
+        if (!resume && !resume.data) return
         setResumes(resume.data)
       } catch (error) {
         console.error('There was an error fetching the resume data:', error)
