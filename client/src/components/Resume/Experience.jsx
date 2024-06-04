@@ -56,16 +56,16 @@ const Experience = ({
       />
       {experience.length > 0
         ? experience.map((exp, index) => (
-            <ExperienceItem
-              key={`experience-item-${index}`}
-              parentStyle={parentStyle}
-              defaultLeft={defaultLeft}
-              childSpacer={childSpacer}
-              experienceTop={experienceTop + index * 25}
-              experienceItem={exp}
-              index={index}
-            />
-          ))
+          <ExperienceItem
+            key={`experience-item-${index}`}
+            parentStyle={parentStyle}
+            defaultLeft={defaultLeft}
+            childSpacer={childSpacer}
+            experienceTop={experienceTop + index * 25}
+            experienceItem={exp}
+            index={index}
+          />
+        ))
         : defaultExperience()}
     </div>
   )

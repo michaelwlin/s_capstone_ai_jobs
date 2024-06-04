@@ -13,7 +13,7 @@ const SuggestionModal = ({
       originalText: '',
       suggestedChanges: '',
       header: '',
-      acceptChanges: () => {},
+      acceptChanges: () => { },
     })
   }
 

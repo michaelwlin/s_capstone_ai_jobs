@@ -1,18 +1,20 @@
 import { MenuOption, DropDown } from 'react-web-editor'
 import axios from 'axios'
+import config from '../../clientConfig';
 
 const AI_COMMANDS = [{ id: 'improve', label: 'Improve' }]
 
 const enhance = async (value) => {
   try {
     const response = await axios.post(
-      'http://localhost:8000/api/enhance',
+      `${config.DJANGO_URL}/enhance`,
       {
         resume_text: JSON.stringify(value),
       },
       {
         headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       },
     )

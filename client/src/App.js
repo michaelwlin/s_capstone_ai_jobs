@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/user-settings" element={<UserSettings />} />
           </Route>
         </Routes>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   )

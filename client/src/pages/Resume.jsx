@@ -18,6 +18,7 @@ import {
   EnhanceModal,
   QuickSearchModal,
 } from '../components/Resume/index.js'
+import config from '../clientConfig.js';
 
 const Resume = () => {
   let { _id } = useParams()
@@ -73,8 +74,10 @@ const Resume = () => {
     const getUserResume = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/api/users/${auth.userId}`,
-        )
+          `${config.API_URL}/users/${auth.userId}`, {
+          withCredentials: true // Add this line to include cookies
+        })
+
         if (res && res.data.resume.length === 0) {
           return
         }

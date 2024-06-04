@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
+import config from '../clientConfig';
 
 export const AuthContext = createContext()
 
@@ -13,10 +14,11 @@ export const AuthProvider = ({ children }) => {
   const validateToken = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('http://localhost:4500/api/auth/validate', {
-        method: 'POST',
-        credentials: 'include', // Necessary to include cookies
-      })
+      const response =
+        await fetch(`${config.AUTH_URL}/validate`, {
+          method: 'POST',
+          credentials: 'include', // Necessary to include cookies
+        });
       if (response.ok) {
         const data = await response.json()
         if (data.isAuthenticated) {

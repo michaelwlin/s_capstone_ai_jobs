@@ -16,21 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Give execution rights on the entrypoint script
-RUN chmod +x ./entrypoint.sh
-
-# # Install cron
-# RUN apt-get update && apt-get install -y cron
-
-# # ADD CRON JOB
-# COPY ./docker_scripts/scheduler.txt /etc/cron.d/scheduler
-# RUN chmod 0644 /etc/cron.d/scheduler
-# RUN crontab /etc/cron.d/scheduler
-
-# Make port 8000 available to the world outside this container
+# Expose the port that Gunicorn will run on
 EXPOSE 8000
 
-# Define the entry point script
-ENTRYPOINT ["sh", "./entrypoint.sh"]
-
-CMD ["sh", "-c", "gunicorn your_project_name.wsgi:application --bind 0.0.0.0:8000"]
+# Run Gunicorn
+CMD ["bash", "-c", "gunicorn matchiq_api.wsgi:application --bind 0.0.0.0:$PORT"]

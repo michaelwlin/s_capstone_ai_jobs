@@ -1,6 +1,7 @@
 import { Modal, Button, Spinner } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
+import config from '../../clientConfig';
 
 const EnhanceModal = ({ openModal, setOpenModal, resume }) => {
   const [inputFile, setInputFile] = useState(null)
@@ -18,13 +19,15 @@ const EnhanceModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/enhance',
+        `${config.DJANGO_URL}/enhance`,
         {
           resume_text: JSON.stringify(resume),
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
           },
         },
       )
@@ -92,19 +95,19 @@ const EnhanceModal = ({ openModal, setOpenModal, resume }) => {
             {loading
               ? ''
               : enhancements.map((enhancement) => (
-                  <div>
-                    <p className="pb-1">
-                      <h3 className="text-gray-500 font-medium">Original</h3>
-                      <li className="list-none">{enhancement.original}</li>
-                    </p>
-                    <p>
-                      <h3 className="text-indigo-800 font-medium">
-                        MatchIQ Suggestion
-                      </h3>
-                      <li className="list-none">{enhancement.new_element}</li>
-                    </p>
-                  </div>
-                ))}
+                <div>
+                  <p className="pb-1">
+                    <h3 className="text-gray-500 font-medium">Original</h3>
+                    <li className="list-none">{enhancement.original}</li>
+                  </p>
+                  <p>
+                    <h3 className="text-indigo-800 font-medium">
+                      MatchIQ Suggestion
+                    </h3>
+                    <li className="list-none">{enhancement.new_element}</li>
+                  </p>
+                </div>
+              ))}
           </div>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>

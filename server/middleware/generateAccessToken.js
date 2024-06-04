@@ -11,6 +11,7 @@ function generateAccessToken(userPayload, res) {
     httpOnly: true,
     secure: true,
     expires: accessExpires,
+    sameSite: 'None',
   });
 
   return accessToken;
@@ -36,6 +37,7 @@ async function generateRefreshToken(userPayload, res) {
       httpOnly: true,
       secure: true,
       expires: refreshExpires,
+      sameSite: 'None',
     });
 
     return refreshToken;

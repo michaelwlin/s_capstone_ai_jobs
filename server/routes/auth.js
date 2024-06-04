@@ -51,45 +51,43 @@ router.get("/loggedInData", authenticateAccessToken, async (req, res) => {
 });
 
 router.post("/logout", async (req, res) => {
+    console.log('Logout called');
     const refreshToken = req.cookies['refreshToken'];
     const accessToken = req.cookies['accessToken'];
 
     if (!refreshToken) {
-        return res.status(400).send("Token not provided.");
+        console.log("Refresh Token not provided.");
     }
 
     try {
         const result = await RefreshToken.deleteOne({ token: refreshToken });
 
         if (result.deletedCount === 0) {
-            console.log("Token not found for delete")
-            return res.status(404).send("Token not found.");
+            console.log("Refresh Token not found for delete")
         }
-        else {
-            // Clear the refresh token cookie
-            res.clearCookie('refreshToken', {
-                httpOnly: true,
-                secure: true, // Set to true only in production
-                path: '/', // Ensure cookie is valid for all paths
-            });
-
-            res.clearCookie('accessToken', {
-                httpOnly: true,
-                secure: true, // Set to true only in production
-                path: '/', // Ensure cookie is valid for all paths
-            });
-
-            res.send("Logged out successfully.");
-        }
-
-
-
 
     } catch (error) {
         console.error("Logout error:", error);
-        res.status(500).send("An error occurred during logout.");
+        // res.status(500).send("An error occurred during logout.");
     }
 
+    res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: true, // Set to true only in production
+        sameSite: 'None',
+        path: '/', // Ensure cookie is valid for all paths
+    });
+
+    res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: true, // Set to true only in production
+        sameSite: 'None',
+        path: '/', // Ensure cookie is valid for all paths
+    });
+
+
+
+    res.send("Logged out successfully.");
 }
 
 );
@@ -109,10 +107,15 @@ router.post('/validate', async (req, res) => {
                 try {
                     const newUser = await authenticateRefreshToken();
                     if (!newUser) {
-                        return res.sendStatus(401).json({ isAuthenticated: false }); // Token expired
-                    } else {
-                        generateAccessToken(newUser, res);
-                        return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
+                        const newUser = await authenticateRefreshToken();
+                        if (!newUser) {
+                            return res.sendStatus(401).json({ isAuthenticated: false }); // Token expired
+                        } else {
+                            generateAccessToken(newUser, res);
+                            return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
+                            generateAccessToken(newUser, res);
+                            return res.json({ isAuthenticated: true, user: newUser.userName, userId: newUser.userId.toString() });
+                        }
                     }
                 } catch (refreshError) {
                     console.error(refreshError);
@@ -122,6 +125,7 @@ router.post('/validate', async (req, res) => {
                 return res.sendStatus(403).json({ isAuthenticated: false }); // Invalid token
             }
         } else {
+            console.log(user.userId)
             return res.json({ isAuthenticated: true, user: user.userName, userId: user.userId });
         }
     });

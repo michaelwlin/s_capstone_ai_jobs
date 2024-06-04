@@ -1,6 +1,7 @@
 import { Button, Label, TextInput, Accordion } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
+import config from '../../clientConfig';
 
 const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
   const [inputFile, setInputFile] = useState(null)
@@ -18,9 +19,14 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
 
   const onClickFind = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:4000/api/jobs?keyword=${keyword}&location=${location}`,
-      )
+      const response = await axios.get(`${config.API_URL}/jobs?keyword=${keyword}&location=${location}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+
+        },
+        credentials: 'include', // Include cookies in the request and response
+      },)
       if (response.data) {
         setJobs(response.data.jobs)
       }
@@ -36,14 +42,15 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/get_score',
+        `${config.DJANGO_URL}/get_score`,
         {
           resume_text: JSON.stringify(resume),
           job_desc: job['description'],
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
         },
       )
@@ -66,13 +73,14 @@ const QuickSearchModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/match',
+        `${config.DJANGO_URL}/match`,
         {
           resume_text: JSON.stringify(resume),
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
         },
       )

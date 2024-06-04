@@ -6,6 +6,7 @@ import LandingPage from './LandingPage'
 import { BrowserRouter } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import axios from 'axios'
+import config from '../clientConfig';
 
 jest.mock('../hooks/useAuth')
 jest.mock('axios')
@@ -117,7 +118,14 @@ describe('LandingPage', () => {
 
       await act(async () => {
         expect(axios.get).toHaveBeenCalledWith(
-          `http://localhost:4000/api/users/${authenticatedUser.auth.userId}/skills`,
+          `${config.API_URL}/users/${authenticatedUser.auth.userId}/skills`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+          },
+          credentials: 'include', // Include cookies in the request and response
+        },
         )
       })
 

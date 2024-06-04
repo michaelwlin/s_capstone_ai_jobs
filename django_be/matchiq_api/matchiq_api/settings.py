@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-^0d3hg@#6u)swp-(g$1)yip)355x34#^z^&h)&pl9198)91@r9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
@@ -126,9 +127,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = ["https://matchiq-client-803d913faaf2.herokuapp.com/",
+                        "https://matchiq-api-8d1eb08929d0.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000",
+                        "https://matchiq-client-803d913faaf2.herokuapp.com"]
 CSRF_COOKIE_SECURE = False
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -149,3 +153,7 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+CORS_ORIGIN_WHITELIST = (
+    "https://matchiq-client-803d913faaf2.herokuapp.com/",
+    "https://matchiq-api-8d1eb08929d0.herokuapp.com/"
+)

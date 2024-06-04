@@ -23,6 +23,7 @@ filelock==3.13.1
 flake8==6.0.0
 Flask==2.3.2
 gnureadline==8.1.2
+gunicorn>=20.0,<21.0
 idna==3.6
 ipykernel==6.22.0
 ipython==8.13.1

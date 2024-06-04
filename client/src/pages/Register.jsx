@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import config from '../clientConfig';
 import { Button, TextInput } from 'flowbite-react'
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
@@ -85,21 +86,21 @@ const Register = () => {
       return
     }
 
-    try {
-      await axios.post(`http://localhost:4500/api/auth/register`, formData)
-      alert('User registered successfully')
-      setFormData({
-        userName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      })
-      navigate('/signIn')
-    } catch (error) {
-      console.error('Error registering user:', error)
-      alert('Error registering user')
-    }
-  }
+        try {
+            await axios.post(`${config.AUTH_URL}/register`, formData);
+            alert('User registered successfully');
+            setFormData({
+                userName: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+            });
+            navigate('/signIn');
+        } catch (error) {
+            console.error('Error registering user:', error);
+            alert('Error registering user');
+        }
+    };
 
   const isFormValid = () => {
     const { userName, email, password, confirmPassword } = formData

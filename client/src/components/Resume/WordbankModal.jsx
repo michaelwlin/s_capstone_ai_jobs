@@ -1,6 +1,7 @@
 import { Modal, Button, Spinner, Accordion } from 'flowbite-react'
 import { useState } from 'react'
 import axios from 'axios'
+import config from '../../clientConfig'
 
 const WordbankModal = ({ openModal, setOpenModal, resume }) => {
   const [inputFile, setInputFile] = useState(null)
@@ -19,13 +20,14 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
     setLoading(true)
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/wordbank',
+        `${config.DJANGO_URL}/wordbank`,
         {
           resume_text: JSON.stringify(resume),
         },
         {
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
           },
         },
       )
@@ -94,22 +96,24 @@ const WordbankModal = ({ openModal, setOpenModal, resume }) => {
                   ''
                 )}
                 <hr></hr>
-                {done ? (
-                  <h2>
-                    <strong>Adjectives</strong>
-                  </h2>
-                ) : (
-                  ''
-                )}
-                {loading ? '' : adjectives.map((adj) => <li>{adj}</li>)}
-                {done ? (
-                  <h2>
-                    <strong>Verbs</strong>
-                  </h2>
-                ) : (
-                  ''
-                )}
-                {loading ? '' : verbs.map((verb) => <li>{verb}</li>)}
+                <div className="scrollable-content">
+                  {done ? (
+                    <h2>
+                      <strong>Adjectives</strong>
+                    </h2>
+                  ) : (
+                    ''
+                  )}
+                  {loading ? '' : adjectives.map((adj) => <li>{adj}</li>)}
+                  {done ? (
+                    <h2>
+                      <strong>Verbs</strong>
+                    </h2>
+                  ) : (
+                    ''
+                  )}
+                  {loading ? '' : verbs.map((verb) => <li>{verb}</li>)}
+                </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <Button onClick={onClickGenerate}>
                     {done ? 'Generate Again' : 'Generate'}

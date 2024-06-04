@@ -3,6 +3,7 @@ import axios from 'axios'
 import { BrowserRouter as Router } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import HistoryModal from './HistoryModal'
+import config from '../clientConfig';
 
 jest.mock('axios')
 jest.mock('../../hooks/useAuth')
@@ -61,7 +62,14 @@ describe('HistoryModal', () => {
 
       await waitFor(() => {
         expect(axios.get).toHaveBeenCalledWith(
-          `http://localhost:4000/api/users/${mockAuth.auth.userId}`,
+          `${config.API_URL}/users/${mockAuth.auth.userId}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+  
+            },
+            credentials: 'include', // Include cookies in the request and response
+          },
         )
       })
       await waitFor(() => {
@@ -73,7 +81,7 @@ describe('HistoryModal', () => {
 
   describe('when there are errors', () => {
     beforeEach(() => {
-      jest.spyOn(console, 'error').mockImplementation(() => {})
+      jest.spyOn(console, 'error').mockImplementation(() => { })
     })
 
     afterEach(() => {

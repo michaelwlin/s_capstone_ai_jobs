@@ -1,15 +1,34 @@
-FROM node:lts-alpine3.18
+# Build the React application
+FROM node:lts-alpine3.18 as build
 
-ENV NODE_VERSION 20.11.0
+# Set the openssl-legacy-provider option
 ENV NODE_OPTIONS="--openssl-legacy-provider"
 
-RUN addgroup app && adduser -S -G app app
-
+# Set working directory
 WORKDIR /app
+
+# Copy package.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "start"]
+# Serve the app using a simple static file server
+FROM node:lts-alpine3.18
+
+# Install 'serve' to run the application
+RUN npm install -g serve
+
+# Set working directory
+WORKDIR /app
+
+# Copy build artifacts from the 'build' stage
+COPY --from=build /app/build /app
+
+# Heroku dynamically assigns a port
+CMD ["sh", "-c", "serve -s -l $PORT"]
+EXPOSE $PORT

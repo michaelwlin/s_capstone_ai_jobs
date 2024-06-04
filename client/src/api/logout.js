@@ -1,12 +1,13 @@
 // authUtils.js
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import config from '../clientConfig';
 
 const useLogout = () => {
     const { validateToken } = useContext(AuthContext);
 
     const logout = () => {
-        fetch('http://localhost:4500/api/auth/logout', {
+        fetch(`${config.AUTH_URL}/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

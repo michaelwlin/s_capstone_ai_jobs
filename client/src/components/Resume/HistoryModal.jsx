@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import useAuth from '../../hooks/useAuth.js'
+import config from '../../clientConfig.js';
 
 const HistoryModal = ({ openModal, setOpenModal }) => {
   const [resumes, setResumes] = useState([])
@@ -22,11 +23,20 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
   useEffect(() => {
     const getAllResumes = async () => {
       try {
-        const resume = await axios.get(
-          `http://localhost:4000/api/users/${auth.userId}/resume`,
-        )
-        if (!resume && !resume.data) return
-        setResumes(resume.data)
+
+        console.log(auth.userId)
+        const res = await axios.get(`${config.API_URL}/users/${auth.userId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          withCredentials: true,  // Correct property for including cookies in requests
+        });
+
+        if (res && res.data.resume.length === 0) {
+          return
+        }
+        setResumes(res.data.resume)
       } catch (error) {
         console.error('There was an error fetching the resume data:', error)
       }

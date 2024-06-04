@@ -7,8 +7,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { maliciousChars } from '../utils/maliciousChars'
-import useAuth from '../hooks/useAuth'
-import axios from 'axios'
+import useAuth from '../hooks/useAuth';
+import axios from "axios";
+import config from '../clientConfig';
 
 const LandingPage = () => {
   const { auth } = useAuth()
@@ -78,9 +79,9 @@ const LandingPage = () => {
   useEffect(() => {
     const fetchUserSkills = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/api/users/${auth.userId}/skills`,
-        )
+        const response = await axios.get(`${config.API_URL}/users/${auth.userId}/skills`, {
+          withCredentials: true // Add this line to include cookies
+        });
 
         setUserSkills(response.data)
         setLoading(false)
