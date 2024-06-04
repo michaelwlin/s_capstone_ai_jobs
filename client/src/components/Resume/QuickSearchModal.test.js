@@ -79,14 +79,14 @@ describe('QuickSearchModal', () => {
 
       await waitFor(() => {
         expect(axios.get).toHaveBeenCalledWith(
-          `${config.API_URL}/jobs?keyword=&location=`,, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-  
-            },
-            credentials: 'include', // Include cookies in the request and response
+          `${config.API_URL}/jobs?keyword=&location=`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
           },
+          credentials: 'include', // Include cookies in the request and response
+        },
         )
       })
     })
@@ -120,7 +120,7 @@ describe('QuickSearchModal', () => {
 
       await waitFor(() => {
         expect(axios.post).toHaveBeenCalledWith(
-          'http://localhost:8000/api/get_score',
+          `${config.API_URL}/get_score`,
           {
             resume_text: JSON.stringify(resume),
             job_desc: 'Description 1',

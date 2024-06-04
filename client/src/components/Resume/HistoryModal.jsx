@@ -23,18 +23,20 @@ const HistoryModal = ({ openModal, setOpenModal }) => {
   useEffect(() => {
     const getAllResumes = async () => {
       try {
-        const res = await axios.get(
-          `${config.API_URL}/users/${auth.userId}`, {
+
+        console.log(auth.userId)
+        const res = await axios.get(`${config.API_URL}/users/${auth.userId}`, {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-
           },
-          credentials: 'include', // Include cookies in the request and response
-        },
-        )
-        if (!resume && !resume.data) return
-        setResumes(resume.data)
+          withCredentials: true,  // Correct property for including cookies in requests
+        });
+
+        if (res && res.data.resume.length === 0) {
+          return
+        }
+        setResumes(res.data.resume)
       } catch (error) {
         console.error('There was an error fetching the resume data:', error)
       }
