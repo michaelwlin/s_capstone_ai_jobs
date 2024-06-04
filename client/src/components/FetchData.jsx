@@ -69,7 +69,7 @@ function FetchData() {
       }
     }
     getJobs()
-  }, [keyword, locationName, useSkills, usersName])
+  }, [keyword, locationName, useSkills, auth.userId])
 
   const [selectedJob, setSelectedJob] = useState(null)
 
